@@ -199,6 +199,8 @@ px2_uniform = np.interp(T_uniform, T2, px2)
 # now compute FFT
 freq = np.fft.rfftfreq(len(px2_uniform), dt)
 spec = np.abs(np.fft.rfft(px2_uniform - np.mean(px2_uniform)))**2
+cw_freq = np.fft.rfftfreq(len(cw_amp), dt)
+cw_spec = np.abs(np.fft.rfft(cw_amp - np.mean(cw_amp)))**2
 
 # fit observational data using dominant simulation frequencies (skip DC at index 0)
 if len(spec) <= FIT_COMPONENTS:
@@ -266,7 +268,8 @@ plt.title("Emergent Polar Motion Amplitude")
 plt.legend()
 
 plt.subplot(2,1,2)
-plt.semilogy(freq, spec)
+plt.semilogy(freq, spec, label="simulation")
+plt.semilogy(cw_freq, cw_spec, alpha=0.7, label="cw.dat")
 #plt.plot(freq, spec)
 plt.ylim(0.0000001, 0.1)
 plt.xlim(0.01, 2)
