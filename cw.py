@@ -130,7 +130,7 @@ def compute_spectrum(signal, dt, estimator, ar_order):
         ar_coeffs, noise_var = burg_ar(signal, order)
         return ar_spectrum(ar_coeffs, noise_var, dt, len(signal))
     if estimator == "arz":
-        ar_coeffs, noise_var, autocorr = yule_walker_ar(signal, order)
+        ar_coeffs, noise_var, autocorr = burg_ar(signal, order)  # yule_walker_ar(signal, order)
         ar_coeffs = stabilize_ar_coeffs(ar_coeffs)
         stabilized_noise = autocorr[0] + np.dot(autocorr[1:], ar_coeffs)
         if stabilized_noise > 0:
@@ -334,7 +334,7 @@ cw_freq, cw_spec = compute_spectrum(cw_amp, dt, args.spectral_estimator, args.ar
 # Plots
 # -----------------------------
 
-plt.figure(figsize=(12,4))
+plt.figure(figsize=(16,12))
 
 plt.subplot(2,1,1)
 plt.plot(T2-3.8, px2*100.0 - 0.02, lw=0.8, label="simulation")
@@ -348,7 +348,8 @@ plt.subplot(2,1,2)
 plt.semilogy(freq, spec, label="simulation")
 plt.semilogy(cw_freq, cw_spec/10000.0, alpha=0.7, label="cw.dat")
 #plt.plot(freq, spec)
-plt.ylim(0.0000001, 0.1)
+# plt.ylim(0.0000001, 0.1)
+plt.ylim(0.0000000001, 0.0001)
 plt.xlim(0.01, 2)
 plt.axvline(omega_m/(2*np.pi), color='b', label="draconic forcing")
 plt.axvline(1.0, color='g', ls=':', label="annual")
@@ -359,7 +360,7 @@ plt.axvline(1.0+CW_Freq, color='r', ls=':', label="CW sideband (annual+CW)")
 plt.xlabel("Frequency")
 plt.ylabel("Power")
 plt.title("Spectrum")
-plt.legend(fontsize=8, loc="lower center")
+plt.legend(fontsize=8, loc="upper right")
 
 plt.tight_layout()
 plt.show()
