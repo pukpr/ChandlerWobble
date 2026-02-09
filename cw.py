@@ -1,6 +1,14 @@
+from pathlib import Path
+
 import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
+
+CW_DATA_FILENAME = "cw.dat"
+CORRELATION_THRESHOLD = 0.8
+FIT_COMPONENTS = 5
+SAMPLING_UNIFORMITY_RTOL = 1e-3
+SAMPLING_UNIFORMITY_ATOL = 1e-9
 
 # -----------------------------
 # Parameters (nondimensional)
@@ -140,19 +148,69 @@ T2 = T[mask]
 r2 = r[mask]
 px2 = px[mask]
 
+cw_path = Path(__file__).with_name(CW_DATA_FILENAME)
+try:
+    cw_data = np.loadtxt(cw_path)
+except FileNotFoundError as exc:
+    raise RuntimeError(f"Chandler wobble data file not found at {cw_path}.") from exc
+except PermissionError as exc:
+    raise RuntimeError(f"Permission denied reading Chandler wobble data at {cw_path}.") from exc
+except ValueError as exc:
+    raise RuntimeError(
+        f"Unable to parse Chandler wobble data from {cw_path}. Ensure it contains numeric columns."
+    ) from exc
+if cw_data.ndim != 2 or cw_data.shape[1] < 2:
+    raise RuntimeError(f"Chandler wobble data in {cw_path} must have at least two columns.")
+if cw_data.shape[0] < 2:
+    raise RuntimeError(f"Chandler wobble data in {cw_path} must have at least two rows.")
+if T2.size < 2:
+    raise RuntimeError("Simulation did not produce enough samples for comparison.")
+cw_time = cw_data[:, 0]
+cw_amp = cw_data[:, 1]
+cw_time_diffs = np.diff(cw_time)
+if np.any(cw_time_diffs <= 0):
+    raise RuntimeError(f"Chandler wobble data in {cw_path} must have increasing times.")
+cw_time_step = np.mean(cw_time_diffs)
+cw_time_step_std = np.std(cw_time_diffs)
+if cw_time_step_std > max(SAMPLING_UNIFORMITY_ATOL, SAMPLING_UNIFORMITY_RTOL * cw_time_step):
+    cw_time_uniform = np.linspace(cw_time[0], cw_time[-1], len(cw_time))
+    cw_amp = np.interp(cw_time_uniform, cw_time, cw_amp)
+    cw_time = cw_time_uniform
+    cw_time_diffs = np.diff(cw_time)
+    cw_time_step = np.mean(cw_time_diffs)
+cw_time_aligned = (cw_time - cw_time[0]) + T2[0]
+if cw_time_aligned[-1] > T2[-1]:
+    raise RuntimeError(
+        "Simulation time window is shorter than the observational data after transient removal."
+    )
+
 # uniform interpolation
-# choose a finer dt
-dt = 0.1  # for example
-
-# create uniform time grid
+dt = cw_time_step
 T_uniform = np.arange(T2[0], T2[-1], dt)
-
-# interpolate your solution onto this grid
 px2_uniform = np.interp(T_uniform, T2, px2)
 
 # now compute FFT
 freq = np.fft.rfftfreq(len(px2_uniform), dt)
 spec = np.abs(np.fft.rfft(px2_uniform - np.mean(px2_uniform)))**2
+
+# fit observational data using dominant simulation frequencies
+dominant_indices = np.argsort(spec[1:])[::-1][:FIT_COMPONENTS] + 1
+dominant_freqs = freq[dominant_indices]
+fit_columns = []
+for component_freq in dominant_freqs:
+    fit_columns.append(np.sin(2 * np.pi * component_freq * cw_time))
+    fit_columns.append(np.cos(2 * np.pi * component_freq * cw_time))
+fit_columns.append(np.ones_like(cw_time))
+fit_matrix = np.column_stack(fit_columns)
+coefficients, _, _, _ = np.linalg.lstsq(fit_matrix, cw_amp, rcond=None)
+cw_fit = fit_matrix @ coefficients
+correlation = np.corrcoef(cw_fit, cw_amp)[0, 1]
+print(f"Optimized correlation coefficient = {correlation:.3f}")
+if correlation < CORRELATION_THRESHOLD:
+    raise RuntimeError(
+        "Optimized correlation coefficient "
+        f"{correlation:.3f} is below required threshold {CORRELATION_THRESHOLD:.2f}."
+    )
 
 
 # FFT
@@ -169,10 +227,13 @@ spec = np.abs(np.fft.rfft(px2_uniform - np.mean(px2_uniform)))**2
 plt.figure(figsize=(12,4))
 
 plt.subplot(2,1,1)
-plt.plot(T2, px2, lw=0.8)
+plt.plot(T2, px2, lw=0.8, label="simulation")
+plt.plot(cw_time_aligned, cw_amp, lw=0.8, alpha=0.6, label="cw.dat")
+plt.plot(cw_time_aligned, cw_fit, lw=0.8, label="optimized fit")
 plt.xlabel("Time")
 plt.ylabel("px")
 plt.title("Emergent Polar Motion Amplitude")
+plt.legend()
 
 plt.subplot(2,1,2)
 plt.semilogy(freq, spec)
