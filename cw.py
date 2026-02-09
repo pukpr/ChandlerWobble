@@ -34,7 +34,7 @@ def parse_args():
 
 def resolve_ar_order(order, sample_count):
     if sample_count < 2:
-        raise RuntimeError("Not enough samples for autoregressive spectral estimation.")
+        raise RuntimeError("Not enough samples for spectral estimation with AR order.")
     if order < 1:
         raise ValueError("AR order must be at least 1.")
     return min(order, sample_count - 1)
