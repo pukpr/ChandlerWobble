@@ -6,10 +6,15 @@ import matplotlib.pyplot as plt
 # Parameters (nondimensional)
 # -----------------------------
 
+# Chandler wobble emerges from aliasing between lunar draconic forcing 
+# and annual/semi-annual inertia impulses. The period is:
+# T_CW = (1/2) * |1/(1/T_d - 13/T_y)| ≈ 433 days
+# where the factor of 1/2 arises from quadratic (π-symmetric) coupling.
+
 Nutation = 455.0  # 443 460
 Calendar = 365.242
 Draconic = 27.2122
-CW_Freq = (Calendar/Draconic-13.0)*2.0
+CW_Freq = (Calendar/Draconic-13.0)*2.0  # Aliased difference frequency
 CW_Calculated = Calendar/CW_Freq 
 
 #omega0 = 1.0          # free nutation frequency (sets timescale)
@@ -177,9 +182,9 @@ plt.xlim(0.01, 2)
 plt.axvline(omega_m/(2*np.pi), color='b', label="draconic forcing")
 plt.axvline(1.0, color='g', ls=':', label="annual")
 plt.axvline(0.0+CW_Freq, color='r', ls='-.', label="CW")
-plt.axvline(1.0-CW_Freq, color='r', ls='--', label="CW sideband")
-plt.axvline(2.0-CW_Freq, color='r', ls='--', label="CW sideband")
-plt.axvline(1.0+CW_Freq, color='r', ls=':', label="CW harmonic")
+plt.axvline(1.0-CW_Freq, color='r', ls='--', label="CW sideband (annual-CW)")
+plt.axvline(2.0-CW_Freq, color='r', ls='--', label="CW sideband (2*annual-CW)")
+plt.axvline(1.0+CW_Freq, color='r', ls=':', label="CW sideband (annual+CW)")
 plt.xlabel("Frequency")
 plt.ylabel("Power")
 plt.title("Spectrum")
