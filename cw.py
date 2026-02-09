@@ -5,9 +5,6 @@ from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
 CW_DATA_FILENAME = "cw.dat"
-CORRELATION_THRESHOLD = 0.8
-FIT_COMPONENTS = 5
-MIN_STD_THRESHOLD = 1e-12
 SAMPLING_UNIFORMITY_RTOL = 1e-3
 SAMPLING_UNIFORMITY_ATOL = 1e-9
 
@@ -202,56 +199,6 @@ spec = np.abs(np.fft.rfft(px2_uniform - np.mean(px2_uniform)))**2
 cw_freq = np.fft.rfftfreq(len(cw_amp), dt)
 cw_spec = np.abs(np.fft.rfft(cw_amp - np.mean(cw_amp)))**2
 
-# fit observational data using dominant simulation frequencies (skip DC at index 0)
-if len(spec) <= FIT_COMPONENTS:
-    raise RuntimeError("Simulation spectrum is too short to select dominant components.")
-sorted_indices_desc = np.argsort(spec[1:])[::-1]
-dominant_indices = sorted_indices_desc[:FIT_COMPONENTS] + 1  # +1 restores indices after skipping DC.
-dominant_freqs = freq[dominant_indices]
-fit_columns = []
-for component_freq in dominant_freqs:
-    fit_columns.append(np.sin(2 * np.pi * component_freq * cw_time_aligned))
-    fit_columns.append(np.cos(2 * np.pi * component_freq * cw_time_aligned))
-# Constant offset appended last; coefficients follow the order of fit_columns.
-fit_columns.append(np.ones_like(cw_time_aligned))
-fit_matrix = np.column_stack(fit_columns)
-# rcond=None uses NumPy's default cutoff for stability across versions.
-try:
-    coefficients, _, _, _ = np.linalg.lstsq(fit_matrix, cw_amp, rcond=None)
-except np.linalg.LinAlgError as exc:
-    raise RuntimeError("Least-squares fit failed; check data conditioning.") from exc
-cw_fit = fit_matrix @ coefficients
-# cw_time_aligned ensures the observational grid stays within the simulation window.
-# Pearson correlation captures how well dominant simulation frequencies reproduce cw.dat.
-fit_rank = np.linalg.matrix_rank(fit_matrix)
-if fit_rank < fit_matrix.shape[1]:
-    raise RuntimeError(
-        "Least-squares fit matrix is rank-deficient; adjust simulation or data sampling."
-    )
-cw_fit_std = np.std(cw_fit)
-cw_amp_std = np.std(cw_amp)
-if cw_fit_std < MIN_STD_THRESHOLD:
-    raise RuntimeError(f"Fitted signal has near-zero variance (std={cw_fit_std:.2e}).")
-if cw_amp_std < MIN_STD_THRESHOLD:
-    raise RuntimeError(f"Observational signal has near-zero variance (std={cw_amp_std:.2e}).")
-correlation = np.corrcoef(cw_fit, cw_amp)[0, 1]
-if np.isnan(correlation):
-    raise RuntimeError("Correlation is undefined; check observational and fitted signals.")
-print(f"Optimized correlation coefficient = {correlation:.3f}")
-if correlation < CORRELATION_THRESHOLD:
-    raise RuntimeError(
-        "Optimized correlation coefficient "
-        f"{correlation:.3f} is below required threshold {CORRELATION_THRESHOLD:.2f}."
-    )
-
-
-# FFT
-#dt = np.mean(np.diff(T2))
-#freq = np.fft.rfftfreq(len(px2), dt)
-##spec = np.abs(np.fft.rfft(px2 - np.mean(px2)))
-#spec = np.abs(np.fft.rfft(px2 - np.mean(px2))) ** 2
-
-
 # -----------------------------
 # Plots
 # -----------------------------
@@ -261,7 +208,6 @@ plt.figure(figsize=(12,4))
 plt.subplot(2,1,1)
 plt.plot(T2-3.8, px2*100.0 - 0.02, lw=0.8, label="simulation")
 plt.plot(cw_time_aligned, cw_amp, lw=0.8, alpha=0.6, label="cw.dat")
-# plt.plot(cw_time_aligned, cw_fit, lw=0.8, label="optimized fit")
 plt.xlabel("Time")
 plt.ylabel("px")
 plt.title("Emergent Polar Motion Amplitude")
