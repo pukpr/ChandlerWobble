@@ -2,7 +2,7 @@
 Mathematical Geoenergy treatment of Chandler wobble mechanism.
 
 ## Documentation
-- `dialog.pdf` (included reference derivation and implementation notes)
+- `dialog.pdf` (includes reference derivation and implementation notes)
 - `ChandlerWobbleForcing.pdf` (2021 blog post: https://geoenergymath.com/2021/01/07/chandler-wobble-forcing/)
 
 ## Usage

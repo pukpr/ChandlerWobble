@@ -97,7 +97,8 @@ def stabilize_ar_coeffs(ar_coeffs):
         return ar_coeffs
     roots = np.roots(np.concatenate(([1.0], ar_coeffs)))
     threshold = 1.0 - 1e-8
-    stabilized = np.where(np.abs(roots) >= threshold, threshold / np.conj(roots), roots)
+    radius = np.abs(roots)
+    stabilized = np.where(radius >= threshold, threshold * roots / radius, roots)
     stabilized_poly = np.poly(stabilized)
     return np.real_if_close(stabilized_poly[1:])
 
