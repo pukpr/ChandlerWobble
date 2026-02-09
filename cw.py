@@ -1,12 +1,145 @@
 from pathlib import Path
 
+import argparse
 import numpy as np
 from scipy.integrate import solve_ivp
+from scipy.linalg import toeplitz
+from scipy.signal import correlate
 import matplotlib.pyplot as plt
 
 CW_DATA_FILENAME = "cw.dat"
 SAMPLING_UNIFORMITY_RTOL = 1e-3
 SAMPLING_UNIFORMITY_ATOL = 1e-9
+DEFAULT_AR_ORDER = 30
+STABILITY_MARGIN = 1e-8
+
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Chandler wobble simulation with spectral estimators."
+    )
+    parser.add_argument(
+        "--spectral-estimator",
+        choices=["fft", "mem", "arz"],
+        default="fft",
+        help="Spectral estimator to use (fft, mem/Burg, or stabilized AR-Z).",
+    )
+    parser.add_argument(
+        "--ar-order",
+        type=int,
+        default=DEFAULT_AR_ORDER,
+        help="Autoregressive order for MEM/AR-Z estimators.",
+    )
+    return parser.parse_args()
+
+
+def resolve_ar_order(order, sample_count):
+    if sample_count < 2:
+        raise RuntimeError(
+            f"At least 2 samples required for spectral estimation, got {sample_count}."
+        )
+    if order < 1:
+        raise ValueError("AR order must be at least 1.")
+    return min(order, sample_count - 1)
+
+
+def compute_fft_spectrum(signal, dt):
+    signal = signal - np.mean(signal)
+    freq = np.fft.rfftfreq(len(signal), dt)
+    power = np.abs(np.fft.rfft(signal)) ** 2
+    return freq, power
+
+
+def burg_ar(signal, order):
+    signal = np.asarray(signal, dtype=float)
+    n_samples = len(signal)
+    if order >= n_samples:
+        raise ValueError("AR order must be less than the number of samples.")
+    ef = signal[1:].copy()
+    eb = signal[:-1].copy()
+    ar_coeffs = np.zeros(order + 1, dtype=float)
+    ar_coeffs[0] = 1.0
+    error = np.dot(signal, signal) / n_samples
+    for k in range(1, order + 1):
+        num = -2.0 * np.dot(eb, ef)
+        den = np.dot(ef, ef) + np.dot(eb, eb)
+        if den <= 0:
+            break
+        reflection = num / den
+        prev_coeffs = ar_coeffs[:k].copy()
+        ar_coeffs[1:k] = prev_coeffs[1:k] + reflection * prev_coeffs[k - 1 : 0 : -1]
+        ar_coeffs[k] = reflection
+        ef_new = ef + reflection * eb
+        eb_new = eb + reflection * ef
+        ef = ef_new[1:]
+        eb = eb_new[:-1]
+        error *= 1.0 - reflection**2
+        if error <= 0:
+            error = np.finfo(float).eps
+            break
+    return ar_coeffs[1:], error
+
+
+def yule_walker_ar(signal, order):
+    signal = np.asarray(signal, dtype=float)
+    n_samples = len(signal)
+    if order >= n_samples:
+        raise ValueError("AR order must be less than the number of samples.")
+    autocorr = correlate(signal, signal, mode="full", method="fft")[
+        n_samples - 1 : n_samples + order
+    ]
+    autocorr = autocorr / n_samples
+    toeplitz_matrix = toeplitz(autocorr[:-1])
+    ar_coeffs = np.linalg.solve(toeplitz_matrix, -autocorr[1:])
+    noise_var = autocorr[0] + np.dot(autocorr[1:], ar_coeffs)
+    return ar_coeffs, noise_var, autocorr
+
+
+def stabilize_ar_coeffs(ar_coeffs):
+    if ar_coeffs.size == 0:
+        return ar_coeffs
+    roots = np.roots(np.concatenate(([1.0], ar_coeffs)))
+    threshold = 1.0 - STABILITY_MARGIN
+    radius = np.abs(roots)
+    stabilized = np.where(radius >= threshold, threshold * roots / radius, roots)
+    stabilized_poly = np.poly(stabilized)
+    return np.real_if_close(stabilized_poly[1:])
+
+
+def ar_spectrum(ar_coeffs, noise_var, dt, n_samples):
+    freq = np.fft.rfftfreq(n_samples, dt)
+    omega = 2.0 * np.pi * freq * dt
+    if ar_coeffs.size:
+        k = np.arange(1, ar_coeffs.size + 1)
+        exp_matrix = np.exp(-1j * np.outer(omega, k))
+        denom = np.abs(1.0 + exp_matrix @ ar_coeffs) ** 2
+    else:
+        denom = np.ones_like(freq)
+    denom = np.maximum(denom, np.finfo(float).eps)
+    noise_var = max(noise_var, np.finfo(float).eps)
+    return freq, noise_var / denom
+
+
+def compute_spectrum(signal, dt, estimator, ar_order):
+    signal = np.asarray(signal, dtype=float)
+    signal = signal - np.mean(signal)
+    if estimator == "fft":
+        return compute_fft_spectrum(signal, dt)
+    order = resolve_ar_order(ar_order, len(signal))
+    if estimator == "mem":
+        ar_coeffs, noise_var = burg_ar(signal, order)
+        return ar_spectrum(ar_coeffs, noise_var, dt, len(signal))
+    if estimator == "arz":
+        ar_coeffs, noise_var, autocorr = yule_walker_ar(signal, order)
+        ar_coeffs = stabilize_ar_coeffs(ar_coeffs)
+        stabilized_noise = autocorr[0] + np.dot(autocorr[1:], ar_coeffs)
+        if stabilized_noise > 0:
+            noise_var = stabilized_noise
+        return ar_spectrum(ar_coeffs, noise_var, dt, len(signal))
+    raise ValueError(f"Unknown spectral estimator: {estimator}")
+
+
+args = parse_args()
 
 # -----------------------------
 # Parameters (nondimensional)
@@ -193,11 +326,9 @@ dt = cw_time_step
 T_uniform = np.arange(T2[0], T2[-1], dt)
 px2_uniform = np.interp(T_uniform, T2, px2)
 
-# now compute FFT
-freq = np.fft.rfftfreq(len(px2_uniform), dt)
-spec = np.abs(np.fft.rfft(px2_uniform - np.mean(px2_uniform)))**2
-cw_freq = np.fft.rfftfreq(len(cw_amp), dt)
-cw_spec = np.abs(np.fft.rfft(cw_amp - np.mean(cw_amp)))**2
+# now compute spectrum
+freq, spec = compute_spectrum(px2_uniform, dt, args.spectral_estimator, args.ar_order)
+cw_freq, cw_spec = compute_spectrum(cw_amp, dt, args.spectral_estimator, args.ar_order)
 
 # -----------------------------
 # Plots
