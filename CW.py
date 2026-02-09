@@ -15,7 +15,7 @@ eps_m = 2e-3          # forcing amplitude
 Ts = 2 * np.pi * 13.0  # sampling period (annual analogue)
 eps_s = 3e-3           # impulse strength
 
-tmax = 0.04  # 4000.0  # total integration time
+tmax = 0.04  # total integration time (use 4000.0 for full run)
 dt_sample = 0.5       # output sampling
 
 # -----------------------------
@@ -47,7 +47,7 @@ def impulse_event(t, y):
 
 
 impulse_event.terminal = True
-impulse_event.direction = 0
+impulse_event.direction = 0  # trigger on both rising/falling crossings
 
 # -----------------------------
 # Apply impulse map
