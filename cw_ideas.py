@@ -6,7 +6,10 @@ This module implements a mathematical geoenergy treatment of the Chandler wobble
 mechanism based on the approach described in Mathematical GeoEnergy (Wiley, 2018).
 
 The Chandler wobble is a small variation in the Earth's axis of rotation,
-with a period of approximately 433 days.
+with a period of approximately 433 days. The wobble emerges from aliasing between
+lunar draconic forcing (~27.21 days) and annual/semi-annual inertia impulses:
+    T_CW = (1/2) * |1/(1/T_d - 13/T_y)| ≈ 433 days
+where the factor of 1/2 arises from quadratic (π-symmetric) coupling at the poles.
 """
 
 import numpy as np

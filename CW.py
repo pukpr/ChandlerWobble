@@ -1,3 +1,16 @@
+"""
+Minimal Chandler Wobble simulation demonstrating aliasing mechanism.
+
+This is the reference implementation from dialog.pdf showing how the Chandler
+wobble emerges from stroboscopic sampling of a continuous off-resonant lunar
+(draconic) forcing by impulsive parametric modulation of the inertia tensor.
+
+The emergent slow frequency is the aliased difference:
+    f_CW ≈ (1/2) * |ω_m - k*ω_s|
+where ω_m is the "monthly" forcing, ω_s is the sampling (annual) frequency,
+and the factor of 1/2 comes from quadratic coupling (π-symmetry at poles).
+"""
+
 import numpy as np
 from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
