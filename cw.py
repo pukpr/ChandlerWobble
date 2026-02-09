@@ -11,6 +11,7 @@ CW_DATA_FILENAME = "cw.dat"
 SAMPLING_UNIFORMITY_RTOL = 1e-3
 SAMPLING_UNIFORMITY_ATOL = 1e-9
 DEFAULT_AR_ORDER = 30
+STABILITY_MARGIN = 1e-8
 
 
 def parse_args():
@@ -34,7 +35,9 @@ def parse_args():
 
 def resolve_ar_order(order, sample_count):
     if sample_count < 2:
-        raise RuntimeError("Not enough samples for spectral estimation with AR order.")
+        raise RuntimeError(
+            f"At least 2 samples required for spectral estimation, got {sample_count}."
+        )
     if order < 1:
         raise ValueError("AR order must be at least 1.")
     return min(order, sample_count - 1)
@@ -96,7 +99,7 @@ def stabilize_ar_coeffs(ar_coeffs):
     if ar_coeffs.size == 0:
         return ar_coeffs
     roots = np.roots(np.concatenate(([1.0], ar_coeffs)))
-    threshold = 1.0 - 1e-8
+    threshold = 1.0 - STABILITY_MARGIN
     radius = np.abs(roots)
     stabilized = np.where(radius >= threshold, threshold * roots / radius, roots)
     stabilized_poly = np.poly(stabilized)
