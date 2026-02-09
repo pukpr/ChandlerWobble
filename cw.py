@@ -199,13 +199,6 @@ spec = np.abs(np.fft.rfft(px2_uniform - np.mean(px2_uniform)))**2
 cw_freq = np.fft.rfftfreq(len(cw_amp), dt)
 cw_spec = np.abs(np.fft.rfft(cw_amp - np.mean(cw_amp)))**2
 
-# FFT
-#dt = np.mean(np.diff(T2))
-#freq = np.fft.rfftfreq(len(px2), dt)
-##spec = np.abs(np.fft.rfft(px2 - np.mean(px2)))
-#spec = np.abs(np.fft.rfft(px2 - np.mean(px2))) ** 2
-
-
 # -----------------------------
 # Plots
 # -----------------------------
