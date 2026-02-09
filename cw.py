@@ -4,6 +4,7 @@ import argparse
 import numpy as np
 from scipy.integrate import solve_ivp
 from scipy.linalg import toeplitz
+from scipy.signal import correlate
 import matplotlib.pyplot as plt
 
 CW_DATA_FILENAME = "cw.dat"
@@ -81,7 +82,9 @@ def yule_walker_ar(signal, order):
     n_samples = len(signal)
     if order >= n_samples:
         raise ValueError("AR order must be less than the number of samples.")
-    autocorr = np.correlate(signal, signal, mode="full")[n_samples - 1 : n_samples + order]
+    autocorr = correlate(signal, signal, mode="full", method="fft")[
+        n_samples - 1 : n_samples + order
+    ]
     autocorr = autocorr / n_samples
     toeplitz_matrix = toeplitz(autocorr[:-1])
     ar_coeffs = np.linalg.solve(toeplitz_matrix, -autocorr[1:])
@@ -93,7 +96,8 @@ def stabilize_ar_coeffs(ar_coeffs):
     if ar_coeffs.size == 0:
         return ar_coeffs
     roots = np.roots(np.concatenate(([1.0], ar_coeffs)))
-    stabilized = np.where(np.abs(roots) > 1.0, 1.0 / np.conj(roots), roots)
+    threshold = 1.0 - 1e-8
+    stabilized = np.where(np.abs(roots) >= threshold, threshold / np.conj(roots), roots)
     stabilized_poly = np.poly(stabilized)
     return np.real_if_close(stabilized_poly[1:])
 
@@ -124,7 +128,9 @@ def compute_spectrum(signal, dt, estimator, ar_order):
     if estimator == "arz":
         ar_coeffs, noise_var, autocorr = yule_walker_ar(signal, order)
         ar_coeffs = stabilize_ar_coeffs(ar_coeffs)
-        noise_var = autocorr[0] + np.dot(autocorr[1:], ar_coeffs)
+        stabilized_noise = autocorr[0] + np.dot(autocorr[1:], ar_coeffs)
+        if stabilized_noise > 0:
+            noise_var = stabilized_noise
         return ar_spectrum(ar_coeffs, noise_var, dt, len(signal))
     raise ValueError(f"Unknown spectral estimator: {estimator}")
 
