@@ -19,11 +19,17 @@ python cw.py
 ```
 <img width="2404" height="1903" alt="image" src="https://github.com/user-attachments/assets/61856b65-7321-4d36-8a0d-06262f3b04fe" />
 
+---
+
+Maximum Entropy Model (MEM) order 400
 
 ```bash
 python cw.py --spectral-estimator mem --ar-order 400
 ```
 <img width="2404" height="1903" alt="image" src="https://github.com/user-attachments/assets/23bab957-245d-4f07-bfac-61d96e63d705" />
+
+---
+complex z-domain autoregressive (AR-z) order 100
 
 ```bash
 python3 .\cw.py --spectral-estimator arz --ar-order 100
