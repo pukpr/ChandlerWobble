@@ -1,0 +1,1 @@
+export GZ_SIM_SYSTEM_PLUGIN_PATH=`pwd`
