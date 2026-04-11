@@ -317,10 +317,38 @@ input[type=range] { cursor: pointer; }
         </div>
       </div>
       <div class="control-group">
-        <label>Model amplitude scale</label>
+        <label>Annual forcing amplitude A<sub>ann</sub></label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlAmp" min="0.3" max="3.0" step="0.05" value="1.0">
-          <span class="ctrl-val" id="valAmp">1.00</span>
+          <input type="range" id="ctrlAmpAnn" min="0.1" max="5.0" step="0.05" value="1.0">
+          <span class="ctrl-val" id="valAmpAnn">1.00</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Draconic forcing amplitude A<sub>drac</sub></label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlAmpDrac" min="0.1" max="5.0" step="0.05" value="1.0">
+          <span class="ctrl-val" id="valAmpDrac">1.00</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Annual phase φ<sub>ann</sub></label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlPhiAnn" min="-3.14159" max="3.14159" step="0.05" value="0">
+          <span class="ctrl-val" id="valPhiAnn">0.00 rad</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Draconic phase φ<sub>drac</sub></label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlPhiDrac" min="-3.14159" max="3.14159" step="0.05" value="0">
+          <span class="ctrl-val" id="valPhiDrac">0.00 rad</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Nodal modulation phase φ<sub>node</sub></label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlPhiNode" min="-3.14159" max="3.14159" step="0.05" value="0">
+          <span class="ctrl-val" id="valPhiNode">0.00 rad</span>
         </div>
       </div>
       <div class="control-group">
@@ -387,8 +415,9 @@ input[type=range] { cursor: pointer; }
         &nbsp;&nbsp;&nbsp;&nbsp; T<sub>alias</sub> = T<sub>y</sub> / (T<sub>y</sub>/(T<sub>d</sub>/2) − 26)<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="hl">365.242 / (26.847 − 26)</span><br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ≈ <span class="hl2">432.77 days</span><br><br>
-        Forcing: F(t) = A·<span class="hl">|cos(2πt/T<sub>d</sub>·½)|</span>·<span class="hl2">cos²(πt/T<sub>y</sub>)</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;· (1 + ε·cos(2πt/T<sub>node</sub>))<br><br>
+        Forcing: F(t) = <span class="hl">A<sub>drac</sub>·|cos(πt/(T<sub>d</sub>/2) + φ<sub>d</sub>)|</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·<span class="hl2">A<sub>ann</sub>·cos²(πt/T<sub>y</sub> + φ<sub>a</sub>/2)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· (1 + ε·cos(2πt/T<sub>node</sub> + φ<sub>n</sub>))<br><br>
         Resonator: 2nd-order DiffEq, Q≈100<br>
         &nbsp;&nbsp;&nbsp;&nbsp;ẍ + (ω<sub>0</sub>/Q)ẋ + ω<sub>0</sub>²x = F(t)
       </div>
@@ -489,7 +518,7 @@ function generateObserved() {
    Numerically integrated with RK4.
 */
 function computeModel(params) {
-  const { Td, Ty, Q, Tnode, amp } = params;
+  const { Td, Ty, Q, Tnode, ampAnn, ampDrac, phiAnn, phiDrac, phiNode } = params;
 
   // Derived periods (in years)
   const Td_yr = Td / DAYS_PER_YEAR;
@@ -506,12 +535,12 @@ function computeModel(params) {
 
   // Forcing function F(t) at a given year t
   function forcing(t) {
-    // Full-wave rectified draconic (absolute cosine of draconic half-month)
-    const fd = Math.abs(Math.cos(Math.PI * t / (Td_yr / 2)));
-    // Semi-annual impulse (cos² = 1 + cos(4πt/Ty_yr)) / 2
-    const fa = Math.pow(Math.cos(Math.PI * t / Ty_yr), 2);
-    // Nodal modulation
-    const fn = 1.0 + 0.22 * Math.cos(2 * Math.PI * t / Tnode);
+    // Full-wave rectified draconic — amplitude + phase controlled
+    const fd = ampDrac * Math.abs(Math.cos(Math.PI * t / (Td_yr / 2) + phiDrac));
+    // Semi-annual (annual) impulse — amplitude + phase controlled
+    const fa = ampAnn * Math.pow(Math.cos(Math.PI * t / Ty_yr + phiAnn / 2), 2);
+    // Nodal modulation — phase controlled
+    const fn = 1.0 + 0.22 * Math.cos(2 * Math.PI * t / Tnode + phiNode);
     return fd * fa * fn;
   }
 
@@ -630,7 +659,13 @@ function amplitudeSpectrum(signal) {
    STATE
 ═══════════════════════════════════════════════════════ */
 let params = {
-  Td: 27.2122, Ty: 365.242, Q: 100, Tnode: 18.6, amp: 1.0, trainEnd: 1962.5
+  Td: 27.2122, Ty: 365.242, Q: 100, Tnode: 18.6,
+  ampAnn: 1.0,    // annual forcing amplitude
+  ampDrac: 1.0,   // draconic forcing amplitude
+  phiAnn: 0.0,    // annual phase offset (radians)
+  phiDrac: 0.0,   // draconic phase offset (radians)
+  phiNode: 0.0,   // nodal modulation phase offset (radians)
+  trainEnd: 1962.5
 };
 
 const observed = generateObserved();
@@ -1068,10 +1103,11 @@ bindSlider('ctrlTd', 'valTd', 'Td', v => v.toFixed(3), hardUpdate);
 bindSlider('ctrlTy', 'valTy', 'Ty', v => v.toFixed(2), hardUpdate);
 bindSlider('ctrlQ',  'valQ',  'Q',  v => v.toFixed(0),  hardUpdate);
 bindSlider('ctrlTnode','valTnode','Tnode', v => v.toFixed(1)+' yr', hardUpdate);
-bindSlider('ctrlAmp','valAmp','amp', v => v.toFixed(2), () => {
-  model = model.map(x => x * 1); // amp integrated in fitting; just re-render
-  softUpdate();
-});
+bindSlider('ctrlAmpAnn',  'valAmpAnn',  'ampAnn',  v => v.toFixed(2), hardUpdate);
+bindSlider('ctrlAmpDrac', 'valAmpDrac', 'ampDrac', v => v.toFixed(2), hardUpdate);
+bindSlider('ctrlPhiAnn',  'valPhiAnn',  'phiAnn',  v => v.toFixed(2)+' rad', hardUpdate);
+bindSlider('ctrlPhiDrac', 'valPhiDrac', 'phiDrac', v => v.toFixed(2)+' rad', hardUpdate);
+bindSlider('ctrlPhiNode', 'valPhiNode', 'phiNode', v => v.toFixed(2)+' rad', hardUpdate);
 bindSlider('ctrlTrainEnd','valTrainEnd','trainEnd', v => v.toFixed(1), () => {
   model = fitModel(modelRaw, observed, params.trainEnd);
   updateTS();
