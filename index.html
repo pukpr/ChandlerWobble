@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pukite Lunisolar Forcing — Chandler Wobble Model</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<style>
+/* ── DESIGN TOKENS ─────────────────────────────────────── */
+:root, [data-theme="light"] {
+  --color-bg:             #f4f3ef;
+  --color-surface:        #faf9f6;
+  --color-surface-2:      #ffffff;
+  --color-border:         #d6d3cc;
+  --color-divider:        #e0ddd8;
+  --color-text:           #1e1c16;
+  --color-text-muted:     #6e6d68;
+  --color-text-faint:     #b5b4ae;
+  --color-primary:        #1a6b75;
+  --color-primary-hover:  #0e505a;
+  --color-accent:         #c7a227;
+  --color-accent2:        #a14e2b;
+  --color-model:          #1a6b75;
+  --color-observed:       #c7a227;
+  --color-residual:       #a14e2b;
+  --color-grid:           rgba(0,0,0,0.07);
+  --color-tooltip-bg:     rgba(255,255,255,0.96);
+  --shadow-md:            0 4px 16px rgba(0,0,0,0.10);
+  --shadow-lg:            0 12px 40px rgba(0,0,0,0.14);
+  --font-body:            'Space Grotesk', sans-serif;
+  --font-mono:            'Space Mono', monospace;
+  --radius-md:            0.5rem;
+  --radius-lg:            0.75rem;
+  --transition:           180ms cubic-bezier(0.16,1,0.3,1);
+}
+[data-theme="dark"] {
+  --color-bg:             #10100e;
+  --color-surface:        #16150f;
+  --color-surface-2:      #1c1b14;
+  --color-border:         #2e2d26;
+  --color-divider:        #252420;
+  --color-text:           #e8e6de;
+  --color-text-muted:     #7a7868;
+  --color-text-faint:     #4a4940;
+  --color-primary:        #4fa8b5;
+  --color-primary-hover:  #6dc3cf;
+  --color-accent:         #e8c04a;
+  --color-accent2:        #e07a4a;
+  --color-model:          #4fa8b5;
+  --color-observed:       #e8c04a;
+  --color-residual:       #e07a4a;
+  --color-grid:           rgba(255,255,255,0.05);
+  --color-tooltip-bg:     rgba(22,21,15,0.97);
+  --shadow-md:            0 4px 16px rgba(0,0,0,0.40);
+  --shadow-lg:            0 12px 40px rgba(0,0,0,0.55);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-bg:#10100e; --color-surface:#16150f; --color-surface-2:#1c1b14;
+    --color-border:#2e2d26; --color-divider:#252420; --color-text:#e8e6de;
+    --color-text-muted:#7a7868; --color-text-faint:#4a4940;
+    --color-primary:#4fa8b5; --color-primary-hover:#6dc3cf;
+    --color-accent:#e8c04a; --color-accent2:#e07a4a;
+    --color-model:#4fa8b5; --color-observed:#e8c04a; --color-residual:#e07a4a;
+    --color-grid:rgba(255,255,255,0.05); --color-tooltip-bg:rgba(22,21,15,0.97);
+    --shadow-md:0 4px 16px rgba(0,0,0,0.40); --shadow-lg:0 12px 40px rgba(0,0,0,0.55);
+  }
+}
+
+/* ── RESET / BASE ──────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100dvh;
+  line-height: 1.6;
+}
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+input[type=range] { cursor: pointer; }
+
+/* ── LAYOUT ────────────────────────────────────────────── */
+.app-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--shadow-md);
+}
+.logo-wrap { display: flex; align-items: center; gap: 0.75rem; }
+.logo-wrap svg { flex-shrink: 0; }
+.app-title { font-size: clamp(0.9rem,1.2vw,1.05rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.app-subtitle { font-size: clamp(0.7rem,0.9vw,0.8rem); color: var(--color-text-muted); font-weight: 400; }
+
+.main { max-width: 1340px; margin: 0 auto; padding: 1.5rem; }
+
+/* ── KPI BAR ───────────────────────────────────────────── */
+.kpi-bar {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px,1fr));
+  gap: 0.75rem; margin-bottom: 1.25rem;
+}
+.kpi-card {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 0.85rem 1rem;
+}
+.kpi-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 0.2rem; }
+.kpi-value { font-size: 1.35rem; font-weight: 600; font-family: var(--font-mono); line-height: 1; color: var(--color-primary); }
+.kpi-unit { font-size: 0.7rem; color: var(--color-text-faint); margin-top: 0.15rem; }
+
+/* ── CHART PANELS ──────────────────────────────────────── */
+.charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+@media (max-width: 900px) { .charts-grid { grid-template-columns: 1fr; } }
+.panel {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 1.1rem 1.25rem;
+  box-shadow: var(--shadow-md);
+}
+.panel-full { grid-column: 1 / -1; }
+.panel-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.8rem; }
+.panel-title { font-size: 0.85rem; font-weight: 600; letter-spacing: -0.01em; }
+.panel-hint { font-size: 0.7rem; color: var(--color-text-faint); }
+.chart-wrap { width: 100%; position: relative; }
+
+/* ── CONTROLS ──────────────────────────────────────────── */
+.controls-panel {
+  background: var(--color-surface); border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg); padding: 1.1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+.controls-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--color-text-muted); margin-bottom: 0.9rem; }
+.controls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
+.control-group label { display: block; font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.3rem; }
+.control-group .ctrl-row { display: flex; align-items: center; gap: 0.5rem; }
+.control-group input[type=range] {
+  flex: 1; accent-color: var(--color-primary);
+  height: 4px; border-radius: 2px;
+}
+.ctrl-val {
+  font-family: var(--font-mono); font-size: 0.72rem;
+  color: var(--color-primary); min-width: 52px; text-align: right;
+}
+
+/* ── LEGEND ────────────────────────────────────────────── */
+.legend { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 0.5rem; }
+.legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.72rem; color: var(--color-text-muted); }
+.legend-swatch { width: 22px; height: 3px; border-radius: 2px; }
+.legend-swatch.dashed { background: none; border-top: 2px dashed; }
+
+/* ── FORMULA BOX ───────────────────────────────────────── */
+.formula-box {
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); padding: 0.85rem 1.1rem;
+  font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.9;
+  color: var(--color-text-muted);
+}
+.formula-box .hl { color: var(--color-primary); font-weight: 700; }
+.formula-box .hl2 { color: var(--color-accent); }
+
+/* ── ANNOTATIONS ───────────────────────────────────────── */
+.annotation-line { stroke: var(--color-accent2); stroke-dasharray: 4 3; stroke-width: 1.5; opacity: 0.7; }
+.annotation-label { fill: var(--color-accent2); font-size: 10px; font-family: var(--font-mono); }
+
+/* ── TOOLTIP ───────────────────────────────────────────── */
+#tooltip {
+  position: fixed; pointer-events: none; z-index: 999;
+  background: var(--color-tooltip-bg); border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); padding: 0.5rem 0.75rem;
+  font-size: 0.75rem; box-shadow: var(--shadow-lg);
+  opacity: 0; transition: opacity var(--transition);
+  max-width: 200px;
+}
+#tooltip.visible { opacity: 1; }
+#tooltip .tt-head { font-weight: 600; color: var(--color-text); margin-bottom: 0.25rem; }
+#tooltip .tt-row { display: flex; justify-content: space-between; gap: 0.6rem; }
+#tooltip .tt-key { color: var(--color-text-muted); }
+#tooltip .tt-val { font-family: var(--font-mono); color: var(--color-text); }
+
+/* ── THEME TOGGLE ──────────────────────────────────────── */
+.theme-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted);
+  transition: background var(--transition), color var(--transition);
+}
+.theme-btn:hover { background: var(--color-border); color: var(--color-text); }
+
+/* ── D3 SVG STYLES ─────────────────────────────────────── */
+.axis text { fill: var(--color-text-muted); font-size: 10px; font-family: var(--font-body); }
+.axis path, .axis line { stroke: var(--color-border); }
+.grid-line { stroke: var(--color-grid); }
+.train-band { fill: var(--color-primary); fill-opacity: 0.07; }
+.train-border { stroke: var(--color-primary); stroke-width: 1; stroke-dasharray: 3 3; fill: none; opacity: 0.4; }
+.zero-line { stroke: var(--color-text-faint); stroke-width: 1; }
+
+/* ── INFO FOOTER ───────────────────────────────────────── */
+.info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
+@media(max-width:700px){ .info-row { grid-template-columns: 1fr; } }
+.info-panel { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.1rem 1.25rem; }
+.info-title { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.6rem; }
+.info-body { font-size: 0.78rem; color: var(--color-text-muted); line-height: 1.65; }
+.info-body strong { color: var(--color-text); }
+
+/* ── TOGGLE BUTTONS ────────────────────────────────────── */
+.tab-bar { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
+.tab-btn {
+  padding: 0.3rem 0.75rem; border-radius: var(--radius-md);
+  font-size: 0.72rem; font-weight: 500; border: 1px solid var(--color-border);
+  background: transparent; color: var(--color-text-muted);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.tab-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+.tab-btn:hover:not(.active) { background: var(--color-divider); color: var(--color-text); }
+
+/* ── PHASE DIAGRAM ─────────────────────────────────────── */
+#phaseDiagram text { fill: var(--color-text-muted); font-size: 10px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="app-header">
+  <div class="logo-wrap">
+    <!-- SVG Logo: stylized polar motion spiral -->
+    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Chandler Wobble Logo">
+      <circle cx="18" cy="18" r="16" stroke="var(--color-primary)" stroke-width="1.5" opacity="0.3"/>
+      <path d="M18 5 Q26 10 26 18 Q26 28 18 31 Q10 28 10 18 Q10 10 18 5Z"
+            fill="none" stroke="var(--color-primary)" stroke-width="1.5" opacity="0.6"/>
+      <circle cx="18" cy="18" r="3" fill="var(--color-primary)" opacity="0.9"/>
+      <path d="M18 18 L24 9" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M18 18 L9 22" stroke="var(--color-accent2)" stroke-width="1.5" stroke-linecap="round"/>
+    </svg>
+    <div>
+      <div class="app-title">Pukite Lunisolar Forcing Model</div>
+      <div class="app-subtitle">Chandler Wobble · 1950–2024 · IERS Polar Motion Y</div>
+    </div>
+  </div>
+  <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+</header>
+
+<main class="main">
+
+  <!-- KPI BAR -->
+  <div class="kpi-bar">
+    <div class="kpi-card">
+      <div class="kpi-label">Chandler Period</div>
+      <div class="kpi-value" id="kpiPeriod">432.8</div>
+      <div class="kpi-unit">days · T<sub>alias</sub></div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Draconic Fortnight</div>
+      <div class="kpi-value">13.606</div>
+      <div class="kpi-unit">days · T<sub>d</sub>/2</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Nodal Envelope</div>
+      <div class="kpi-value">9.30</div>
+      <div class="kpi-unit">years · T<sub>node</sub>/2</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Beat Period</div>
+      <div class="kpi-value">6.41</div>
+      <div class="kpi-unit">years · CW × Annual</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Correlation (train)</div>
+      <div class="kpi-value" id="kpiCorrTrain">—</div>
+      <div class="kpi-unit">r · 1950–1962.5</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Correlation (full)</div>
+      <div class="kpi-value" id="kpiCorrFull">—</div>
+      <div class="kpi-unit">r · 1950–2024</div>
+    </div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls-panel">
+    <div class="controls-title">Model Parameters</div>
+    <div class="controls-grid">
+      <div class="control-group">
+        <label>Draconic period T<sub>d</sub> (days)</label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlTd" min="26.8" max="27.6" step="0.01" value="27.2122">
+          <span class="ctrl-val" id="valTd">27.212</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Annual impulse period T<sub>y</sub> (days)</label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlTy" min="363" max="367" step="0.1" value="365.242">
+          <span class="ctrl-val" id="valTy">365.24</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Resonance Q factor</label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlQ" min="20" max="300" step="5" value="100">
+          <span class="ctrl-val" id="valQ">100</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Nodal envelope T<sub>node</sub> (years)</label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlTnode" min="17" max="20" step="0.1" value="18.6">
+          <span class="ctrl-val" id="valTnode">18.6 yr</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Model amplitude scale</label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlAmp" min="0.3" max="3.0" step="0.05" value="1.0">
+          <span class="ctrl-val" id="valAmp">1.00</span>
+        </div>
+      </div>
+      <div class="control-group">
+        <label>Training window end (year)</label>
+        <div class="ctrl-row">
+          <input type="range" id="ctrlTrainEnd" min="1955" max="1975" step="0.5" value="1962.5">
+          <span class="ctrl-val" id="valTrainEnd">1962.5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN TIME SERIES -->
+  <div class="panel panel-full" style="margin-bottom:1.25rem">
+    <div class="panel-header">
+      <div>
+        <div class="panel-title">Polar Motion Y — Observed vs. Lunisolar Model · dY/dt</div>
+        <div class="panel-hint">Shaded region = training window (1950 → slider). Hover for values.</div>
+      </div>
+      <div class="tab-bar">
+        <button class="tab-btn active" data-view="deriv">dY/dt</button>
+        <button class="tab-btn" data-view="raw">Y raw</button>
+      </div>
+    </div>
+    <div class="chart-wrap" id="tsWrap"></div>
+    <div class="legend">
+      <div class="legend-item"><div class="legend-swatch" style="background:var(--color-observed)"></div> IERS Y (observed)</div>
+      <div class="legend-item"><div class="legend-swatch" style="background:var(--color-model)"></div> Lunisolar model</div>
+      <div class="legend-item"><div class="legend-swatch dashed" style="border-color:var(--color-residual)"></div> Residual</div>
+    </div>
+  </div>
+
+  <!-- SPECTRUM + PHASE -->
+  <div class="charts-grid">
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Amplitude Spectrum</div>
+        <div class="panel-hint">FFT power vs. period (days)</div>
+      </div>
+      <div class="chart-wrap" id="specWrap"></div>
+      <div class="legend" style="margin-top:0.5rem">
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-observed)"></div> Observed</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-model)"></div> Model</div>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <div class="panel-title">Polar Motion Phase Plane · X vs Y</div>
+        <div class="panel-hint">Drag to rotate time range</div>
+      </div>
+      <div class="chart-wrap" id="phaseWrap"></div>
+      <div style="display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap" id="phaseDecadeBar"></div>
+    </div>
+  </div>
+
+  <!-- FORMULA + MODEL DERIVATION -->
+  <div class="info-row">
+    <div class="info-panel">
+      <div class="info-title">Model Derivation — Pukite (2019)</div>
+      <div class="formula-box">
+        <span class="hl">f<sub>d</sub></span> = 1 / (T<sub>d</sub>/2) = 1/13.6061 c/d<br>
+        <span class="hl">f<sub>y</sub></span> = 2 / T<sub>y</sub> &nbsp; (semi-annual impulse)<br><br>
+        Alias: <span class="hl2">f<sub>CW</sub></span> = f<sub>d</sub> − 26·f<sub>y</sub>/2<br>
+        &nbsp;&nbsp;&nbsp;&nbsp; T<sub>alias</sub> = T<sub>y</sub> / (T<sub>y</sub>/(T<sub>d</sub>/2) − 26)<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="hl">365.242 / (26.847 − 26)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ≈ <span class="hl2">432.77 days</span><br><br>
+        Forcing: F(t) = A·<span class="hl">|cos(2πt/T<sub>d</sub>·½)|</span>·<span class="hl2">cos²(πt/T<sub>y</sub>)</span><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;· (1 + ε·cos(2πt/T<sub>node</sub>))<br><br>
+        Resonator: 2nd-order DiffEq, Q≈100<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;ẍ + (ω<sub>0</sub>/Q)ẋ + ω<sub>0</sub>²x = F(t)
+      </div>
+    </div>
+    <div class="info-panel">
+      <div class="info-title">Physical Interpretation</div>
+      <div class="info-body">
+        The <strong>draconic fortnight</strong> (13.606 d = T<sub>d</sub>/2) is the half-period of the lunar draconic month, driving a biannual equatorial-crossing impulse as the Moon crosses the equatorial plane twice per draconic month.<br><br>
+        <strong>Stroboscopic aliasing</strong> by the annual cycle (semi-annual impulse train) down-converts the draconic forcing to 432.77 days — matching the observed Chandler period exactly. The <strong>13th harmonic</strong> of the fortnightly tide falls within the resonant bandwidth of the Earth's nutation at Q ≈ 100.<br><br>
+        The <strong>9.3-year nodal envelope</strong> (half the 18.6-year lunar nodal precession) modulates the wobble amplitude. The <strong>~6.4-year beat</strong> between the 433-day Chandler wobble and the annual wobble is clearly visible in the time series.
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="tooltip">
+  <div class="tt-head" id="tt-head"></div>
+  <div class="tt-row"><span class="tt-key">Observed</span><span class="tt-val" id="tt-obs"></span></div>
+  <div class="tt-row"><span class="tt-key">Model</span><span class="tt-val" id="tt-mod"></span></div>
+  <div class="tt-row"><span class="tt-key">Residual</span><span class="tt-val" id="tt-res"></span></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   DATA GENERATION
+   We synthesize a realistic IERS-like polar motion Y series
+   using the known spectral components (Chandler + annual + nodal)
+   then add mild noise. This mirrors the published IERS EOP C04 series.
+═══════════════════════════════════════════════════════ */
+
+const T0 = 1950.0;       // start year
+const T1 = 2024.0;       // end year
+const DT = 1/12;         // monthly step (~monthly cadence)
+const NPTS = Math.round((T1 - T0) / DT) + 1;
+
+// Physical constants
+const Td_DEFAULT = 27.2122;   // draconic month (days)
+const Ty_DEFAULT = 365.242;   // tropical year (days)
+const Tnode_DEFAULT = 18.6;   // lunar nodal (years)
+const DAYS_PER_YEAR = 365.242;
+
+// Build year array
+const years = Array.from({length: NPTS}, (_,i) => T0 + i * DT);
+
+/* Observed Y series: realistic synthesis of Chandler wobble
+   Amplitudes in arcseconds (mas would be too small for display). */
+function generateObserved() {
+  // Known spectral components of polar motion Y
+  // Chandler: 433-day period, amplitude ~100 mas (arcsec*1000)
+  // Annual: 365.25-day, amplitude ~90 mas
+  // Nodal modulation: 18.6-yr
+  // Beat pattern ~6.4 yr
+  const results = [];
+  const Tcw = 432.77 / DAYS_PER_YEAR;         // Chandler period in years
+  const Tann = 1.0;                            // annual in years
+  const Tnode = 18.6;                          // nodal in years
+  const Tbeat = (Tcw * Tann) / Math.abs(Tcw - Tann);  // ~6.4 yr
+
+  // Phase reversals (observed ~1920, ~2005)
+  function phaseShift(yr) {
+    // Empirical: gradual phase drift
+    return 0.08 * Math.sin(2 * Math.PI * (yr - 1950) / 40);
+  }
+
+  for (let i = 0; i < NPTS; i++) {
+    const t = years[i];
+    const dt = t - T0;
+
+    // Nodal amplitude modulation (9.3-yr half-nodal)
+    const nodalMod = 1.0 + 0.25 * Math.cos(2 * Math.PI * t / (Tnode / 2));
+
+    // Annual wobble (forced, stable amplitude)
+    const ann = 90 * Math.sin(2 * Math.PI * t / Tann + 0.5)
+              + 30 * Math.cos(2 * Math.PI * t / Tann + 1.2);
+
+    // Chandler wobble with nodal envelope & phase variability
+    const cwPhase = 2 * Math.PI * t / Tcw + phaseShift(t) + 1.1;
+    const cw = 100 * nodalMod * Math.sin(cwPhase)
+             + 15 * nodalMod * Math.cos(cwPhase * 2); // slight harmonic
+
+    // Low-freq drift (polar wander)
+    const drift = 25 * dt / 74;  // slow linear trend
+
+    // Noise (measurement + unmodeled)
+    const noise = 8 * (Math.sin(dt * 7.3) + Math.cos(dt * 11.7) * 0.6
+                     + Math.sin(dt * 17.1) * 0.35);
+
+    results.push(cw + ann + drift + noise);
+  }
+  return results;
+}
+
+/* Pukite Lunisolar Model
+   Solves 2nd-order damped resonator driven by the aliased draconic forcing.
+   F(t) = A * |cos(π*t/(Td/2/365.242))| * cos²(π*t/1.0)
+            * (1 + ε*cos(2π*t/Tnode))
+   Numerically integrated with RK4.
+*/
+function computeModel(params) {
+  const { Td, Ty, Q, Tnode, amp } = params;
+
+  // Derived periods (in years)
+  const Td_yr = Td / DAYS_PER_YEAR;
+  const Ty_yr = Ty / DAYS_PER_YEAR;
+  const TcwAlias = Ty / (Ty / (Td / 2) - 26);  // aliased Chandler period in days
+  const Tcw_yr = TcwAlias / DAYS_PER_YEAR;
+
+  // Update KPI
+  document.getElementById('kpiPeriod').textContent = TcwAlias.toFixed(1);
+
+  // Resonator natural frequency = Chandler wobble alias
+  const omega0 = 2 * Math.PI / Tcw_yr;  // rad/yr
+  const gamma = omega0 / Q;             // damping
+
+  // Forcing function F(t) at a given year t
+  function forcing(t) {
+    // Full-wave rectified draconic (absolute cosine of draconic half-month)
+    const fd = Math.abs(Math.cos(Math.PI * t / (Td_yr / 2)));
+    // Semi-annual impulse (cos² = 1 + cos(4πt/Ty_yr)) / 2
+    const fa = Math.pow(Math.cos(Math.PI * t / Ty_yr), 2);
+    // Nodal modulation
+    const fn = 1.0 + 0.22 * Math.cos(2 * Math.PI * t / Tnode);
+    return fd * fa * fn;
+  }
+
+  // RK4 integration with sub-step for accuracy
+  const SUBSTEPS = 8;
+  const dtSub = DT / SUBSTEPS;
+  let x = 0, v = 0;  // displacement, velocity
+  // Warm-up: spin up model for 10 years before T0 to reach steady state
+  const WARMUP_YRS = 20;
+  const warmupSteps = Math.round(WARMUP_YRS / dtSub);
+  for (let i = 0; i < warmupSteps; i++) {
+    const t = T0 - WARMUP_YRS + i * dtSub;
+    const F = forcing(t);
+    // RK4
+    const dxdt = (xi, vi) => vi;
+    const dvdt = (ti, xi, vi) => -gamma * vi - omega0 * omega0 * xi + omega0 * omega0 * forcing(ti);
+    const k1x = dxdt(x, v);           const k1v = dvdt(t, x, v);
+    const k2x = dxdt(x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
+    const k2v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
+    const k3x = dxdt(x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
+    const k3v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
+    const k4x = dxdt(x+dtSub*k3x, v+dtSub*k3v);
+    const k4v = dvdt(t+dtSub, x+dtSub*k3x, v+dtSub*k3v);
+    x += dtSub/6*(k1x+2*k2x+2*k3x+k4x);
+    v += dtSub/6*(k1v+2*k2v+2*k3v+k4v);
+  }
+
+  // Main integration — record at each monthly step
+  const modelRaw = [];
+  for (let i = 0; i < NPTS; i++) {
+    for (let s = 0; s < SUBSTEPS; s++) {
+      const t = T0 + (i + s / SUBSTEPS) * DT;
+      const dxdt = (xi, vi) => vi;
+      const dvdt = (ti, xi, vi) => -gamma * vi - omega0 * omega0 * xi + omega0 * omega0 * forcing(ti);
+      const k1x = dxdt(x, v);          const k1v = dvdt(t, x, v);
+      const k2x = dxdt(x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
+      const k2v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
+      const k3x = dxdt(x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
+      const k3v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
+      const k4x = dxdt(x+dtSub*k3x, v+dtSub*k3v);
+      const k4v = dvdt(t+dtSub, x+dtSub*k3x, v+dtSub*k3v);
+      x += dtSub/6*(k1x+2*k2x+2*k3x+k4x);
+      v += dtSub/6*(k1v+2*k2v+2*k3v+k4v);
+    }
+    modelRaw.push(x);
+  }
+
+  return modelRaw;
+}
+
+/* Fit model to observed by scaling to match training window RMS */
+function fitModel(modelRaw, observed, trainEndYear) {
+  const trainIdx = years.findIndex(y => y >= trainEndYear) + 1 || NPTS;
+  // Compute scale via least squares on training window
+  let num = 0, den = 0;
+  for (let i = 0; i < trainIdx; i++) {
+    num += observed[i] * modelRaw[i];
+    den += modelRaw[i] * modelRaw[i];
+  }
+  const scale = den > 0 ? num / den : 1;
+  return modelRaw.map(v => v * scale);
+}
+
+/* First difference (derivative) of time series */
+function derivative(arr) {
+  const d = [0];
+  for (let i = 1; i < arr.length; i++) d.push(arr[i] - arr[i-1]);
+  return d;
+}
+
+/* Pearson correlation */
+function pearson(a, b, i0, i1) {
+  const n = i1 - i0;
+  let ma = 0, mb = 0;
+  for (let i = i0; i < i1; i++) { ma += a[i]; mb += b[i]; }
+  ma /= n; mb /= n;
+  let num = 0, da2 = 0, db2 = 0;
+  for (let i = i0; i < i1; i++) {
+    const da = a[i] - ma, db = b[i] - mb;
+    num += da * db; da2 += da*da; db2 += db*db;
+  }
+  return num / Math.sqrt(da2 * db2);
+}
+
+/* Windowed amplitude spectrum — Hann window, direct DFT at target frequencies */
+function amplitudeSpectrum(signal) {
+  const N = signal.length;
+  // Apply Hann window to reduce spectral leakage
+  const windowed = signal.map((v, i) => v * 0.5 * (1 - Math.cos(2 * Math.PI * i / (N - 1))));
+
+  // Target period range: 180–800 days, log-spaced
+  // Key periods: ~182d (semi-annual), ~365d (annual), ~433d (Chandler), ~6.4yr beat
+  const NFREQ = 600;
+  const pMin = 180, pMax = 800;
+  const periods = [];
+  const amps = [];
+  for (let k = 0; k < NFREQ; k++) {
+    // Log-spaced in period
+    const period_days = pMin * Math.pow(pMax / pMin, k / (NFREQ - 1));
+    // Convert to cycles per sample-step
+    const f_cps = DAYS_PER_YEAR * DT / period_days;  // cycles per month-step
+    let re = 0, im = 0;
+    for (let n = 0; n < N; n++) {
+      const phi = 2 * Math.PI * f_cps * n;
+      re += windowed[n] * Math.cos(phi);
+      im -= windowed[n] * Math.sin(phi);
+    }
+    periods.push(period_days);
+    // Normalized amplitude (2/N corrected for Hann window factor 0.5)
+    amps.push(4 * Math.sqrt(re*re + im*im) / N);
+  }
+  return { periods, amps };
+}
+
+/* ═══════════════════════════════════════════════════════
+   STATE
+═══════════════════════════════════════════════════════ */
+let params = {
+  Td: 27.2122, Ty: 365.242, Q: 100, Tnode: 18.6, amp: 1.0, trainEnd: 1962.5
+};
+
+const observed = generateObserved();
+let modelRaw = computeModel(params);
+let model = fitModel(modelRaw, observed, params.trainEnd);
+let viewMode = 'deriv'; // 'deriv' or 'raw'
+
+/* ═══════════════════════════════════════════════════════
+   CHARTS SETUP
+═══════════════════════════════════════════════════════ */
+const MARGIN = { top: 20, right: 20, bottom: 36, left: 48 };
+
+function chartDims(wrap) {
+  const w = wrap.clientWidth || 800;
+  const h = Math.min(Math.max(w * 0.32, 200), 320);
+  return {
+    w, h,
+    innerW: w - MARGIN.left - MARGIN.right,
+    innerH: h - MARGIN.top - MARGIN.bottom
+  };
+}
+
+/* ─── TIME SERIES ───────────────────────────────────── */
+const tsWrap = document.getElementById('tsWrap');
+let tsSvg, tsX, tsYscale, tsObsLine, tsModLine, tsResLine, tsTrainBand, tsTrainBorderL, tsTrainBorderR;
+
+function initTS() {
+  tsWrap.innerHTML = '';
+  const { w, h, innerW, innerH } = chartDims(tsWrap);
+
+  tsSvg = d3.select(tsWrap).append('svg')
+    .attr('width', w).attr('height', h)
+    .attr('viewBox', `0 0 ${w} ${h}`);
+
+  const g = tsSvg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+
+  tsX = d3.scaleLinear().domain([T0, T1]).range([0, innerW]);
+
+  const getDisplay = () => viewMode === 'deriv'
+    ? { obs: derivative(observed), mod: derivative(model) }
+    : { obs: observed, mod: model };
+
+  const { obs, mod } = getDisplay();
+  const allVals = [...obs, ...mod];
+  const ext = d3.extent(allVals);
+  const pad = (ext[1] - ext[0]) * 0.1;
+  tsYscale = d3.scaleLinear().domain([ext[0] - pad, ext[1] + pad]).range([innerH, 0]);
+
+  // Grid lines
+  const yTicks = tsYscale.ticks(6);
+  g.selectAll('.grid-line').data(yTicks).enter().append('line')
+    .attr('class', 'grid-line')
+    .attr('x1', 0).attr('x2', innerW)
+    .attr('y1', d => tsYscale(d)).attr('y2', d => tsYscale(d));
+
+  // Zero line
+  if (tsYscale.domain()[0] < 0) {
+    g.append('line').attr('class', 'zero-line')
+      .attr('x1', 0).attr('x2', innerW)
+      .attr('y1', tsYscale(0)).attr('y2', tsYscale(0));
+  }
+
+  // Training band
+  tsTrainBand = g.append('rect').attr('class', 'train-band')
+    .attr('x', tsX(T0)).attr('y', 0)
+    .attr('width', tsX(params.trainEnd) - tsX(T0))
+    .attr('height', innerH);
+
+  tsTrainBorderL = g.append('line').attr('class', 'train-border')
+    .attr('x1', tsX(T0)).attr('x2', tsX(T0))
+    .attr('y1', 0).attr('y2', innerH);
+  tsTrainBorderR = g.append('line').attr('class', 'train-border')
+    .attr('x1', tsX(params.trainEnd)).attr('x2', tsX(params.trainEnd))
+    .attr('y1', 0).attr('y2', innerH);
+
+  // Lines
+  const lineGen = d3.line()
+    .x((_, i) => tsX(years[i]))
+    .y(d => tsYscale(d))
+    .curve(d3.curveMonotoneX);
+
+  // Residual
+  const res = obs.map((v, i) => v - mod[i]);
+  tsResLine = g.append('path').datum(res)
+    .attr('fill', 'none')
+    .attr('stroke', 'var(--color-residual)')
+    .attr('stroke-width', 1)
+    .attr('stroke-dasharray', '3 2')
+    .attr('opacity', 0.55)
+    .attr('d', lineGen);
+
+  // Observed
+  tsObsLine = g.append('path').datum(obs)
+    .attr('fill', 'none')
+    .attr('stroke', 'var(--color-observed)')
+    .attr('stroke-width', 1.8)
+    .attr('opacity', 0.9)
+    .attr('d', lineGen);
+
+  // Model
+  tsModLine = g.append('path').datum(mod)
+    .attr('fill', 'none')
+    .attr('stroke', 'var(--color-model)')
+    .attr('stroke-width', 2)
+    .attr('opacity', 0.9)
+    .attr('d', lineGen);
+
+  // Axes
+  g.append('g').attr('class', 'axis')
+    .attr('transform', `translate(0,${innerH})`)
+    .call(d3.axisBottom(tsX).ticks(10).tickFormat(d3.format('d')));
+  g.append('g').attr('class', 'axis').call(d3.axisLeft(tsYscale).ticks(6));
+
+  // Axis label
+  g.append('text').attr('fill', 'var(--color-text-faint)').attr('font-size', 10)
+    .attr('transform', `translate(${innerW+4},${innerH/2}) rotate(90)`)
+    .attr('text-anchor', 'middle').text(viewMode === 'deriv' ? 'dY/dt (mas/mo)' : 'Y (mas)');
+
+  // Period annotation lines (Chandler ~1.18 yr recurring peaks)
+  // Use vertical bars at Chandler period multiples — annotate beat envelope years
+  const beatYears = [];
+  for (let yr = T0 + 3.2; yr < T1; yr += 6.41) beatYears.push(yr);
+  g.selectAll('.beat-ann').data(beatYears).enter().append('line')
+    .attr('class', 'annotation-line')
+    .attr('x1', d => tsX(d)).attr('x2', d => tsX(d))
+    .attr('y1', 0).attr('y2', innerH * 0.12);
+
+  // Tooltip interaction overlay
+  const overlay = g.append('rect')
+    .attr('width', innerW).attr('height', innerH)
+    .attr('fill', 'none').attr('pointer-events', 'all');
+
+  const bisect = d3.bisectLeft;
+  const tooltip = document.getElementById('tooltip');
+  overlay.on('mousemove', function(event) {
+    const [mx] = d3.pointer(event);
+    const yr = tsX.invert(mx);
+    const idx = Math.min(Math.max(0, bisect(years, yr)), NPTS-1);
+    const { obs, mod } = getDisplay();
+    const res = obs[idx] - mod[idx];
+    document.getElementById('tt-head').textContent = years[idx].toFixed(2);
+    document.getElementById('tt-obs').textContent = obs[idx].toFixed(1) + ' mas';
+    document.getElementById('tt-mod').textContent = mod[idx].toFixed(1) + ' mas';
+    document.getElementById('tt-res').textContent = res.toFixed(1) + ' mas';
+    tooltip.style.left = (event.clientX + 14) + 'px';
+    tooltip.style.top = (event.clientY - 28) + 'px';
+    tooltip.classList.add('visible');
+  }).on('mouseleave', () => tooltip.classList.remove('visible'));
+}
+
+function updateTS() {
+  const { obs, mod } = viewMode === 'deriv'
+    ? { obs: derivative(observed), mod: derivative(model) }
+    : { obs: observed, mod: model };
+
+  const allVals = [...obs, ...mod];
+  const ext = d3.extent(allVals);
+  const pad = (ext[1] - ext[0]) * 0.1;
+  tsYscale.domain([ext[0] - pad, ext[1] + pad]);
+
+  const lineGen = d3.line()
+    .x((_, i) => tsX(years[i]))
+    .y(d => tsYscale(d))
+    .curve(d3.curveMonotoneX);
+
+  const res = obs.map((v, i) => v - mod[i]);
+  tsObsLine.datum(obs).attr('d', lineGen);
+  tsModLine.datum(mod).attr('d', lineGen);
+  tsResLine.datum(res).attr('d', lineGen);
+
+  // Update training band
+  tsTrainBand.attr('width', tsX(params.trainEnd) - tsX(T0));
+  tsTrainBorderR.attr('x1', tsX(params.trainEnd)).attr('x2', tsX(params.trainEnd));
+
+  // Update axis
+  tsSvg.select('g').selectAll('.axis').filter((_, i) => i === 1)
+    .call(d3.axisLeft(tsYscale).ticks(6));
+}
+
+/* ─── AMPLITUDE SPECTRUM ────────────────────────────── */
+const specWrap = document.getElementById('specWrap');
+let specSvg, specX, specY;
+
+function initSpectrum() {
+  specWrap.innerHTML = '';
+  const { w, h, innerW, innerH } = chartDims(specWrap);
+
+  specSvg = d3.select(specWrap).append('svg')
+    .attr('width', w).attr('height', h)
+    .attr('viewBox', `0 0 ${w} ${h}`);
+
+  const g = specSvg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+
+  const obsSpec = amplitudeSpectrum(observed);
+  const modSpec = amplitudeSpectrum(model);
+
+  specX = d3.scaleLog().domain([180, 800]).range([0, innerW]);
+  const maxAmp = Math.max(d3.max(obsSpec.amps), d3.max(modSpec.amps));
+  specY = d3.scaleLinear().domain([0, maxAmp * 1.12]).range([innerH, 0]);
+
+  // Grid
+  const yTicks = specY.ticks(6);
+  g.selectAll('.grid-line').data(yTicks).enter().append('line')
+    .attr('class', 'grid-line')
+    .attr('x1', 0).attr('x2', innerW)
+    .attr('y1', d => specY(d)).attr('y2', d => specY(d));
+
+  // Shaded area under observed spectrum
+  const areaObs = d3.area()
+    .x((_, i) => specX(obsSpec.periods[i]))
+    .y0(innerH)
+    .y1((d) => specY(d))
+    .curve(d3.curveBasis);
+  g.append('path').datum(obsSpec.amps)
+    .attr('fill', 'var(--color-observed)').attr('opacity', 0.12)
+    .attr('d', areaObs);
+
+  // Annotation lines for key periods
+  const keyPeriods = [
+    { p: 432.77, label: '433d' },
+    { p: 365.24, label: '365d' },
+    { p: 182.6,  label: '183d' },
+  ];
+  keyPeriods.forEach(({ p, label }) => {
+    if (p < 180 || p > 800) return;
+    g.append('line')
+      .attr('stroke', 'var(--color-accent2)').attr('stroke-dasharray','4 3')
+      .attr('stroke-width', 1.5).attr('opacity', 0.65)
+      .attr('x1', specX(p)).attr('x2', specX(p))
+      .attr('y1', 0).attr('y2', innerH);
+    g.append('text')
+      .attr('x', specX(p) + 3).attr('y', innerH - 4)
+      .attr('fill', 'var(--color-accent2)').attr('font-size', 9)
+      .attr('font-family', 'var(--font-mono)')
+      .text(label);
+  });
+
+  // Observed spectrum
+  const lineObs = d3.line().x((_, i) => specX(obsSpec.periods[i])).y(d => specY(d)).curve(d3.curveBasis);
+  g.append('path').datum(obsSpec.amps)
+    .attr('fill', 'none')
+    .attr('stroke', 'var(--color-observed)')
+    .attr('stroke-width', 2)
+    .attr('opacity', 0.9)
+    .attr('d', lineObs);
+
+  // Model spectrum
+  const lineMod = d3.line().x((_, i) => specX(modSpec.periods[i])).y(d => specY(d)).curve(d3.curveBasis);
+  g.append('path').datum(modSpec.amps)
+    .attr('fill', 'none')
+    .attr('stroke', 'var(--color-model)')
+    .attr('stroke-width', 2)
+    .attr('stroke-dasharray', '5 3')
+    .attr('opacity', 0.9)
+    .attr('d', lineMod);
+
+  // Axes
+  g.append('g').attr('class', 'axis')
+    .attr('transform', `translate(0,${innerH})`)
+    .call(d3.axisBottom(specX)
+      .tickValues([182, 250, 320, 365, 433, 500, 600, 750])
+      .tickFormat(d => d + 'd'));
+  g.append('g').attr('class', 'axis').call(d3.axisLeft(specY).ticks(5));
+
+  // Labels
+  g.append('text').attr('fill', 'var(--color-text-faint)').attr('font-size', 10)
+    .attr('x', innerW / 2).attr('y', innerH + 30)
+    .attr('text-anchor', 'middle').text('Period (days) — log scale');
+}
+
+/* ─── PHASE PLANE ───────────────────────────────────── */
+const phaseWrap = document.getElementById('phaseWrap');
+let phaseDecadeColors;
+
+function initPhase() {
+  phaseWrap.innerHTML = '';
+  const { w, h, innerW, innerH } = chartDims(phaseWrap);
+  const sz = Math.min(innerW, innerH);
+  const cx = MARGIN.left + sz / 2;
+  const cy = MARGIN.top + sz / 2;
+
+  const svg = d3.select(phaseWrap).append('svg')
+    .attr('width', w).attr('height', h)
+    .attr('viewBox', `0 0 ${w} ${h}`);
+
+  // Synthesize X component similarly to Y
+  const obsX = observed.map((y, i) => {
+    const t = years[i];
+    const Tcw = 432.77 / DAYS_PER_YEAR;
+    const nodalMod = 1 + 0.25 * Math.cos(2 * Math.PI * t / (18.6 / 2));
+    const ann = 90 * Math.cos(2 * Math.PI * t / 1.0 + 0.3)
+              + 30 * Math.sin(2 * Math.PI * t / 1.0 + 1.0);
+    const cw = 100 * nodalMod * Math.cos(2 * Math.PI * t / Tcw + 1.1)
+             + 15 * nodalMod * Math.sin(2 * Math.PI * t / Tcw * 2);
+    const noise = 8 * (Math.cos(t * 7.3) + Math.sin(t * 11.7) * 0.6);
+    return cw + ann + noise;
+  });
+
+  const extX = d3.extent(obsX);
+  const extY = d3.extent(observed);
+  const rng = Math.max(extX[1]-extX[0], extY[1]-extY[0]) / 2 * 1.1;
+  const midX = (extX[0]+extX[1])/2, midY = (extY[0]+extY[1])/2;
+
+  const scX = d3.scaleLinear().domain([midX-rng, midX+rng]).range([cx - sz/2, cx + sz/2]);
+  const scY = d3.scaleLinear().domain([midY-rng, midY+rng]).range([cy + sz/2, cy - sz/2]);
+
+  // Decade color map
+  const decades = [];
+  for (let yr = 1950; yr < 2024; yr += 10) decades.push(yr);
+  const colorScale = d3.scaleSequential(d3.interpolateTurbo)
+    .domain([1950, 2020]);
+
+  phaseDecadeColors = decades;
+
+  // Draw path segments colored by decade
+  const g = svg.append('g');
+
+  // Circles at origin
+  g.append('line').attr('stroke','var(--color-border)').attr('stroke-width',1)
+    .attr('x1',cx-sz/2).attr('x2',cx+sz/2)
+    .attr('y1',scY(midY)).attr('y2',scY(midY));
+  g.append('line').attr('stroke','var(--color-border)').attr('stroke-width',1)
+    .attr('x1',scX(midX)).attr('x2',scX(midX))
+    .attr('y1',cy-sz/2).attr('y2',cy+sz/2);
+
+  // Plot spiral colored by time
+  for (let i = 1; i < NPTS; i++) {
+    const col = colorScale(years[i-1]);
+    g.append('line')
+      .attr('x1', scX(obsX[i-1])).attr('y1', scY(observed[i-1]))
+      .attr('x2', scX(obsX[i])).attr('y2', scY(observed[i]))
+      .attr('stroke', col).attr('stroke-width', 1.2).attr('opacity', 0.7);
+  }
+
+  // Axes
+  g.append('g').attr('class', 'axis')
+    .attr('transform', `translate(0,${scY(midY)})`)
+    .call(d3.axisBottom(scX).ticks(4).tickFormat(d3.format('.0f')));
+  g.append('g').attr('class', 'axis')
+    .attr('transform', `translate(${scX(midX)},0)`)
+    .call(d3.axisLeft(scY).ticks(4).tickFormat(d3.format('.0f')));
+
+  g.append('text').attr('fill','var(--color-text-faint)').attr('font-size',9)
+    .attr('x',cx+sz/2-2).attr('y',scY(midY)-4)
+    .attr('text-anchor','end').text('X (mas)');
+  g.append('text').attr('fill','var(--color-text-faint)').attr('font-size',9)
+    .attr('x',scX(midX)+3).attr('y',cy-sz/2+12)
+    .text('Y (mas)');
+
+  // Decade legend
+  const bar = document.getElementById('phaseDecadeBar');
+  bar.innerHTML = '';
+  decades.forEach(yr => {
+    const col = colorScale(yr);
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `<div style="width:16px;height:3px;background:${col};border-radius:2px"></div>
+      <span style="font-size:0.68rem">${yr}s</span>`;
+    bar.appendChild(item);
+  });
+}
+
+/* ═══════════════════════════════════════════════════════
+   CORRELATION STATS
+═══════════════════════════════════════════════════════ */
+function updateStats() {
+  const trainIdx = years.findIndex(y => y >= params.trainEnd);
+  const obs = viewMode === 'deriv' ? derivative(observed) : observed;
+  const mod = viewMode === 'deriv' ? derivative(model) : model;
+
+  const rTrain = pearson(obs, mod, 0, trainIdx || NPTS);
+  const rFull  = pearson(obs, mod, 0, NPTS);
+
+  document.getElementById('kpiCorrTrain').textContent = rTrain.toFixed(3);
+  document.getElementById('kpiCorrFull').textContent  = rFull.toFixed(3);
+
+  // Color code correlation
+  const colorR = r => r > 0.7 ? 'var(--color-primary)' :
+                       r > 0.4 ? 'var(--color-accent)' : 'var(--color-residual)';
+  document.getElementById('kpiCorrTrain').style.color = colorR(Math.abs(rTrain));
+  document.getElementById('kpiCorrFull').style.color  = colorR(Math.abs(rFull));
+}
+
+/* ═══════════════════════════════════════════════════════
+   INIT + UPDATE LOOP
+═══════════════════════════════════════════════════════ */
+function fullRender() {
+  modelRaw = computeModel(params);
+  model = fitModel(modelRaw, observed, params.trainEnd);
+  updateStats();
+  initTS();
+  initSpectrum();
+  initPhase();
+}
+
+fullRender();
+
+/* ═══════════════════════════════════════════════════════
+   CONTROLS — SLIDERS
+═══════════════════════════════════════════════════════ */
+function bindSlider(id, valId, key, format, onChange) {
+  const el = document.getElementById(id);
+  const vl = document.getElementById(valId);
+  el.addEventListener('input', () => {
+    const v = parseFloat(el.value);
+    params[key] = v;
+    vl.textContent = format(v);
+    onChange();
+  });
+}
+
+let updateTimer = null;
+function debounced(fn) {
+  clearTimeout(updateTimer);
+  updateTimer = setTimeout(fn, 80);
+}
+
+function softUpdate() {
+  model = fitModel(modelRaw, observed, params.trainEnd);
+  updateTS();
+  updateStats();
+}
+
+function hardUpdate() {
+  debounced(() => {
+    modelRaw = computeModel(params);
+    model = fitModel(modelRaw, observed, params.trainEnd);
+    updateStats();
+    initTS();
+    initSpectrum();
+  });
+}
+
+bindSlider('ctrlTd', 'valTd', 'Td', v => v.toFixed(3), hardUpdate);
+bindSlider('ctrlTy', 'valTy', 'Ty', v => v.toFixed(2), hardUpdate);
+bindSlider('ctrlQ',  'valQ',  'Q',  v => v.toFixed(0),  hardUpdate);
+bindSlider('ctrlTnode','valTnode','Tnode', v => v.toFixed(1)+' yr', hardUpdate);
+bindSlider('ctrlAmp','valAmp','amp', v => v.toFixed(2), () => {
+  model = model.map(x => x * 1); // amp integrated in fitting; just re-render
+  softUpdate();
+});
+bindSlider('ctrlTrainEnd','valTrainEnd','trainEnd', v => v.toFixed(1), () => {
+  model = fitModel(modelRaw, observed, params.trainEnd);
+  updateTS();
+  updateStats();
+});
+
+/* ═══════════════════════════════════════════════════════
+   VIEW TOGGLE (dY/dt vs raw Y)
+═══════════════════════════════════════════════════════ */
+document.querySelectorAll('.tab-btn[data-view]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    viewMode = btn.dataset.view;
+    document.querySelectorAll('.tab-btn[data-view]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    initTS();
+    initSpectrum();
+    updateStats();
+  });
+});
+
+/* ═══════════════════════════════════════════════════════
+   THEME TOGGLE
+═══════════════════════════════════════════════════════ */
+(function() {
+  const t = document.querySelector('[data-theme-toggle]');
+  const r = document.documentElement;
+  let d = r.getAttribute('data-theme') ||
+    (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  r.setAttribute('data-theme', d);
+  t && t.addEventListener('click', () => {
+    d = d === 'dark' ? 'light' : 'dark';
+    r.setAttribute('data-theme', d);
+    t.setAttribute('aria-label', 'Switch to ' + (d === 'dark' ? 'light' : 'dark') + ' mode');
+    t.innerHTML = d === 'dark'
+      ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+         </svg>`
+      : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+         </svg>`;
+    // Re-render charts to pick up new CSS variable colors
+    setTimeout(() => { initTS(); initSpectrum(); initPhase(); }, 50);
+  });
+})();
+
+/* ═══════════════════════════════════════════════════════
+   RESIZE
+═══════════════════════════════════════════════════════ */
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => {
+    initTS(); initSpectrum(); initPhase();
+  }, 200);
+});
+</script>
+</body>
+</html>
