@@ -215,6 +215,28 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
 .train-border { stroke: var(--color-primary); stroke-width: 1; stroke-dasharray: 3 3; fill: none; opacity: 0.4; }
 .zero-line { stroke: var(--color-text-faint); stroke-width: 1; }
 
+/* ── TOGGLE BUTTON ─────────────────────────────────────── */
+.toggle-btn {
+  font-size: 0.68rem; font-family: var(--font-mono);
+  padding: 0.22rem 0.65rem; border-radius: 100px;
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.toggle-btn.active {
+  background: rgba(199,162,39,0.12);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.toggle-btn:hover { border-color: var(--color-text-muted); }
+
+/* ── SEMI-LOG SPECTRUM ──────────────────────────────────── */
+.semilog-legend { margin-top: 0.6rem; display: flex; flex-direction: column; gap: 0.35rem; }
+.semilog-note {
+  font-size: 0.68rem; font-family: var(--font-mono);
+  color: var(--color-text-faint); line-height: 1.5;
+}
+
 /* ── MLR INFO BOX ──────────────────────────────────────── */
 .mlr-info {
   font-size: 0.7rem; font-family: var(--font-mono);
@@ -400,7 +422,7 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
       </div>
     </div>
 
-    <!-- Amplitude spectrum -->
+    <!-- Amplitude spectrum (log-period) -->
     <div class="panel">
       <div class="panel-header">
         <span class="panel-title">Amplitude Spectrum</span>
@@ -418,6 +440,31 @@ button { cursor: pointer; border: none; background: none; font: inherit; }
       <div class="chart-wrap" id="phaseChart"></div>
     </div>
 
+  </div>
+
+  <!-- 2nd-order semi-log spectral exploration panel -->
+  <div class="panel panel-full" id="semilogPanel">
+    <div class="panel-header">
+      <span class="panel-title">2nd-Order Spectral Exploration — Semi-log (linear freq, log amplitude)</span>
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span class="panel-hint">IERS X+Y avg &amp; MLR model · 0–2.5 cyc/yr</span>
+        <button id="btn2ndOrder" class="toggle-btn active" title="Toggle 2nd-order peak annotations">
+          2nd-order peaks: <span id="btn2ndOrderLabel">ON</span>
+        </button>
+      </div>
+    </div>
+    <div class="chart-wrap" id="semilogChart"></div>
+    <div class="semilog-legend">
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-observed)"></div>IERS X+Y avg (observed)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-model)"></div>MLR model</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-accent2);opacity:0.8"></div>1st-order peaks (always shown)</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-accent)"></div>2nd-order peaks (toggle)</div>
+      </div>
+      <div class="semilog-note" id="semilogNote">
+        Drac2 = 2×draconic alias (Chandler) · Mm = 3×anomalistic alias · Mm2 = 2×anomalistic alias · Drac2− = Chandler − (f_a−13)
+      </div>
+    </div>
   </div>
 
   <!-- Formula box -->
@@ -1066,6 +1113,252 @@ function drawPhase() {
 }
 
 /* ═══════════════════════════════════════════════════════
+   SEMI-LOG SPECTRUM (2ND-ORDER EXPLORATION)
+   — Linear frequency axis: 0–2.5 cyc/yr
+   — Log amplitude (Intensity) axis
+   — Hann-windowed amplitude DFT of both IERS X+Y avg and MLR model
+   — 1st-order reference lines always shown; 2nd-order toggleable
+═══════════════════════════════════════════════════════ */
+
+/* Physical constants for peak positions — derived from aliasing formula */
+const PEAKS = (() => {
+  const Ty = 365.242, Td = 27.2122, Ta = 27.5545;
+  const fd = Ty / Td;        // 13.422 cyc/yr
+  const fa = Ty / Ta;        // 13.255 cyc/yr
+  const f_cw  = (fd - 13) * 2;          // Chandler / Drac2:  0.844 cyc/yr
+  const f_mm2 = (fa - 13) * 2;          // Mm2 (2× anom alias): 0.511 cyc/yr
+  const f_mm  = (fa - 13) * 3;          // Mm  (3× anom alias): 0.766 cyc/yr
+  const f_dm  = f_cw - (fa - 13);       // Drac2− (lower sideband): 0.589 cyc/yr
+  const f_cw2 = f_cw * 2;               // Drac2 harmonic: 1.688 cyc/yr
+  return {
+    // 1st-order peaks — always annotated
+    first: [
+      { f: f_cw,  label: 'Drac2',      desc: 'Chandler wobble — 2×draconic alias' },
+      { f: 1.0,   label: 'Annual',     desc: '1-year forcing' },
+      { f: 2.0,   label: 'SemiAnnual', desc: '6-month' },
+    ],
+    // 2nd-order peaks — toggle
+    second: [
+      { f: f_mm2, label: 'Mm2',    desc: '2× anomalistic alias — T=715d' },
+      { f: f_dm,  label: 'Drac2−', desc: 'Chandler − (f_a−13) — T=620d' },
+      { f: f_mm,  label: 'Mm',     desc: '3× anomalistic alias — T=477d' },
+      { f: f_cw2, label: 'Drac2',  desc: '2× Chandler harmonic — T=216d' },
+    ],
+    f_cw,
+  };
+})();
+
+/* Hann-windowed DFT on a LINEAR frequency grid using zero-padded FFT.
+   Returns { freqs, amps_obs, amps_mod, amps_xy } covering 0–2.5 cyc/yr.
+   Strategy: zero-pad to NFFT=4096 → FFT → pick bins up to fMax.
+   This is O(N log N) vs O(N²) for the naive direct DFT.
+*/
+function computeSemilogSpec() {
+  const N = iersYpole.length;
+  const DT = 1/12;   // years per sample (monthly)
+  const NFFT = 4096; // zero-pad to next power-of-2 ≥ 2N for freq resolution
+
+  // Hann window
+  const win = new Float64Array(N);
+  for (let i = 0; i < N; i++) win[i] = 0.5 * (1 - Math.cos(TWO_PI * i / (N - 1)));
+
+  // Mean-subtract + window each signal
+  function prepSignal(arr) {
+    const mean = arr.reduce((s,v)=>s+v,0)/N;
+    const out = new Float64Array(NFFT); // zero-padded
+    for (let i = 0; i < N; i++) out[i] = (arr[i] - mean) * win[i];
+    return out;
+  }
+  const bufY   = prepSignal(iersYpole);
+  const bufMod = prepSignal(modelFitted);
+  const xyAvg  = iersXpole.map((x,i) => (x + iersYpole[i]) / 2);
+  const bufXY  = prepSignal(xyAvg);
+
+  // Simple radix-2 Cooley-Tukey FFT (real input, returns interleaved re/im)
+  function fft(x) {
+    const n = x.length;
+    const re = new Float64Array(n), im = new Float64Array(n);
+    for (let i = 0; i < n; i++) re[i] = x[i];
+    // Bit-reverse permutation
+    let j = 0;
+    for (let i = 1; i < n; i++) {
+      let bit = n >> 1;
+      for (; j & bit; bit >>= 1) j ^= bit;
+      j ^= bit;
+      if (i < j) {
+        [re[i], re[j]] = [re[j], re[i]];
+        [im[i], im[j]] = [im[j], im[i]];
+      }
+    }
+    // Butterfly stages
+    for (let len = 2; len <= n; len <<= 1) {
+      const ang = -TWO_PI / len;
+      const wRe = Math.cos(ang), wIm = Math.sin(ang);
+      for (let i = 0; i < n; i += len) {
+        let uRe = 1, uIm = 0;
+        for (let k = 0; k < len/2; k++) {
+          const eRe = re[i+k+len/2]*uRe - im[i+k+len/2]*uIm;
+          const eIm = re[i+k+len/2]*uIm + im[i+k+len/2]*uRe;
+          re[i+k+len/2] = re[i+k] - eRe;  im[i+k+len/2] = im[i+k] - eIm;
+          re[i+k]      += eRe;             im[i+k]      += eIm;
+          const nuRe = uRe*wRe - uIm*wIm;
+          uIm = uRe*wIm + uIm*wRe; uRe = nuRe;
+        }
+      }
+    }
+    return { re, im };
+  }
+
+  const fftY   = fft(bufY);
+  const fftMod = fft(bufMod);
+  const fftXY  = fft(bufXY);
+
+  // Frequency resolution: DT/NFFT cyc/sample × (1/DT) = 1/NFFT × 12 cyc/yr
+  const df = 1 / (NFFT * DT);   // cyc/yr per bin = 12/4096 ≈ 0.00293 cyc/yr
+  const scale = 4 / N;           // 2/N for one-sided, ×2 for Hann
+
+  // Collect bins up to fMax = 2.5 cyc/yr
+  const fMax = 2.5;
+  const nBins = Math.floor(fMax / df) + 1;
+  const freqs    = new Float64Array(nBins);
+  const amps_obs = new Float64Array(nBins);
+  const amps_mod = new Float64Array(nBins);
+  const amps_xy  = new Float64Array(nBins);
+
+  for (let k = 0; k < nBins; k++) {
+    freqs[k]    = k * df;
+    amps_obs[k] = scale * Math.sqrt(fftY.re[k]*fftY.re[k]   + fftY.im[k]*fftY.im[k]);
+    amps_mod[k] = scale * Math.sqrt(fftMod.re[k]*fftMod.re[k] + fftMod.im[k]*fftMod.im[k]);
+    amps_xy[k]  = scale * Math.sqrt(fftXY.re[k]*fftXY.re[k]  + fftXY.im[k]*fftXY.im[k]);
+  }
+
+  return { freqs, amps_obs, amps_mod, amps_xy };
+}
+
+/* State */
+let show2ndOrder = true;
+let semilogSvg = null;
+let slPaths = {};   // {obs, mod} path elements to update
+let sl2ndLines = [];  // reference line elements to show/hide
+
+function drawSemilog() {
+  const { W, H, w, h } = chartDims('#semilogChart', 0.32);
+  const div = d3.select('#semilogChart');
+  div.selectAll('*').remove();
+  slPaths = {}; sl2ndLines = [];
+
+  const svg = div.append('svg').attr('width', W).attr('height', H);
+  semilogSvg = svg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+
+  const spec = computeSemilogSpec();
+  const { freqs, amps_obs, amps_mod, amps_xy } = spec;
+
+  const fMax = 2.5;
+  const scX = d3.scaleLinear().domain([0, fMax]).range([0, w]);
+
+  // Log-Y: find sensible range from data
+  const allAmps = [...amps_xy, ...amps_mod].filter(v => v > 0);
+  const aMin = d3.quantile(allAmps.slice().sort(d3.ascending), 0.01) * 0.5;
+  const aMax = d3.max(allAmps) * 1.8;
+  const scY = d3.scaleLog().domain([Math.max(aMin, 1e-5), aMax]).range([h, 0]).clamp(true);
+
+  // Grid lines
+  const yTicks = scY.ticks(5);
+  semilogSvg.append('g').selectAll('line').data(yTicks).enter().append('line')
+    .attr('class','grid-line').attr('x1',0).attr('x2',w)
+    .attr('y1', d=>scY(d)).attr('y2', d=>scY(d));
+
+  // Axes
+  const xTicks = [0, 0.5, 1.0, 1.5, 2.0, 2.5];
+  semilogSvg.append('g').attr('class','axis').attr('transform',`translate(0,${h})`)
+    .call(d3.axisBottom(scX).tickValues(xTicks).tickFormat(d => d.toFixed(1)));
+  semilogSvg.append('g').attr('class','axis')
+    .call(d3.axisLeft(scY).ticks(5, '~e').tickFormat(d => {
+      // Use clean scientific notation or fixed depending on magnitude
+      if (d >= 0.01) return d.toFixed(3);
+      return d.toExponential(0);
+    }));
+  semilogSvg.append('text').attr('x', w/2).attr('y', h+32)
+    .attr('fill','var(--color-text-muted)').attr('font-size','10').attr('text-anchor','middle')
+    .text('Frequency (cycles/year)');
+  semilogSvg.append('text').attr('x',-h/2).attr('y',-42).attr('transform','rotate(-90)')
+    .attr('fill','var(--color-text-muted)').attr('font-size','10').attr('text-anchor','middle')
+    .text('Amplitude (log scale)');
+
+  // ── Reference lines: 1st-order (always shown) ──
+  for (const pk of PEAKS.first) {
+    semilogSvg.append('line')
+      .attr('x1', scX(pk.f)).attr('x2', scX(pk.f)).attr('y1', 0).attr('y2', h)
+      .attr('stroke','var(--color-accent2)').attr('stroke-width',1.5)
+      .attr('stroke-dasharray','5 3').attr('opacity',0.85);
+    semilogSvg.append('text')
+      .attr('x', scX(pk.f)+3).attr('y', 16)
+      .attr('fill','var(--color-accent2)').attr('font-size',10)
+      .attr('font-family','var(--font-mono)').attr('font-weight','600')
+      .text(pk.label);
+  }
+
+  // ── Reference lines: 2nd-order (toggleable) ──
+  // Stagger label y-positions to prevent overlap between close peaks
+  const labelYOffsets = [0.25, 0.35, 0.20, 0.28]; // fractional height per peak
+  PEAKS.second.forEach((pk, idx) => {
+    const line = semilogSvg.append('line')
+      .attr('x1', scX(pk.f)).attr('x2', scX(pk.f)).attr('y1', 0).attr('y2', h)
+      .attr('stroke','var(--color-accent)').attr('stroke-width',1.2)
+      .attr('stroke-dasharray','3 3').attr('opacity',0.8);
+    const yLbl = h * labelYOffsets[idx];
+    const label = semilogSvg.append('text')
+      .attr('x', scX(pk.f)+3).attr('y', yLbl)
+      .attr('fill','var(--color-accent)').attr('font-size',10)
+      .attr('font-family','var(--font-mono)');
+    label.append('tspan').attr('x', scX(pk.f)+3).attr('dy',0).text(pk.label);
+    label.append('tspan').attr('x', scX(pk.f)+3).attr('dy',12)
+      .attr('font-size',8).attr('opacity',0.75).text(pk.f.toFixed(3)+'/yr');
+
+    sl2ndLines.push(line.node(), label.node());
+  });
+  apply2ndOrderVisibility();
+
+  // ── Data paths ──
+  // Draw X+Y average (observed, gold) — matches blog's "X+Y avg" series
+  const lineXY = d3.line().defined((_,i) => amps_xy[i] > 0)
+    .x((_,i) => scX(freqs[i])).y(v => scY(Math.max(v, 1e-9)));
+  slPaths.xy = semilogSvg.append('path').datum(Array.from(amps_xy))
+    .attr('fill','none').attr('stroke','var(--color-observed)')
+    .attr('stroke-width',1.2).attr('opacity',0.9)
+    .attr('d', lineXY);
+
+  // Draw MLR model (teal)
+  const lineMod = d3.line().defined((_,i) => amps_mod[i] > 0)
+    .x((_,i) => scX(freqs[i])).y(v => scY(Math.max(v, 1e-9)));
+  slPaths.mod = semilogSvg.append('path').datum(Array.from(amps_mod))
+    .attr('fill','none').attr('stroke','var(--color-model)')
+    .attr('stroke-width',1.5).attr('opacity',0.9)
+    .attr('d', lineMod);
+
+  // Legend inside chart
+  const lx = w - 120, ly = 6;
+  semilogSvg.append('line').attr('x1',lx).attr('x2',lx+18).attr('y1',ly+5).attr('y2',ly+5)
+    .attr('stroke','var(--color-observed)').attr('stroke-width',2);
+  semilogSvg.append('text').attr('x',lx+22).attr('y',ly+9)
+    .attr('fill','var(--color-text-muted)').attr('font-size',10).text('X+Y avg');
+  semilogSvg.append('line').attr('x1',lx).attr('x2',lx+18).attr('y1',ly+19).attr('y2',ly+19)
+    .attr('stroke','var(--color-model)').attr('stroke-width',2);
+  semilogSvg.append('text').attr('x',lx+22).attr('y',ly+23)
+    .attr('fill','var(--color-text-muted)').attr('font-size',10).text('MLR model');
+}
+
+function apply2ndOrderVisibility() {
+  const vis = show2ndOrder ? null : 'none';
+  for (const el of sl2ndLines) d3.select(el).style('display', vis);
+}
+
+function updateSemilog() {
+  // Recompute and redraw the semi-log spectrum (called from render)
+  drawSemilog();
+}
+
+/* ═══════════════════════════════════════════════════════
    RENDER ALL CHARTS
 ═══════════════════════════════════════════════════════ */
 function render() {
@@ -1073,12 +1366,14 @@ function render() {
   updateTS();
   updateSpec();
   drawPhase();
+  updateSemilog();
 }
 
 function initCharts() {
   initTS();
   initSpec();
   drawPhase();
+  drawSemilog();
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1106,6 +1401,16 @@ function wireSliders() {
   wire('slAmpNode',  'valAmpNode',  'ampNode',  v => v.toFixed(2), true);
   wire('slPhiNode',  'valPhiNode',  'phiNode',  v => v.toFixed(2), true);
 }
+
+/* ═══════════════════════════════════════════════════════
+   2ND-ORDER TOGGLE
+═══════════════════════════════════════════════════════ */
+document.getElementById('btn2ndOrder').addEventListener('click', function() {
+  show2ndOrder = !show2ndOrder;
+  document.getElementById('btn2ndOrderLabel').textContent = show2ndOrder ? 'ON' : 'OFF';
+  this.classList.toggle('active', show2ndOrder);
+  apply2ndOrderVisibility();
+});
 
 /* ═══════════════════════════════════════════════════════
    THEME TOGGLE
