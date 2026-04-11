@@ -37,67 +37,56 @@
   --transition:           180ms cubic-bezier(0.16,1,0.3,1);
 }
 [data-theme="dark"] {
-  --color-bg:             #10100e;
-  --color-surface:        #16150f;
-  --color-surface-2:      #1c1b14;
-  --color-border:         #2e2d26;
+  --color-bg:             #131210;
+  --color-surface:        #1c1b18;
+  --color-surface-2:      #242320;
+  --color-border:         #2e2d29;
   --color-divider:        #252420;
-  --color-text:           #e8e6de;
-  --color-text-muted:     #7a7868;
-  --color-text-faint:     #4a4940;
-  --color-primary:        #4fa8b5;
-  --color-primary-hover:  #6dc3cf;
-  --color-accent:         #e8c04a;
-  --color-accent2:        #e07a4a;
-  --color-model:          #4fa8b5;
-  --color-observed:       #e8c04a;
-  --color-residual:       #e07a4a;
+  --color-text:           #e8e6e0;
+  --color-text-muted:     #908e88;
+  --color-text-faint:     #4e4d49;
+  --color-primary:        #3fb8c6;
+  --color-primary-hover:  #5dcfdc;
+  --color-accent:         #d4aa40;
+  --color-accent2:        #c07040;
+  --color-model:          #3fb8c6;
+  --color-observed:       #d4aa40;
+  --color-residual:       #c07040;
   --color-grid:           rgba(255,255,255,0.05);
-  --color-tooltip-bg:     rgba(22,21,15,0.97);
-  --shadow-md:            0 4px 16px rgba(0,0,0,0.40);
-  --shadow-lg:            0 12px 40px rgba(0,0,0,0.55);
+  --color-tooltip-bg:     rgba(28,27,24,0.96);
 }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) {
-    --color-bg:#10100e; --color-surface:#16150f; --color-surface-2:#1c1b14;
-    --color-border:#2e2d26; --color-divider:#252420; --color-text:#e8e6de;
-    --color-text-muted:#7a7868; --color-text-faint:#4a4940;
-    --color-primary:#4fa8b5; --color-primary-hover:#6dc3cf;
-    --color-accent:#e8c04a; --color-accent2:#e07a4a;
-    --color-model:#4fa8b5; --color-observed:#e8c04a; --color-residual:#e07a4a;
-    --color-grid:rgba(255,255,255,0.05); --color-tooltip-bg:rgba(22,21,15,0.97);
-    --shadow-md:0 4px 16px rgba(0,0,0,0.40); --shadow-lg:0 12px 40px rgba(0,0,0,0.55);
-  }
-}
-
-/* ── RESET / BASE ──────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+html { font-size: 14px; }
 body {
-  font-family: var(--font-body);
-  font-size: clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
-  background: var(--color-bg);
-  color: var(--color-text);
-  min-height: 100dvh;
-  line-height: 1.6;
+  font-family: var(--font-body); background: var(--color-bg);
+  color: var(--color-text); min-height: 100vh;
+  transition: background var(--transition), color var(--transition);
 }
-button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
-input[type=range] { cursor: pointer; }
+button { cursor: pointer; border: none; background: none; font: inherit; }
+
+/* ── HEADER ────────────────────────────────────────────── */
+.header {
+  border-bottom: 1px solid var(--color-border);
+  padding: 1rem 1.5rem;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem;
+}
+.header-left { display: flex; align-items: center; gap: 0.8rem; }
+.logo-svg { color: var(--color-primary); flex-shrink: 0; }
+.header-title { font-size: 1rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
+.header-sub { font-size: 0.72rem; color: var(--color-text-muted); margin-top: 0.1rem; }
+.header-right { display: flex; align-items: center; gap: 0.75rem; }
+.data-badge {
+  font-size: 0.68rem; font-family: var(--font-mono);
+  padding: 0.2rem 0.55rem; border-radius: 100px;
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+}
+.data-badge.loading { color: var(--color-accent); border-color: var(--color-accent); }
+.data-badge.ready   { color: var(--color-primary); border-color: var(--color-primary); }
+.data-badge.error   { color: var(--color-residual); border-color: var(--color-residual); }
 
 /* ── LAYOUT ────────────────────────────────────────────── */
-.app-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 1rem 1.5rem;
-  background: var(--color-surface);
-  border-bottom: 1px solid var(--color-border);
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: var(--shadow-md);
-}
-.logo-wrap { display: flex; align-items: center; gap: 0.75rem; }
-.logo-wrap svg { flex-shrink: 0; }
-.app-title { font-size: clamp(0.9rem,1.2vw,1.05rem); font-weight: 600; letter-spacing: -0.02em; line-height: 1.2; }
-.app-subtitle { font-size: clamp(0.7rem,0.9vw,0.8rem); color: var(--color-text-muted); font-weight: 400; }
-
 .main { max-width: 1340px; margin: 0 auto; padding: 1.5rem; }
 
 /* ── KPI BAR ───────────────────────────────────────────── */
@@ -112,6 +101,28 @@ input[type=range] { cursor: pointer; }
 .kpi-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 0.2rem; }
 .kpi-value { font-size: 1.35rem; font-weight: 600; font-family: var(--font-mono); line-height: 1; color: var(--color-primary); }
 .kpi-unit { font-size: 0.7rem; color: var(--color-text-faint); margin-top: 0.15rem; }
+
+/* ── LOADING OVERLAY ───────────────────────────────────── */
+#loadOverlay {
+  position: fixed; inset: 0; z-index: 50;
+  background: var(--color-bg);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1rem;
+}
+#loadOverlay .load-title {
+  font-size: 1.1rem; font-weight: 600; color: var(--color-text);
+}
+#loadOverlay .load-sub {
+  font-size: 0.8rem; color: var(--color-text-muted); font-family: var(--font-mono);
+}
+.spinner {
+  width: 40px; height: 40px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── CHART PANELS ──────────────────────────────────────── */
 .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
@@ -136,6 +147,10 @@ input[type=range] { cursor: pointer; }
 .controls-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--color-text-muted); margin-bottom: 0.9rem; }
 .controls-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem; }
 .control-group label { display: block; font-size: 0.72rem; color: var(--color-text-muted); margin-bottom: 0.3rem; }
+.ctrl-mlr-val {
+  font-size: 0.62rem; color: var(--color-accent); font-family: var(--font-mono);
+  margin-left: 0.3rem;
+}
 .control-group .ctrl-row { display: flex; align-items: center; gap: 0.5rem; }
 .control-group input[type=range] {
   flex: 1; accent-color: var(--color-primary);
@@ -161,6 +176,7 @@ input[type=range] { cursor: pointer; }
 }
 .formula-box .hl { color: var(--color-primary); font-weight: 700; }
 .formula-box .hl2 { color: var(--color-accent); }
+.formula-box .hl3 { color: var(--color-accent2); }
 
 /* ── ANNOTATIONS ───────────────────────────────────────── */
 .annotation-line { stroke: var(--color-accent2); stroke-dasharray: 4 3; stroke-width: 1.5; opacity: 0.7; }
@@ -199,1016 +215,962 @@ input[type=range] { cursor: pointer; }
 .train-border { stroke: var(--color-primary); stroke-width: 1; stroke-dasharray: 3 3; fill: none; opacity: 0.4; }
 .zero-line { stroke: var(--color-text-faint); stroke-width: 1; }
 
-/* ── INFO FOOTER ───────────────────────────────────────── */
-.info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
-@media(max-width:700px){ .info-row { grid-template-columns: 1fr; } }
-.info-panel { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-lg); padding: 1.1rem 1.25rem; }
-.info-title { font-size: 0.8rem; font-weight: 600; margin-bottom: 0.6rem; }
-.info-body { font-size: 0.78rem; color: var(--color-text-muted); line-height: 1.65; }
-.info-body strong { color: var(--color-text); }
-
-/* ── TOGGLE BUTTONS ────────────────────────────────────── */
-.tab-bar { display: flex; gap: 0.5rem; margin-bottom: 0.75rem; }
-.tab-btn {
-  padding: 0.3rem 0.75rem; border-radius: var(--radius-md);
-  font-size: 0.72rem; font-weight: 500; border: 1px solid var(--color-border);
-  background: transparent; color: var(--color-text-muted);
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
+/* ── MLR INFO BOX ──────────────────────────────────────── */
+.mlr-info {
+  font-size: 0.7rem; font-family: var(--font-mono);
+  color: var(--color-text-muted);
+  background: var(--color-surface-2); border: 1px solid var(--color-border);
+  border-radius: var(--radius-md); padding: 0.6rem 0.8rem;
+  margin-top: 0.75rem; line-height: 1.8;
 }
-.tab-btn.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
-.tab-btn:hover:not(.active) { background: var(--color-divider); color: var(--color-text); }
-
-/* ── PHASE DIAGRAM ─────────────────────────────────────── */
-#phaseDiagram text { fill: var(--color-text-muted); font-size: 10px; }
+.mlr-info .hl { color: var(--color-primary); }
+.mlr-info .hl2 { color: var(--color-accent); }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="app-header">
-  <div class="logo-wrap">
-    <!-- SVG Logo: stylized polar motion spiral -->
-    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-label="Chandler Wobble Logo">
-      <circle cx="18" cy="18" r="16" stroke="var(--color-primary)" stroke-width="1.5" opacity="0.3"/>
-      <path d="M18 5 Q26 10 26 18 Q26 28 18 31 Q10 28 10 18 Q10 10 18 5Z"
-            fill="none" stroke="var(--color-primary)" stroke-width="1.5" opacity="0.6"/>
-      <circle cx="18" cy="18" r="3" fill="var(--color-primary)" opacity="0.9"/>
-      <path d="M18 18 L24 9" stroke="var(--color-accent)" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M18 18 L9 22" stroke="var(--color-accent2)" stroke-width="1.5" stroke-linecap="round"/>
+<!-- Loading overlay -->
+<div id="loadOverlay">
+  <div class="spinner"></div>
+  <div class="load-title">Loading IERS EOP C04 Data</div>
+  <div class="load-sub" id="loadMsg">Fetching from datacenter.iers.org…</div>
+</div>
+
+<!-- Header -->
+<header class="header">
+  <div class="header-left">
+    <svg class="logo-svg" width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Chandler Wobble">
+      <circle cx="16" cy="16" r="14" stroke="currentColor" stroke-width="1.5"/>
+      <ellipse cx="16" cy="16" rx="6" ry="14" stroke="currentColor" stroke-width="1" opacity="0.4"/>
+      <path d="M4 16 Q10 8 16 16 Q22 24 28 16" stroke="currentColor" stroke-width="2" fill="none"/>
+      <circle cx="16" cy="16" r="2.5" fill="currentColor"/>
     </svg>
     <div>
-      <div class="app-title">Pukite Lunisolar Forcing Model</div>
-      <div class="app-subtitle">Chandler Wobble · 1950–2024 · IERS Polar Motion Y</div>
+      <div class="header-title">Pukite Lunisolar Chandler Wobble</div>
+      <div class="header-sub">IERS EOP C04 · Resonator ODE · Multiple Linear Regression</div>
     </div>
   </div>
-  <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-    </svg>
-  </button>
+  <div class="header-right">
+    <span class="data-badge loading" id="dataBadge">loading…</span>
+    <button class="theme-btn" id="themeBtn" title="Toggle theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/>
+        <line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/>
+        <line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+      </svg>
+    </button>
+  </div>
 </header>
 
-<main class="main">
+<div class="main" id="appContent" style="display:none">
 
-  <!-- KPI BAR -->
+  <!-- KPI bar -->
   <div class="kpi-bar">
     <div class="kpi-card">
       <div class="kpi-label">Chandler Period</div>
-      <div class="kpi-value" id="kpiPeriod">432.8</div>
-      <div class="kpi-unit">days · T<sub>alias</sub></div>
+      <div class="kpi-value" id="kpiPeriod">—</div>
+      <div class="kpi-unit">days (aliased)</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Draconic Fortnight</div>
-      <div class="kpi-value">13.606</div>
-      <div class="kpi-unit">days · T<sub>d</sub>/2</div>
+      <div class="kpi-label">IERS Record</div>
+      <div class="kpi-value" id="kpiSpan">—</div>
+      <div class="kpi-unit">years of data</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Nodal Envelope</div>
-      <div class="kpi-value">9.30</div>
-      <div class="kpi-unit">years · T<sub>node</sub>/2</div>
+      <div class="kpi-label">MLR Corr (train)</div>
+      <div class="kpi-value" id="kpiCorrTrain">—</div>
+      <div class="kpi-unit">Chandler band</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">MLR Corr (full)</div>
+      <div class="kpi-value" id="kpiCorrFull">—</div>
+      <div class="kpi-unit">Chandler band</div>
     </div>
     <div class="kpi-card">
       <div class="kpi-label">Beat Period</div>
-      <div class="kpi-value">6.41</div>
-      <div class="kpi-unit">years · CW × Annual</div>
+      <div class="kpi-value" id="kpiBeat">6.4</div>
+      <div class="kpi-unit">years (ann ↔ CW)</div>
     </div>
     <div class="kpi-card">
-      <div class="kpi-label">Correlation (train)</div>
-      <div class="kpi-value" id="kpiCorrTrain">—</div>
-      <div class="kpi-unit">r · Chandler band · train</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">Correlation (full)</div>
-      <div class="kpi-value" id="kpiCorrFull">—</div>
-      <div class="kpi-unit">r · Chandler band · full</div>
+      <div class="kpi-label">Q Factor</div>
+      <div class="kpi-value" id="kpiQ">—</div>
+      <div class="kpi-unit">resonator quality</div>
     </div>
   </div>
 
-  <!-- CONTROLS -->
+  <!-- Controls -->
   <div class="controls-panel">
-    <div class="controls-title">Model Parameters</div>
+    <div class="controls-title">Model Parameters — sliders perturb from MLR-fitted values</div>
     <div class="controls-grid">
+
+      <!-- Training window end -->
       <div class="control-group">
-        <label>Draconic period T<sub>d</sub> (days)</label>
+        <label>Training window end <span class="ctrl-mlr-val">(drag to retrain)</span></label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlTd" min="26.8" max="27.6" step="0.01" value="27.2122">
-          <span class="ctrl-val" id="valTd">27.212</span>
+          <input type="range" id="slTrainEnd" min="1975" max="2020" step="0.5" value="2000" />
+          <span class="ctrl-val" id="valTrainEnd">2000.0</span>
         </div>
       </div>
+
+      <!-- Q factor -->
       <div class="control-group">
-        <label>Annual impulse period T<sub>y</sub> (days)</label>
+        <label>Resonator Q factor</label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlTy" min="363" max="367" step="0.1" value="365.242">
-          <span class="ctrl-val" id="valTy">365.24</span>
-        </div>
-      </div>
-      <div class="control-group">
-        <label>Resonance Q factor</label>
-        <div class="ctrl-row">
-          <input type="range" id="ctrlQ" min="20" max="300" step="5" value="100">
+          <input type="range" id="slQ" min="20" max="500" step="5" value="100" />
           <span class="ctrl-val" id="valQ">100</span>
         </div>
       </div>
+
+      <!-- Annual amplitude -->
       <div class="control-group">
-        <label>Nodal envelope T<sub>node</sub> (years)</label>
+        <label>Annual amplitude <span class="ctrl-mlr-val" id="mlrAmpAnn"></span></label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlTnode" min="17" max="20" step="0.1" value="18.6">
-          <span class="ctrl-val" id="valTnode">18.6 yr</span>
-        </div>
-      </div>
-      <div class="control-group">
-        <label>Annual forcing amplitude A<sub>ann</sub></label>
-        <div class="ctrl-row">
-          <input type="range" id="ctrlAmpAnn" min="0.1" max="5.0" step="0.05" value="1.0">
+          <input type="range" id="slAmpAnn" min="0.05" max="5.0" step="0.05" value="1.0" />
           <span class="ctrl-val" id="valAmpAnn">1.00</span>
         </div>
       </div>
+
+      <!-- Annual phase -->
       <div class="control-group">
-        <label>Draconic forcing amplitude A<sub>drac</sub></label>
+        <label>Annual phase φ_ann <span class="ctrl-mlr-val" id="mlrPhiAnn"></span></label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlAmpDrac" min="0.1" max="5.0" step="0.05" value="1.0">
+          <input type="range" id="slPhiAnn" min="-3.14159" max="3.14159" step="0.05" value="0" />
+          <span class="ctrl-val" id="valPhiAnn">0.00</span>
+        </div>
+      </div>
+
+      <!-- Draconic amplitude -->
+      <div class="control-group">
+        <label>Draconic amplitude <span class="ctrl-mlr-val" id="mlrAmpDrac"></span></label>
+        <div class="ctrl-row">
+          <input type="range" id="slAmpDrac" min="0.05" max="5.0" step="0.05" value="1.0" />
           <span class="ctrl-val" id="valAmpDrac">1.00</span>
         </div>
       </div>
+
+      <!-- Draconic phase -->
       <div class="control-group">
-        <label>Annual phase φ<sub>ann</sub></label>
+        <label>Draconic phase φ_drac <span class="ctrl-mlr-val" id="mlrPhiDrac"></span></label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlPhiAnn" min="-3.14159" max="3.14159" step="0.05" value="0">
-          <span class="ctrl-val" id="valPhiAnn">0.00 rad</span>
+          <input type="range" id="slPhiDrac" min="-3.14159" max="3.14159" step="0.05" value="0" />
+          <span class="ctrl-val" id="valPhiDrac">0.00</span>
         </div>
       </div>
+
+      <!-- Nodal amplitude (18.6-yr modulation depth) -->
       <div class="control-group">
-        <label>Draconic phase φ<sub>drac</sub></label>
+        <label>Nodal modulation depth <span class="ctrl-mlr-val" id="mlrAmpNode"></span></label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlPhiDrac" min="-3.14159" max="3.14159" step="0.05" value="0">
-          <span class="ctrl-val" id="valPhiDrac">0.00 rad</span>
+          <input type="range" id="slAmpNode" min="0.0" max="2.0" step="0.02" value="0.22" />
+          <span class="ctrl-val" id="valAmpNode">0.22</span>
         </div>
       </div>
+
+      <!-- Nodal phase -->
       <div class="control-group">
-        <label>Nodal modulation phase φ<sub>node</sub></label>
+        <label>Nodal phase φ_node <span class="ctrl-mlr-val" id="mlrPhiNode"></span></label>
         <div class="ctrl-row">
-          <input type="range" id="ctrlPhiNode" min="-3.14159" max="3.14159" step="0.05" value="0">
-          <span class="ctrl-val" id="valPhiNode">0.00 rad</span>
+          <input type="range" id="slPhiNode" min="-3.14159" max="3.14159" step="0.05" value="0" />
+          <span class="ctrl-val" id="valPhiNode">0.00</span>
         </div>
       </div>
-      <div class="control-group">
-        <label>Training window end (year)</label>
-        <div class="ctrl-row">
-          <input type="range" id="ctrlTrainEnd" min="1955" max="1975" step="0.5" value="1962.5">
-          <span class="ctrl-val" id="valTrainEnd">1962.5</span>
-        </div>
-      </div>
+
     </div>
+
+    <!-- MLR summary box -->
+    <div class="mlr-info" id="mlrInfo">MLR fit pending…</div>
   </div>
 
-  <!-- MAIN TIME SERIES -->
-  <div class="panel panel-full" style="margin-bottom:1.25rem">
-    <div class="panel-header">
-      <div>
-        <div class="panel-title">Polar Motion Y — Observed vs. Lunisolar Model · dY/dt</div>
-        <div class="panel-hint">Shaded region = training window (1950 → slider). Hover for values.</div>
-      </div>
-      <div class="tab-bar">
-        <button class="tab-btn active" data-view="deriv">dY/dt</button>
-        <button class="tab-btn" data-view="raw">Y raw</button>
-      </div>
-    </div>
-    <div class="chart-wrap" id="tsWrap"></div>
-    <div class="legend">
-      <div class="legend-item"><div class="legend-swatch" style="background:var(--color-observed)"></div> IERS Y (observed)</div>
-      <div class="legend-item"><div class="legend-swatch" style="background:var(--color-model)"></div> Lunisolar model</div>
-      <div class="legend-item"><div class="legend-swatch dashed" style="border-color:var(--color-residual)"></div> Residual</div>
-    </div>
-  </div>
-
-  <!-- SPECTRUM + PHASE -->
+  <!-- Charts -->
   <div class="charts-grid">
-    <div class="panel">
+
+    <!-- Time series (full width) -->
+    <div class="panel panel-full">
       <div class="panel-header">
-        <div class="panel-title">Amplitude Spectrum</div>
-        <div class="panel-hint">FFT power vs. period (days)</div>
+        <span class="panel-title">Y-pole Polar Motion — IERS EOP C04</span>
+        <span class="panel-hint">shaded region = training window</span>
       </div>
-      <div class="chart-wrap" id="specWrap"></div>
-      <div class="legend" style="margin-top:0.5rem">
-        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-observed)"></div> Observed</div>
-        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-model)"></div> Model</div>
+      <div class="chart-wrap" id="tsChart"></div>
+      <div class="legend">
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-observed)"></div>IERS observed</div>
+        <div class="legend-item"><div class="legend-swatch" style="background:var(--color-model)"></div>MLR model</div>
+        <div class="legend-item"><div class="legend-swatch dashed" style="border-color:var(--color-residual)"></div>Residual</div>
       </div>
     </div>
+
+    <!-- Amplitude spectrum -->
     <div class="panel">
       <div class="panel-header">
-        <div class="panel-title">Polar Motion Phase Plane · X vs Y</div>
-        <div class="panel-hint">Drag to rotate time range</div>
+        <span class="panel-title">Amplitude Spectrum</span>
+        <span class="panel-hint">Hann-windowed · log period axis</span>
       </div>
-      <div class="chart-wrap" id="phaseWrap"></div>
-      <div style="display:flex;gap:0.5rem;margin-top:0.5rem;flex-wrap:wrap" id="phaseDecadeBar"></div>
+      <div class="chart-wrap" id="specChart"></div>
+    </div>
+
+    <!-- Phase plane -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Phase Plane (X vs Y pole)</span>
+        <span class="panel-hint">Chandler-band filtered · colored by decade</span>
+      </div>
+      <div class="chart-wrap" id="phaseChart"></div>
+    </div>
+
+  </div>
+
+  <!-- Formula box -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Pukite Lunisolar Forcing Model</span>
+      <span class="panel-hint">aliasing derivation</span>
+    </div>
+    <div class="formula-box" id="formulaBox">
+      <span class="hl">Resonator ODE:</span>  ẍ + 2ζω₀ẋ + ω₀²x = ω₀² · F(t)<br>
+      <span class="hl">Forcing:</span>  F(t) = A_d · cos²(ω_d·t + φ_d) · (1 + ε_node · cos(2π·t/T_node + φ_node))<br>
+      <span class="hl2">Chandler alias:</span>  T_cw = T_yr / (T_yr/T_d − 13) / 2 ≈ <span id="fmPeriod">432.8</span> days<br>
+      <span class="hl">MLR design matrix:</span>  X = [res_cos, res_sin, cos(2πt/T_ann+φ_ann), sin(2πt/T_ann+φ_ann), cos(2πt/T_d), sin(2πt/T_d), cos(2πt/T_node), sin(2πt/T_node), 1]<br>
+      <span class="hl2">Beat period:</span>  T_beat = 1/|1/T_cw − 1/T_yr| = <span id="fmBeat">—</span> yrs
     </div>
   </div>
 
-  <!-- FORMULA + MODEL DERIVATION -->
-  <div class="info-row">
-    <div class="info-panel">
-      <div class="info-title">Model Derivation — Pukite (2019)</div>
-      <div class="formula-box">
-        <span class="hl">f<sub>d</sub></span> = 1 / (T<sub>d</sub>/2) = 1/13.6061 c/d<br>
-        <span class="hl">f<sub>y</sub></span> = 2 / T<sub>y</sub> &nbsp; (semi-annual impulse)<br><br>
-        Alias: <span class="hl2">f<sub>CW</sub></span> = f<sub>d</sub> − 26·f<sub>y</sub>/2<br>
-        &nbsp;&nbsp;&nbsp;&nbsp; T<sub>alias</sub> = T<sub>y</sub> / (T<sub>y</sub>/(T<sub>d</sub>/2) − 26)<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; = <span class="hl">365.242 / (26.847 − 26)</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ≈ <span class="hl2">432.77 days</span><br><br>
-        Forcing: F(t) = <span class="hl">A<sub>drac</sub>·|cos(πt/(T<sub>d</sub>/2) + φ<sub>d</sub>)|</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;·<span class="hl2">A<sub>ann</sub>·cos²(πt/T<sub>y</sub> + φ<sub>a</sub>/2)</span><br>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;· (1 + ε·cos(2πt/T<sub>node</sub> + φ<sub>n</sub>))<br><br>
-        Resonator: 2nd-order DiffEq, Q≈100<br>
-        &nbsp;&nbsp;&nbsp;&nbsp;ẍ + (ω<sub>0</sub>/Q)ẋ + ω<sub>0</sub>²x = F(t)
-      </div>
-    </div>
-    <div class="info-panel">
-      <div class="info-title">Physical Interpretation</div>
-      <div class="info-body">
-        The <strong>draconic fortnight</strong> (13.606 d = T<sub>d</sub>/2) is the half-period of the lunar draconic month, driving a biannual equatorial-crossing impulse as the Moon crosses the equatorial plane twice per draconic month.<br><br>
-        <strong>Stroboscopic aliasing</strong> by the annual cycle (semi-annual impulse train) down-converts the draconic forcing to 432.77 days — matching the observed Chandler period exactly. The <strong>13th harmonic</strong> of the fortnightly tide falls within the resonant bandwidth of the Earth's nutation at Q ≈ 100.<br><br>
-        The <strong>9.3-year nodal envelope</strong> (half the 18.6-year lunar nodal precession) modulates the wobble amplitude. The <strong>~6.4-year beat</strong> between the 433-day Chandler wobble and the annual wobble is clearly visible in the time series.
-      </div>
-    </div>
-  </div>
-
-</main>
+</div><!-- /main -->
 
 <div id="tooltip">
   <div class="tt-head" id="tt-head"></div>
+  <div class="tt-row"><span class="tt-key">Year</span><span class="tt-val" id="tt-year"></span></div>
   <div class="tt-row"><span class="tt-key">Observed</span><span class="tt-val" id="tt-obs"></span></div>
-  <div class="tt-row"><span class="tt-key">Model</span><span class="tt-val" id="tt-mod"></span></div>
-  <div class="tt-row"><span class="tt-key">Residual</span><span class="tt-val" id="tt-res"></span></div>
+  <div class="tt-row"><span class="tt-key">Model</span><span class="tt-val" id="tt-model"></span></div>
 </div>
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   DATA GENERATION
-   We synthesize a realistic IERS-like polar motion Y series
-   using the known spectral components (Chandler + annual + nodal)
-   then add mild noise. This mirrors the published IERS EOP C04 series.
+   PHYSICAL CONSTANTS
 ═══════════════════════════════════════════════════════ */
-
-const T0 = 1950.0;       // start year
-const T1 = 2024.0;       // end year
-const DT = 1/12;         // monthly step (~monthly cadence)
-const NPTS = Math.round((T1 - T0) / DT) + 1;
-
-// Physical constants
-const Td_DEFAULT = 27.2122;   // draconic month (days)
-const Ty_DEFAULT = 365.242;   // tropical year (days)
-const Tnode_DEFAULT = 18.6;   // lunar nodal (years)
+const Td_VAL   = 27.2122;   // draconic month (days)
+const Ty_VAL   = 365.242;   // tropical year (days)
+const Tnode_VAL = 18.6;     // lunar nodal (years)
 const DAYS_PER_YEAR = 365.242;
+const TWO_PI = 2 * Math.PI;
 
-// Build year array
-const years = Array.from({length: NPTS}, (_,i) => T0 + i * DT);
-
-/* Observed Y series:
-   Generated directly from the lunisolar model at default params, then scaled
-   to realistic polar motion amplitudes (~150 mas peak) and augmented with:
-     - annual wobble component (same forcing but direct, not via resonator)
-     - slow polar wander drift
-     - measurement noise + unmodeled geophysical variability
-   This ensures the model can achieve high correlation on the training window,
-   consistent with Pukite's reported fits. */
-function generateObserved() {
-  // Run model at default params to get the Chandler wobble component
-  const defaultParams = {
-    Td: 27.2122, Ty: 365.242, Q: 100, Tnode: 18.6,
-    ampAnn: 1.0, ampDrac: 1.0, phiAnn: 0.0, phiDrac: 0.0, phiNode: 0.0
-  };
-  const cwModel = computeModel(defaultParams);
-
-  // Scale CW component to ~100 mas RMS
-  const cwRms = Math.sqrt(cwModel.reduce((s,v) => s + v*v, 0) / cwModel.length);
-  const cwScale = 100 / (cwRms || 1);
-
-  const results = [];
-  for (let i = 0; i < NPTS; i++) {
-    const t = years[i];
-    const dt = t - T0;
-
-    // Chandler wobble: model output scaled to realistic amplitude
-    const cw = cwModel[i] * cwScale;
-
-    // Annual wobble: direct forced response at 1 yr, amplitude ~90 mas
-    // Phase is arbitrary but consistent across all runs
-    const ann = 85 * Math.sin(2 * Math.PI * t + 0.8)
-              + 35 * Math.cos(2 * Math.PI * t + 0.3);
-
-    // Slow polar wander drift
-    const drift = 18 * dt / 74;
-
-    // Noise: measurement error + ocean/atmosphere excitation not in model
-    // ~15 mas RMS — realistic for IERS EOP C04 residuals
-    const seed = i * 2.3 + 17.1;
-    const noise = 12 * (Math.sin(seed * 1.7) + 0.55 * Math.cos(seed * 3.1)
-                      + 0.3 * Math.sin(seed * 5.9) + 0.15 * Math.cos(seed * 11.3));
-
-    results.push(cw + ann + drift + noise);
-  }
-  return results;
+// Chandler alias period
+function chandlerPeriod(Td, Ty) {
+  const CW_Freq = (Ty / Td - 13.0) * 2.0;
+  return Ty / CW_Freq; // days
 }
 
-/* Pukite Lunisolar Model
-   Solves 2nd-order damped resonator driven by the aliased draconic forcing.
-   F(t) = A * |cos(π*t/(Td/2/365.242))| * cos²(π*t/1.0)
-            * (1 + ε*cos(2π*t/Tnode))
-   Numerically integrated with RK4.
-*/
-function computeModel(params) {
-  const { Td, Ty, Q, Tnode, ampAnn, ampDrac, phiAnn, phiDrac, phiNode } = params;
+/* ═══════════════════════════════════════════════════════
+   GLOBAL STATE
+═══════════════════════════════════════════════════════ */
+let iersTime   = [];   // decimal years, monthly
+let iersYpole  = [];   // y-pole arcseconds, monthly
+let iersXpole  = [];   // x-pole arcseconds, monthly
+let mlrCoeffs  = null; // fitted MLR coefficients (from last fit)
+let mlrBaseParams = null; // params at which MLR was fit
 
-  // Derived periods (in years)
-  const Td_yr = Td / DAYS_PER_YEAR;
-  const Ty_yr = Ty / DAYS_PER_YEAR;
-  const TcwAlias = Ty / (Ty / (Td / 2) - 26);  // aliased Chandler period in days
-  const Tcw_yr = TcwAlias / DAYS_PER_YEAR;
+let params = {
+  Td: Td_VAL, Ty: Ty_VAL, Q: 100, Tnode: Tnode_VAL,
+  ampAnn: 1.0, phiAnn: 0.0,
+  ampDrac: 1.0, phiDrac: 0.0,
+  ampNode: 0.22, phiNode: 0.0,
+  trainEnd: 2000.0
+};
 
-  // Update KPI
-  document.getElementById('kpiPeriod').textContent = TcwAlias.toFixed(1);
+/* ═══════════════════════════════════════════════════════
+   IERS DATA FETCH + PARSE
+═══════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════
+   IERS EOP C04 DATA — embedded monthly averages
+   Source: https://datacenter.iers.org/products/eop/long-term/c04_operational/csv/eopc04.1962-now.csv
+   Preprocessed: daily data averaged into calendar-month bins
+   Units: arcseconds. Coverage: 1962-01-01 to present.
+═══════════════════════════════════════════════════════ */
+const IERS_DATA = {"t":[1962.04107,1962.1203,1962.20774,1962.2897,1962.3744,1962.45637,1962.54107,1962.6244,1962.70637,1962.79107,1962.87303,1962.95774,1963.04107,1963.1203,1963.20774,1963.2897,1963.3744,1963.45637,1963.54107,1963.6244,1963.70637,1963.79107,1963.87303,1963.95774,1964.04107,1964.12166,1964.20774,1964.2897,1964.3744,1964.45637,1964.54107,1964.6244,1964.70637,1964.79107,1964.87303,1964.95774,1965.04107,1965.1203,1965.20774,1965.2897,1965.3744,1965.45637,1965.54107,1965.6244,1965.70637,1965.79107,1965.87303,1965.95774,1966.04107,1966.1203,1966.20774,1966.2897,1966.3744,1966.45637,1966.54107,1966.6244,1966.70637,1966.79107,1966.87303,1966.95774,1967.04107,1967.1203,1967.20774,1967.2897,1967.3744,1967.45637,1967.54107,1967.6244,1967.70637,1967.79107,1967.87303,1967.95774,1968.04107,1968.12166,1968.20774,1968.2897,1968.3744,1968.45637,1968.54107,1968.6244,1968.70637,1968.79107,1968.87303,1968.95774,1969.04107,1969.1203,1969.20774,1969.2897,1969.3744,1969.45637,1969.54107,1969.6244,1969.70637,1969.79107,1969.87303,1969.95774,1970.04107,1970.1203,1970.20774,1970.2897,1970.3744,1970.45637,1970.54107,1970.6244,1970.70637,1970.79107,1970.87303,1970.95774,1971.04107,1971.1203,1971.20774,1971.2897,1971.3744,1971.45637,1971.54107,1971.6244,1971.70637,1971.79107,1971.87303,1971.95774,1972.04107,1972.12166,1972.20774,1972.2897,1972.3744,1972.45637,1972.54107,1972.6244,1972.70637,1972.79107,1972.87303,1972.95774,1973.04107,1973.1203,1973.20774,1973.2897,1973.3744,1973.45637,1973.54107,1973.6244,1973.70637,1973.79107,1973.87303,1973.95774,1974.04107,1974.1203,1974.20774,1974.2897,1974.3744,1974.45637,1974.54107,1974.6244,1974.70637,1974.79107,1974.87303,1974.95774,1975.04107,1975.1203,1975.20774,1975.2897,1975.3744,1975.45637,1975.54107,1975.6244,1975.70637,1975.79107,1975.87303,1975.95774,1976.04107,1976.12166,1976.20774,1976.2897,1976.3744,1976.45637,1976.54107,1976.6244,1976.70637,1976.79107,1976.87303,1976.95774,1977.04107,1977.1203,1977.20774,1977.2897,1977.3744,1977.45637,1977.54107,1977.6244,1977.70637,1977.79107,1977.87303,1977.95774,1978.04107,1978.1203,1978.20774,1978.2897,1978.3744,1978.45637,1978.54107,1978.6244,1978.70637,1978.79107,1978.87303,1978.95774,1979.04107,1979.1203,1979.20774,1979.2897,1979.3744,1979.45637,1979.54107,1979.6244,1979.70637,1979.79107,1979.87303,1979.95774,1980.04107,1980.12166,1980.20774,1980.2897,1980.3744,1980.45637,1980.54107,1980.6244,1980.70637,1980.79107,1980.87303,1980.95774,1981.04107,1981.1203,1981.20774,1981.2897,1981.3744,1981.45637,1981.54107,1981.6244,1981.70637,1981.79107,1981.87303,1981.95774,1982.04107,1982.1203,1982.20774,1982.2897,1982.3744,1982.45637,1982.54107,1982.6244,1982.70637,1982.79107,1982.87303,1982.95774,1983.04107,1983.1203,1983.20774,1983.2897,1983.3744,1983.45637,1983.54107,1983.6244,1983.70637,1983.79107,1983.87303,1983.95774,1984.04107,1984.12166,1984.20774,1984.2897,1984.3744,1984.45637,1984.54107,1984.6244,1984.70637,1984.79107,1984.87303,1984.95774,1985.04107,1985.1203,1985.20774,1985.2897,1985.3744,1985.45637,1985.54107,1985.6244,1985.70637,1985.79107,1985.87303,1985.95774,1986.04107,1986.1203,1986.20774,1986.2897,1986.3744,1986.45637,1986.54107,1986.6244,1986.70637,1986.79107,1986.87303,1986.95774,1987.04107,1987.1203,1987.20774,1987.2897,1987.3744,1987.45637,1987.54107,1987.6244,1987.70637,1987.79107,1987.87303,1987.95774,1988.04107,1988.12166,1988.20774,1988.2897,1988.3744,1988.45637,1988.54107,1988.6244,1988.70637,1988.79107,1988.87303,1988.95774,1989.04107,1989.1203,1989.20774,1989.2897,1989.3744,1989.45637,1989.54107,1989.6244,1989.70637,1989.79107,1989.87303,1989.95774,1990.04107,1990.1203,1990.20774,1990.2897,1990.3744,1990.45637,1990.54107,1990.6244,1990.70637,1990.79107,1990.87303,1990.95774,1991.04107,1991.1203,1991.20774,1991.2897,1991.3744,1991.45637,1991.54107,1991.6244,1991.70637,1991.79107,1991.87303,1991.95774,1992.04107,1992.12166,1992.20774,1992.2897,1992.3744,1992.45637,1992.54107,1992.6244,1992.70637,1992.79107,1992.87303,1992.95774,1993.04107,1993.1203,1993.20774,1993.2897,1993.3744,1993.45637,1993.54107,1993.6244,1993.70637,1993.79107,1993.87303,1993.95774,1994.04107,1994.1203,1994.20774,1994.2897,1994.3744,1994.45637,1994.54107,1994.6244,1994.70637,1994.79107,1994.87303,1994.95774,1995.04107,1995.1203,1995.20774,1995.2897,1995.3744,1995.45637,1995.54107,1995.6244,1995.70637,1995.79107,1995.87303,1995.95774,1996.04107,1996.12166,1996.20774,1996.2897,1996.3744,1996.45637,1996.54107,1996.6244,1996.70637,1996.79107,1996.87303,1996.95774,1997.04107,1997.1203,1997.20774,1997.2897,1997.3744,1997.45637,1997.54107,1997.6244,1997.70637,1997.79107,1997.87303,1997.95774,1998.04107,1998.1203,1998.20774,1998.2897,1998.3744,1998.45637,1998.54107,1998.6244,1998.70637,1998.79107,1998.87303,1998.95774,1999.04107,1999.1203,1999.20774,1999.2897,1999.3744,1999.45637,1999.54107,1999.6244,1999.70637,1999.79107,1999.87303,1999.95774,2000.04107,2000.12166,2000.20774,2000.2897,2000.3744,2000.45637,2000.54107,2000.6244,2000.70637,2000.79107,2000.87303,2000.95774,2001.04107,2001.1203,2001.20774,2001.2897,2001.3744,2001.45637,2001.54107,2001.6244,2001.70637,2001.79107,2001.87303,2001.95774,2002.04107,2002.1203,2002.20774,2002.2897,2002.3744,2002.45637,2002.54107,2002.6244,2002.70637,2002.79107,2002.87303,2002.95774,2003.04107,2003.1203,2003.20774,2003.2897,2003.3744,2003.45637,2003.54107,2003.6244,2003.70637,2003.79107,2003.87303,2003.95774,2004.04107,2004.12166,2004.20774,2004.2897,2004.3744,2004.45637,2004.54107,2004.6244,2004.70637,2004.79107,2004.87303,2004.95774,2005.04107,2005.1203,2005.20774,2005.2897,2005.3744,2005.45637,2005.54107,2005.6244,2005.70637,2005.79107,2005.87303,2005.95774,2006.04107,2006.1203,2006.20774,2006.2897,2006.3744,2006.45637,2006.54107,2006.6244,2006.70637,2006.79107,2006.87303,2006.95774,2007.04107,2007.1203,2007.20774,2007.2897,2007.3744,2007.45637,2007.54107,2007.6244,2007.70637,2007.79107,2007.87303,2007.95774,2008.04107,2008.12166,2008.20774,2008.2897,2008.3744,2008.45637,2008.54107,2008.6244,2008.70637,2008.79107,2008.87303,2008.95774,2009.04107,2009.1203,2009.20774,2009.2897,2009.3744,2009.45637,2009.54107,2009.6244,2009.70637,2009.79107,2009.87303,2009.95774,2010.04107,2010.1203,2010.20774,2010.2897,2010.3744,2010.45637,2010.54107,2010.6244,2010.70637,2010.79107,2010.87303,2010.95774,2011.04107,2011.1203,2011.20774,2011.2897,2011.3744,2011.45637,2011.54107,2011.6244,2011.70637,2011.79107,2011.87303,2011.95774,2012.04107,2012.12166,2012.20774,2012.2897,2012.3744,2012.45637,2012.54107,2012.6244,2012.70637,2012.79107,2012.87303,2012.95774,2013.04107,2013.1203,2013.20774,2013.2897,2013.3744,2013.45637,2013.54107,2013.6244,2013.70637,2013.79107,2013.87303,2013.95774,2014.04107,2014.1203,2014.20774,2014.2897,2014.3744,2014.45637,2014.54107,2014.6244,2014.70637,2014.79107,2014.87303,2014.95774,2015.04107,2015.1203,2015.20774,2015.2897,2015.3744,2015.45637,2015.54107,2015.6244,2015.70637,2015.79107,2015.87303,2015.95774,2016.04107,2016.12166,2016.20774,2016.2897,2016.3744,2016.45637,2016.54107,2016.6244,2016.70637,2016.79107,2016.87303,2016.95774,2017.04107,2017.1203,2017.20774,2017.2897,2017.3744,2017.45637,2017.54107,2017.6244,2017.70637,2017.79107,2017.87303,2017.95774,2018.04107,2018.1203,2018.20774,2018.2897,2018.3744,2018.45637,2018.54107,2018.6244,2018.70637,2018.79107,2018.87303,2018.95774,2019.04107,2019.1203,2019.20774,2019.2897,2019.3744,2019.45637,2019.54107,2019.6244,2019.70637,2019.79107,2019.87303,2019.95774,2020.04107,2020.12166,2020.20774,2020.2897,2020.3744,2020.45637,2020.54107,2020.6244,2020.70637,2020.79107,2020.87303,2020.95774,2021.04107,2021.1203,2021.20774,2021.2897,2021.3744,2021.45637,2021.54107,2021.6244,2021.70637,2021.79107,2021.87303,2021.95774,2022.04107,2022.1203,2022.20774,2022.2897,2022.3744,2022.45637,2022.54107,2022.6244,2022.70637,2022.79107,2022.87303,2022.95774,2023.04107,2023.1203,2023.20774,2023.2897,2023.3744,2023.45637,2023.54107,2023.6244,2023.70637,2023.79107,2023.87303,2023.95774,2024.04107,2024.12166,2024.20774,2024.2897,2024.3744,2024.45637,2024.54107,2024.6244,2024.70637,2024.79107,2024.87303,2024.95774,2025.04107,2025.1203,2025.20774,2025.2897,2025.3744,2025.45637,2025.54107,2025.6244,2025.70637,2025.79107,2025.87303,2025.95774,2026.04107,2026.1203,2026.18173],"xp":[-0.044944,-0.050477,0.00493,0.065315,0.093417,0.098425,0.092305,0.06293,0.010264,-0.057854,-0.109093,-0.163437,-0.201009,-0.16407,-0.095019,0.003412,0.111992,0.191728,0.222324,0.180085,0.09502,-0.009118,-0.119043,-0.187224,-0.267241,-0.29896,-0.235006,-0.128805,-0.025944,0.071292,0.165838,0.231733,0.227711,0.168369,0.075207,-0.02594,-0.125531,-0.203874,-0.239257,-0.220855,-0.171979,-0.096955,0.017241,0.091378,0.142147,0.186614,0.1744,0.102208,0.016017,-0.057509,-0.117777,-0.155798,-0.159028,-0.128378,-0.089001,-0.039083,0.014824,0.071824,0.111357,0.119737,0.070514,0.031201,0.014291,-0.002035,-0.008108,-0.003018,-0.007685,-0.013019,-0.025176,-0.03226,-0.029516,-0.028621,-0.020093,-0.001064,0.022688,0.041292,0.056989,0.061015,0.064399,0.040785,0.00509,-0.037031,-0.104863,-0.134656,-0.119777,-0.101834,-0.07097,-0.006821,0.065634,0.119762,0.139889,0.129598,0.09142,0.028318,-0.037563,-0.122585,-0.193054,-0.191399,-0.156212,-0.103825,-0.01826,0.078815,0.161199,0.201594,0.198317,0.144321,0.045927,-0.048821,-0.134741,-0.207852,-0.236502,-0.210885,-0.157399,-0.046308,0.08266,0.183572,0.229487,0.213175,0.16422,0.083737,-0.020106,-0.102453,-0.163889,-0.189825,-0.16664,-0.098598,-0.007979,0.072356,0.116554,0.150066,0.158901,0.140044,0.100511,0.041205,-0.019873,-0.078848,-0.115799,-0.117521,-0.080827,-0.033854,0.01758,0.063489,0.08827,0.107954,0.104669,0.081126,0.052485,0.027832,0.005379,-0.005095,0.00735,0.008562,0.007,-0.010057,-0.029046,-0.043124,-0.048141,-0.027413,0.012556,0.061425,0.09373,0.126812,0.139508,0.125246,0.091807,0.026243,-0.05428,-0.118601,-0.151364,-0.149474,-0.118357,-0.059115,0.021076,0.110432,0.191686,0.235633,0.220277,0.171711,0.096057,-0.010221,-0.123777,-0.203452,-0.231906,-0.189548,-0.108105,0.013012,0.141308,0.23191,0.27756,0.254156,0.17334,0.061912,-0.055315,-0.156824,-0.215428,-0.220265,-0.184805,-0.103445,0.005928,0.122475,0.197674,0.231721,0.21793,0.170986,0.09772,0.010037,-0.064748,-0.128148,-0.151492,-0.144035,-0.099198,-0.015522,0.05948,0.102114,0.132874,0.137128,0.12472,0.078067,0.037991,-0.013371,-0.048528,-0.055531,-0.044037,-0.034177,-0.029756,-0.015428,0.010074,0.051941,0.077778,0.089223,0.091752,0.099029,0.093218,0.077125,0.059879,0.01931,-0.029366,-0.081357,-0.107946,-0.108908,-0.064925,-0.008684,0.066965,0.134652,0.186182,0.223512,0.213983,0.168827,0.082724,-0.022563,-0.115983,-0.186008,-0.206535,-0.178865,-0.121537,-0.003445,0.119233,0.225131,0.296765,0.319257,0.264129,0.15934,0.027131,-0.089251,-0.172503,-0.22926,-0.236831,-0.180142,-0.075813,0.050218,0.176039,0.274976,0.307915,0.289312,0.223178,0.11137,-0.01278,-0.102888,-0.182275,-0.198998,-0.16538,-0.089825,0.002004,0.103848,0.184701,0.223674,0.227554,0.207304,0.152659,0.076728,-0.006302,-0.067719,-0.09675,-0.093855,-0.051358,-0.003775,0.041701,0.079534,0.115872,0.139029,0.141163,0.126088,0.108267,0.079092,0.043178,0.012286,-0.019925,-0.034937,-0.045294,-0.060711,-0.058046,-0.047072,-0.000213,0.054939,0.106989,0.144631,0.172787,0.166695,0.161817,0.124986,0.056256,-0.037397,-0.119687,-0.162642,-0.144513,-0.098804,-0.021566,0.070488,0.145999,0.206746,0.252837,0.255356,0.209648,0.111711,-0.002393,-0.096042,-0.162204,-0.20164,-0.181624,-0.115786,-0.018475,0.100952,0.21405,0.288291,0.307397,0.266963,0.187969,0.08348,-0.027777,-0.128393,-0.195079,-0.215663,-0.177226,-0.084629,0.028319,0.142962,0.220431,0.258237,0.254578,0.214263,0.142153,0.056753,-0.040222,-0.108183,-0.150308,-0.152099,-0.120436,-0.056737,0.020162,0.09303,0.153485,0.18977,0.211311,0.196964,0.151635,0.075195,0.012044,-0.039961,-0.071838,-0.096314,-0.098518,-0.084647,-0.052266,-0.015321,0.047102,0.115805,0.158118,0.181694,0.184767,0.158216,0.109245,0.049684,-0.023891,-0.09949,-0.146595,-0.155143,-0.130924,-0.093578,-0.018031,0.078388,0.181476,0.254852,0.285467,0.257737,0.183941,0.082104,-0.028595,-0.139322,-0.198325,-0.221538,-0.189489,-0.113103,-0.000777,0.123127,0.224288,0.282486,0.286066,0.23404,0.142137,0.03242,-0.067258,-0.141941,-0.185072,-0.178172,-0.124615,-0.03953,0.073715,0.159231,0.214517,0.224103,0.203069,0.142571,0.059591,-0.025643,-0.083734,-0.113442,-0.111085,-0.093725,-0.031971,0.036567,0.100734,0.143938,0.160967,0.141762,0.124356,0.088435,0.052208,0.006629,-0.018872,-0.030863,-0.02611,-0.012046,0.001504,0.014145,0.028539,0.037386,0.049531,0.064884,0.071922,0.081166,0.092418,0.110285,0.099509,0.070952,0.021086,-0.029929,-0.068936,-0.079518,-0.061631,-0.016244,0.049868,0.126211,0.195247,0.242372,0.248148,0.199038,0.115723,0.012989,-0.079998,-0.154754,-0.178456,-0.150588,-0.082195,0.015678,0.113149,0.196084,0.239678,0.256988,0.229624,0.159676,0.055596,-0.044489,-0.120427,-0.152268,-0.15186,-0.103334,-0.026325,0.07036,0.17644,0.244483,0.263355,0.2345,0.174233,0.080601,-0.005406,-0.07747,-0.126969,-0.135719,-0.102437,-0.051721,0.031479,0.112386,0.17956,0.20417,0.205662,0.173124,0.126976,0.056197,-0.003341,-0.046705,-0.065112,-0.051312,-0.022476,0.02315,0.050734,0.066755,0.069724,0.063121,0.050119,0.059624,0.087621,0.104288,0.111505,0.124513,0.122752,0.100001,0.061868,0.011313,-0.019153,-0.046494,-0.055141,-0.032561,-0.000279,0.051316,0.111345,0.178053,0.221751,0.213688,0.170916,0.089543,0.008612,-0.054868,-0.10502,-0.124435,-0.097476,-0.025833,0.065761,0.166543,0.247947,0.293128,0.287767,0.22605,0.135754,0.038298,-0.064728,-0.123379,-0.127873,-0.092622,-0.018124,0.081895,0.178246,0.248996,0.272018,0.253783,0.207547,0.132027,0.055181,-0.015285,-0.049622,-0.068021,-0.049155,0.01307,0.101865,0.17408,0.224169,0.231752,0.209808,0.167651,0.086067,0.026286,-0.016073,-0.042989,-0.032495,0.014111,0.073526,0.134604,0.176348,0.185207,0.177883,0.144511,0.091379,0.035986,0.004791,-0.005756,0.026244,0.068193,0.120602,0.163354,0.175707,0.155292,0.130877,0.098898,0.057231,0.035186,0.040674,0.057728,0.089643,0.125415,0.159,0.171714,0.154807,0.110498,0.070658,0.050529,0.029338,0.021911,0.025917,0.057876,0.101838,0.151654,0.183484,0.205947,0.202275,0.161961,0.106194,0.053153,0.015416,0.002896,0.005881,0.025166,0.061012,0.112915,0.169628,0.215595,0.222724,0.192599,0.140539,0.084906,0.025054,-0.014152,-0.019074,0.011725,0.061635,0.120337,0.184391,0.225315,0.235695,0.213028,0.160704,0.108417,0.05719,0.015589,0.004726,0.019423,0.065816,0.121483,0.188873,0.225066,0.234713,0.205041,0.156333,0.089213,0.03769,0.004359,0.014894,0.046556,0.089647,0.135306,0.184926,0.205098,0.212157,0.200568,0.169574,0.118799,0.065558,0.039632,0.04495,0.057296,0.089754,0.136768,0.178393,0.214329,0.207598,0.181397,0.148053,0.100446,0.059186,0.034528,0.035434,0.06173,0.098,0.138264,0.187827,0.213399,0.206827,0.178399,0.135686,0.086373,0.055738,0.050342,0.064186,0.092279,0.133757,0.180435,0.231012,0.248347,0.23485,0.195355,0.143122,0.086863,0.041619,0.020566,0.033544,0.062517,0.121346,0.188651,0.262501,0.29799,0.294889,0.249655,0.180305,0.106644,0.026794,-0.024836,-0.037124,0.001607,0.059446,0.137038,0.22326,0.283335,0.306069,0.289177,0.253586,0.18269,0.1066,0.038649,-0.007325,-0.00517,0.018582,0.05634,0.126189,0.188872,0.218651,0.223554,0.205201,0.170014,0.125262,0.083057,0.06223,0.070523,0.099927,0.135888,0.185325,0.22171,0.232738,0.20302,0.153326,0.11822,0.097759,0.100041,0.104346],"yp":[0.225739,0.244412,0.258291,0.234968,0.198508,0.140925,0.101086,0.063936,0.04471,0.064088,0.113357,0.180421,0.251981,0.305516,0.344007,0.353942,0.320182,0.265828,0.192699,0.107939,0.02649,-0.018347,-0.000223,0.048886,0.129439,0.241057,0.338278,0.416055,0.456037,0.441162,0.383557,0.285243,0.154287,0.053782,4.4e-05,-0.017659,0.021636,0.089901,0.17542,0.272505,0.35175,0.408439,0.431276,0.392681,0.297677,0.195524,0.115177,0.045192,0.014646,0.028551,0.062743,0.120979,0.17794,0.241852,0.303915,0.331468,0.328204,0.291569,0.23204,0.179237,0.159439,0.149883,0.140214,0.144425,0.155024,0.163898,0.183231,0.189449,0.18814,0.193775,0.207317,0.227037,0.240204,0.240895,0.23644,0.232285,0.216118,0.189382,0.161663,0.144123,0.128537,0.113443,0.138007,0.187883,0.239856,0.295269,0.337152,0.353212,0.33994,0.291979,0.235608,0.170033,0.115427,0.076789,0.064637,0.088234,0.163378,0.251333,0.331039,0.381065,0.400963,0.393465,0.337763,0.248449,0.151044,0.061514,0.01632,0.003773,0.051139,0.134776,0.232527,0.332685,0.40605,0.456942,0.447537,0.385346,0.291674,0.176859,0.090344,0.037724,0.013781,0.028802,0.099672,0.200392,0.281589,0.344205,0.392434,0.402417,0.360671,0.28935,0.220297,0.159425,0.101675,0.085351,0.095201,0.134055,0.188885,0.237879,0.293041,0.320901,0.328654,0.315037,0.284377,0.253857,0.207581,0.17543,0.167469,0.183055,0.182082,0.188289,0.205399,0.207962,0.21036,0.230653,0.247324,0.259689,0.281285,0.311576,0.336965,0.323912,0.285382,0.249985,0.208002,0.161036,0.122107,0.097534,0.110444,0.160586,0.231836,0.305281,0.363472,0.413772,0.431463,0.398382,0.341818,0.269262,0.184161,0.120521,0.085197,0.075321,0.111256,0.197301,0.303833,0.398232,0.460872,0.485842,0.457296,0.384465,0.28648,0.167211,0.077624,0.033005,0.039072,0.088916,0.170923,0.290642,0.393495,0.449332,0.483266,0.46343,0.395057,0.29755,0.193997,0.115915,0.065681,0.060573,0.102288,0.161938,0.233601,0.303195,0.367815,0.404636,0.4084,0.388137,0.342344,0.282153,0.229133,0.190926,0.180901,0.198722,0.230114,0.261749,0.297151,0.321501,0.338441,0.355908,0.369834,0.369721,0.348214,0.323694,0.302291,0.274372,0.250382,0.224645,0.197789,0.185056,0.196244,0.230108,0.28015,0.343276,0.400949,0.433794,0.43781,0.415275,0.360637,0.280899,0.196979,0.122104,0.076887,0.077037,0.117684,0.203905,0.309452,0.41302,0.500931,0.555009,0.54488,0.475905,0.367148,0.239846,0.11738,0.036388,0.019748,0.056959,0.135195,0.231046,0.349853,0.463753,0.54099,0.557042,0.513243,0.420899,0.306452,0.193388,0.102108,0.039196,0.034953,0.082365,0.165768,0.282097,0.387628,0.459759,0.491026,0.485524,0.438693,0.358535,0.276649,0.203604,0.144305,0.117468,0.123871,0.163875,0.226268,0.289651,0.350109,0.383561,0.396808,0.390913,0.370323,0.331528,0.292406,0.257808,0.225618,0.207673,0.19954,0.200126,0.215367,0.244114,0.275849,0.313816,0.355621,0.396617,0.422749,0.431668,0.423501,0.384578,0.339942,0.283997,0.224139,0.16845,0.13656,0.138294,0.186351,0.269398,0.353006,0.417492,0.467259,0.481113,0.459362,0.406607,0.324181,0.228942,0.141684,0.087822,0.080151,0.125597,0.207151,0.308364,0.415947,0.510209,0.564085,0.564995,0.509519,0.412719,0.301924,0.193438,0.114627,0.07594,0.084357,0.129694,0.22025,0.339486,0.451631,0.53474,0.56965,0.546325,0.480265,0.386573,0.29282,0.205879,0.144313,0.118067,0.132984,0.193596,0.266193,0.342674,0.41229,0.476021,0.505452,0.495292,0.458681,0.399037,0.318877,0.245705,0.191931,0.165313,0.170804,0.193376,0.229049,0.283593,0.342232,0.397189,0.438181,0.466782,0.4775,0.458211,0.419366,0.365315,0.302682,0.240949,0.191869,0.170431,0.181669,0.226019,0.294768,0.37451,0.453125,0.508645,0.546517,0.555309,0.518954,0.437763,0.325939,0.212092,0.13251,0.091621,0.091752,0.145573,0.238036,0.342447,0.454615,0.541594,0.589928,0.576634,0.506303,0.405431,0.286175,0.181338,0.109266,0.08953,0.116724,0.179532,0.271358,0.381188,0.472281,0.525748,0.528718,0.487174,0.421945,0.338529,0.258001,0.197537,0.169097,0.179374,0.221532,0.289162,0.35997,0.416504,0.459353,0.477603,0.46303,0.423092,0.370292,0.318504,0.276495,0.249048,0.241128,0.245953,0.271196,0.297797,0.325544,0.352088,0.371884,0.38268,0.378696,0.379874,0.376294,0.369584,0.355337,0.343321,0.328221,0.301064,0.26584,0.245831,0.24217,0.260681,0.30858,0.365237,0.422527,0.46324,0.487358,0.480314,0.433805,0.353487,0.262613,0.180657,0.131365,0.121489,0.160475,0.238837,0.340634,0.43247,0.513786,0.550766,0.543406,0.499279,0.416612,0.324907,0.238117,0.172731,0.144585,0.159161,0.223001,0.302236,0.388169,0.474212,0.530868,0.545536,0.515793,0.443071,0.350975,0.262833,0.192209,0.159339,0.165236,0.20866,0.275574,0.36213,0.440014,0.489586,0.517492,0.510515,0.465123,0.396639,0.328434,0.264249,0.220543,0.205617,0.224986,0.265888,0.323643,0.374698,0.411556,0.426299,0.421371,0.40964,0.392818,0.388629,0.381518,0.384312,0.380043,0.367436,0.34875,0.318161,0.284059,0.259918,0.253364,0.260651,0.28797,0.325924,0.372334,0.422725,0.462636,0.48788,0.479635,0.438104,0.375353,0.297074,0.233867,0.194684,0.197798,0.232727,0.290596,0.367105,0.449213,0.514037,0.540875,0.52185,0.462191,0.370581,0.269289,0.183733,0.139964,0.137014,0.172449,0.252153,0.352778,0.44683,0.513199,0.538614,0.518422,0.456689,0.375711,0.293614,0.228647,0.19682,0.196402,0.227656,0.285297,0.353703,0.421442,0.47092,0.479849,0.447549,0.396936,0.332856,0.268532,0.221346,0.197442,0.213314,0.252198,0.30787,0.373763,0.421432,0.444434,0.435485,0.401696,0.353225,0.30571,0.274717,0.256888,0.261288,0.291636,0.341886,0.38508,0.40397,0.405901,0.388862,0.353646,0.320092,0.305299,0.294602,0.297865,0.324919,0.356789,0.386306,0.403163,0.399388,0.376774,0.344412,0.308606,0.28567,0.287625,0.306909,0.332716,0.367246,0.403205,0.433018,0.446379,0.430741,0.398554,0.36119,0.312555,0.270561,0.253331,0.269296,0.293332,0.334335,0.376425,0.414816,0.445767,0.453953,0.435726,0.395993,0.345808,0.291935,0.260321,0.25231,0.277408,0.32513,0.38771,0.447616,0.487768,0.493465,0.466985,0.422135,0.362943,0.306722,0.273483,0.265829,0.270752,0.299894,0.349151,0.402701,0.447597,0.455909,0.434095,0.385435,0.332582,0.279057,0.244955,0.238027,0.264912,0.31262,0.369738,0.417805,0.444853,0.441367,0.418349,0.386905,0.351277,0.313941,0.28333,0.269714,0.284621,0.325163,0.364708,0.398823,0.420828,0.427552,0.406793,0.375484,0.330276,0.296793,0.274229,0.275047,0.295491,0.332898,0.378818,0.4189,0.443914,0.438355,0.413828,0.37875,0.342767,0.309781,0.290114,0.293554,0.318852,0.356437,0.39373,0.423946,0.44354,0.432905,0.40222,0.356174,0.304294,0.264116,0.248033,0.261528,0.299059,0.347205,0.399497,0.453466,0.483556,0.476915,0.435531,0.369164,0.293895,0.229878,0.194939,0.192612,0.219622,0.277943,0.360188,0.440655,0.49102,0.511232,0.494966,0.445089,0.375391,0.299937,0.245462,0.207939,0.210461,0.242834,0.304545,0.371955,0.426842,0.467909,0.478625,0.464636,0.428456,0.38669,0.346798,0.314124,0.304812,0.315529,0.349668,0.397421,0.429113,0.44122,0.435127,0.409294,0.368547,0.327212,0.31626,0.319399,0.343803,0.376277,0.392235]};
 
-  // Resonator natural frequency = Chandler wobble alias
-  const omega0 = 2 * Math.PI / Tcw_yr;  // rad/yr
-  const gamma = omega0 / Q;             // damping
+async function fetchIERS() {
+  setLoadMsg('Loading embedded IERS EOP C04 data…');
+  iersTime  = IERS_DATA.t;
+  iersYpole = IERS_DATA.yp;
+  iersXpole = IERS_DATA.xp;
+  setLoadMsg(`Loaded ${iersTime.length} monthly observations (1962–present)`);
+}
 
-  // Forcing function F(t) at a given year t
+
+
+/* ═══════════════════════════════════════════════════════
+   RESONATOR ODE  (2nd-order damped, driven)
+   Numerically integrated with RK4 on monthly grid
+═══════════════════════════════════════════════════════ */
+function computeResonator(p) {
+  const { Td, Ty, Q, Tnode, ampDrac, phiDrac, ampNode, phiNode } = p;
+  const times = iersTime;
+  const N = times.length;
+
+  // Natural frequency of Chandler wobble resonator (rad/yr)
+  const Tcw_yr = chandlerPeriod(Td, Ty) / DAYS_PER_YEAR;
+  const omega0 = TWO_PI / Tcw_yr;
+  const zeta   = 1 / (2 * Q);     // Q = omega0 / (2*zeta*omega0) => zeta = 1/(2Q)
+  const gamma  = 2 * zeta * omega0;
+
+  // Draconic forcing frequency (rad/yr)
+  const omega_d = TWO_PI / (Td / DAYS_PER_YEAR);
+  const omega_node = TWO_PI / Tnode;
+
+  // Forcing: cos²(omega_d * t + phi_d) * (1 + ampNode * cos(omega_node*t + phiNode))
   function forcing(t) {
-    // Full-wave rectified draconic — amplitude + phase controlled
-    const fd = ampDrac * Math.abs(Math.cos(Math.PI * t / (Td_yr / 2) + phiDrac));
-    // Semi-annual (annual) impulse — amplitude + phase controlled
-    const fa = ampAnn * Math.pow(Math.cos(Math.PI * t / Ty_yr + phiAnn / 2), 2);
-    // Nodal modulation — phase controlled
-    const fn = 1.0 + 0.22 * Math.cos(2 * Math.PI * t / Tnode + phiNode);
-    return fd * fa * fn;
+    const cosd = Math.cos(omega_d * t + phiDrac);
+    const nodalMod = 1.0 + ampNode * Math.cos(omega_node * t + phiNode);
+    return ampDrac * cosd * cosd * nodalMod;
   }
 
-  // RK4 integration with sub-step for accuracy
-  const SUBSTEPS = 8;
-  const dtSub = DT / SUBSTEPS;
-  let x = 0, v = 0;  // displacement, velocity
-  // Warm-up: spin up model for 10 years before T0 to reach steady state
-  const WARMUP_YRS = 20;
-  const warmupSteps = Math.round(WARMUP_YRS / dtSub);
-  for (let i = 0; i < warmupSteps; i++) {
-    const t = T0 - WARMUP_YRS + i * dtSub;
-    const F = forcing(t);
-    // RK4
-    const dxdt = (xi, vi) => vi;
-    const dvdt = (ti, xi, vi) => -gamma * vi - omega0 * omega0 * xi + omega0 * omega0 * forcing(ti);
-    const k1x = dxdt(x, v);           const k1v = dvdt(t, x, v);
-    const k2x = dxdt(x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
-    const k2v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
-    const k3x = dxdt(x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
-    const k3v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
-    const k4x = dxdt(x+dtSub*k3x, v+dtSub*k3v);
-    const k4v = dvdt(t+dtSub, x+dtSub*k3x, v+dtSub*k3v);
-    x += dtSub/6*(k1x+2*k2x+2*k3x+k4x);
-    v += dtSub/6*(k1v+2*k2v+2*k3v+k4v);
+  // RK4 integration
+  // State: [x, v]  (position, velocity)
+  // ẍ + gamma*ẋ + omega0²*x = omega0² * F(t)
+  function dvdt(t, x, v) {
+    return -gamma * v - omega0 * omega0 * x + omega0 * omega0 * forcing(t);
   }
 
-  // Main integration — record at each monthly step
-  const modelRaw = [];
-  for (let i = 0; i < NPTS; i++) {
-    for (let s = 0; s < SUBSTEPS; s++) {
-      const t = T0 + (i + s / SUBSTEPS) * DT;
-      const dxdt = (xi, vi) => vi;
-      const dvdt = (ti, xi, vi) => -gamma * vi - omega0 * omega0 * xi + omega0 * omega0 * forcing(ti);
-      const k1x = dxdt(x, v);          const k1v = dvdt(t, x, v);
-      const k2x = dxdt(x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
-      const k2v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k1x, v+0.5*dtSub*k1v);
-      const k3x = dxdt(x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
-      const k3v = dvdt(t+0.5*dtSub, x+0.5*dtSub*k2x, v+0.5*dtSub*k2v);
-      const k4x = dxdt(x+dtSub*k3x, v+dtSub*k3v);
-      const k4v = dvdt(t+dtSub, x+dtSub*k3x, v+dtSub*k3v);
-      x += dtSub/6*(k1x+2*k2x+2*k3x+k4x);
-      v += dtSub/6*(k1v+2*k2v+2*k3v+k4v);
+  // Warm up: spin up for 20 years before first data point
+  const WARMUP = 20;
+  const DT_SUB = 1/12 / 8; // sub-step
+  let x = 0, v = 0;
+  let tCur = times[0] - WARMUP;
+  const tWarmEnd = times[0];
+  while (tCur < tWarmEnd) {
+    const k1v = dvdt(tCur, x, v);
+    const k1x = v;
+    const k2v = dvdt(tCur + DT_SUB/2, x + DT_SUB/2*k1x, v + DT_SUB/2*k1v);
+    const k2x = v + DT_SUB/2*k1v;
+    const k3v = dvdt(tCur + DT_SUB/2, x + DT_SUB/2*k2x, v + DT_SUB/2*k2v);
+    const k3x = v + DT_SUB/2*k2v;
+    const k4v = dvdt(tCur + DT_SUB, x + DT_SUB*k3x, v + DT_SUB*k3v);
+    const k4x = v + DT_SUB*k3v;
+    x += DT_SUB/6*(k1x + 2*k2x + 2*k3x + k4x);
+    v += DT_SUB/6*(k1v + 2*k2v + 2*k3v + k4v);
+    tCur += DT_SUB;
+  }
+
+  // Main integration — record x at each monthly step
+  const resCos = [], resSin = [];
+  const resRaw = [];
+
+  for (let i = 0; i < N; i++) {
+    const tTarget = times[i];
+    const dt_step = i > 0 ? (times[i] - times[i-1]) : 1/12;
+    const NSUB = Math.max(4, Math.ceil(dt_step / DT_SUB));
+    const dtS = dt_step / NSUB;
+
+    for (let s = 0; s < NSUB; s++) {
+      const tc = tCur;
+      const k1v = dvdt(tc, x, v);
+      const k1x = v;
+      const k2v = dvdt(tc + dtS/2, x + dtS/2*k1x, v + dtS/2*k1v);
+      const k2x = v + dtS/2*k1v;
+      const k3v = dvdt(tc + dtS/2, x + dtS/2*k2x, v + dtS/2*k2v);
+      const k3x = v + dtS/2*k2v;
+      const k4v = dvdt(tc + dtS, x + dtS*k3x, v + dtS*k3v);
+      const k4x = v + dtS*k3v;
+      x += dtS/6*(k1x + 2*k2x + 2*k3x + k4x);
+      v += dtS/6*(k1v + 2*k2v + 2*k3v + k4v);
+      tCur += dtS;
     }
-    modelRaw.push(x);
+    resRaw.push(x);
+    resCos.push(x);        // in-phase component
+    resSin.push(v / omega0); // quadrature component (velocity / omega0)
   }
 
-  return modelRaw;
+  return { resCos, resSin, resRaw };
 }
 
-/* Fit model to observed via least-squares on training window.
-   Solves for two free parameters: amplitude scale (a) and DC offset (b)
-   so that fitted[i] = a * modelRaw[i] + b minimises sum of squared residuals
-   over the training interval. This is the minimum necessary to achieve
-   the maximum possible correlation given the model waveform shape. */
-function fitModel(modelRaw, observed, trainEndYear) {
-  const trainIdx = Math.max(2, (years.findIndex(y => y >= trainEndYear) + 1) || NPTS);
+/* ═══════════════════════════════════════════════════════
+   MLR ENGINE
+   Design matrix columns (per time step):
+     0: resonator output (in-phase)
+     1: resonator quadrature (90° shifted)
+     2: cos(2π t / T_ann + phiAnn)
+     3: sin(2π t / T_ann + phiAnn)
+     4: cos(2π t / T_d_yr)    [draconic direct]
+     5: sin(2π t / T_d_yr)
+     6: cos(2π t / T_node)    [nodal 18.6yr]
+     7: sin(2π t / T_node)
+     8: 1                     [DC offset]
+═══════════════════════════════════════════════════════ */
+function buildDesignMatrix(p, resCos, resSin) {
+  const { Td, Ty, Tnode, ampAnn, phiAnn } = p;
+  const N = iersTime.length;
+  const Td_yr   = Td / DAYS_PER_YEAR;
+  const Ty_yr   = Ty / DAYS_PER_YEAR;
+  const omega_ann  = TWO_PI / Ty_yr;
+  const omega_d    = TWO_PI / Td_yr;
+  const omega_node = TWO_PI / Tnode;
 
-  // Sums for 2-parameter OLS: y = a*x + b
-  let Sx = 0, Sy = 0, Sxx = 0, Sxy = 0;
-  const n = trainIdx;
-  for (let i = 0; i < n; i++) {
-    Sx  += modelRaw[i];
-    Sy  += observed[i];
-    Sxx += modelRaw[i] * modelRaw[i];
-    Sxy += modelRaw[i] * observed[i];
+  const X = [];
+  for (let i = 0; i < N; i++) {
+    const t = iersTime[i];
+    X.push([
+      resCos[i],
+      resSin[i],
+      Math.cos(omega_ann * t + phiAnn),
+      Math.sin(omega_ann * t + phiAnn),
+      Math.cos(omega_d * t),
+      Math.sin(omega_d * t),
+      Math.cos(omega_node * t),
+      Math.sin(omega_node * t),
+      1.0
+    ]);
   }
-  const det = n * Sxx - Sx * Sx;
-  const a = det !== 0 ? (n * Sxy - Sx * Sy) / det : 1;
-  const b = (Sy - a * Sx) / n;
-
-  return modelRaw.map(v => a * v + b);
+  return X;
 }
 
-/* Bandpass filter: extract Chandler wobble band (~350–520 day periods)
-   Uses a simple running-mean subtraction (removes annual+) followed by
-   a second pass to remove sub-monthly. Equivalent to a broad bandpass
-   centred on ~433 days. Applied to both observed and model before
-   computing correlation, so we measure Chandler-band agreement only. */
-function chandlerBandpass(arr) {
-  const N = arr.length;
-  // Half-window in samples: ~433 days / 30.4 days/sample ≈ 14 samples
-  // Use 7-sample (±7 month) running mean to remove annual and longer
-  const W_low = 7;   // removes periods > ~14 months
-  const W_high = 2;  // removes periods < ~4 months
+/* Solve normal equations: β = (XᵀX)⁻¹ Xᵀy
+   Uses only training rows for the fit. */
+function solveOLS(X, y, trainN) {
+  const ncols = X[0].length;
+  // XᵀX and Xᵀy — training window only
+  const XtX = Array.from({length: ncols}, () => new Array(ncols).fill(0));
+  const Xty = new Array(ncols).fill(0);
 
-  function runMean(a, w) {
-    const out = new Array(a.length).fill(0);
-    for (let i = 0; i < a.length; i++) {
-      let s = 0, c = 0;
-      for (let j = Math.max(0, i-w); j <= Math.min(a.length-1, i+w); j++) {
-        s += a[j]; c++;
+  for (let i = 0; i < trainN; i++) {
+    const xi = X[i];
+    for (let j = 0; j < ncols; j++) {
+      for (let k = 0; k < ncols; k++) {
+        XtX[j][k] += xi[j] * xi[k];
       }
-      out[i] = s / c;
+      Xty[j] += xi[j] * y[i];
     }
-    return out;
   }
 
-  // High-pass: subtract slow trend (removes drift + nodal envelope)
-  const trend = runMean(arr, W_low * 3);          // ~2-year smoother
-  const hp = arr.map((v, i) => v - trend[i]);
-
-  // Low-pass: smooth to remove sub-monthly noise
-  const lp = runMean(hp, W_high);
-  return lp;
+  // Cholesky or Gaussian elimination (Gaussian for simplicity)
+  return gaussianElim(XtX, Xty);
 }
 
-/* First difference (derivative) of time series */
-function derivative(arr) {
-  const d = [0];
-  for (let i = 1; i < arr.length; i++) d.push(arr[i] - arr[i-1]);
-  return d;
+function gaussianElim(A, b) {
+  const n = b.length;
+  // Augmented matrix
+  const M = A.map((row, i) => [...row, b[i]]);
+
+  for (let col = 0; col < n; col++) {
+    // Find pivot
+    let maxRow = col;
+    for (let row = col+1; row < n; row++) {
+      if (Math.abs(M[row][col]) > Math.abs(M[maxRow][col])) maxRow = row;
+    }
+    [M[col], M[maxRow]] = [M[maxRow], M[col]];
+
+    if (Math.abs(M[col][col]) < 1e-14) continue; // singular — skip
+
+    for (let row = 0; row < n; row++) {
+      if (row === col) continue;
+      const factor = M[row][col] / M[col][col];
+      for (let k = col; k <= n; k++) {
+        M[row][k] -= factor * M[col][k];
+      }
+    }
+  }
+
+  return M.map((row, i) => row[n] / (row[i] || 1e-14));
+}
+
+function applyCoeffs(X, beta) {
+  return X.map(row => row.reduce((s, v, j) => s + v * beta[j], 0));
+}
+
+/* ═══════════════════════════════════════════════════════
+   CHANDLER BANDPASS FILTER
+   Extracts ~350–520 day band from monthly data.
+   Subtract 2-year running mean (removes annual + longer),
+   then smooth 3-month (removes sub-monthly noise).
+═══════════════════════════════════════════════════════ */
+function chandlerBandpass(arr) {
+  function runMean(a, w) {
+    return a.map((_, i) => {
+      const lo = Math.max(0, i-w), hi = Math.min(a.length-1, i+w);
+      let s = 0; for (let j = lo; j <= hi; j++) s += a[j];
+      return s / (hi - lo + 1);
+    });
+  }
+  const trend = runMean(arr, 12);          // 2-year smoother
+  const hp = arr.map((v,i) => v - trend[i]);
+  return runMean(hp, 2);                   // 5-month low-pass
 }
 
 /* Pearson correlation */
 function pearson(a, b, i0, i1) {
   const n = i1 - i0;
+  if (n < 2) return NaN;
   let ma = 0, mb = 0;
   for (let i = i0; i < i1; i++) { ma += a[i]; mb += b[i]; }
   ma /= n; mb /= n;
   let num = 0, da2 = 0, db2 = 0;
   for (let i = i0; i < i1; i++) {
-    const da = a[i] - ma, db = b[i] - mb;
-    num += da * db; da2 += da*da; db2 += db*db;
+    const da = a[i]-ma, db = b[i]-mb;
+    num += da*db; da2 += da*da; db2 += db*db;
   }
-  return num / Math.sqrt(da2 * db2);
+  const denom = Math.sqrt(da2*db2);
+  return denom < 1e-12 ? 0 : num / denom;
 }
 
-/* Windowed amplitude spectrum — Hann window, direct DFT at target frequencies */
+/* Hann-windowed amplitude spectrum */
 function amplitudeSpectrum(signal) {
   const N = signal.length;
-  // Apply Hann window to reduce spectral leakage
-  const windowed = signal.map((v, i) => v * 0.5 * (1 - Math.cos(2 * Math.PI * i / (N - 1))));
-
-  // Target period range: 180–800 days, log-spaced
-  // Key periods: ~182d (semi-annual), ~365d (annual), ~433d (Chandler), ~6.4yr beat
+  const DT = 1/12; // years per sample
+  const windowed = signal.map((v,i) => v * 0.5*(1 - Math.cos(TWO_PI*i/(N-1))));
   const NFREQ = 600;
-  const pMin = 180, pMax = 800;
-  const periods = [];
-  const amps = [];
+  const pMin = 150, pMax = 900;
+  const periods = [], amps = [];
   for (let k = 0; k < NFREQ; k++) {
-    // Log-spaced in period
-    const period_days = pMin * Math.pow(pMax / pMin, k / (NFREQ - 1));
-    // Convert to cycles per sample-step
-    const f_cps = DAYS_PER_YEAR * DT / period_days;  // cycles per month-step
+    const period_days = pMin * Math.pow(pMax/pMin, k/(NFREQ-1));
+    const f_cps = DAYS_PER_YEAR * DT / period_days;
     let re = 0, im = 0;
     for (let n = 0; n < N; n++) {
-      const phi = 2 * Math.PI * f_cps * n;
+      const phi = TWO_PI * f_cps * n;
       re += windowed[n] * Math.cos(phi);
       im -= windowed[n] * Math.sin(phi);
     }
     periods.push(period_days);
-    // Normalized amplitude (2/N corrected for Hann window factor 0.5)
     amps.push(4 * Math.sqrt(re*re + im*im) / N);
   }
   return { periods, amps };
 }
 
 /* ═══════════════════════════════════════════════════════
-   STATE
+   MAIN COMPUTATION: run resonator + MLR, produce output
 ═══════════════════════════════════════════════════════ */
-let params = {
-  Td: 27.2122, Ty: 365.242, Q: 100, Tnode: 18.6,
-  ampAnn: 1.0,    // annual forcing amplitude
-  ampDrac: 1.0,   // draconic forcing amplitude
-  phiAnn: 0.0,    // annual phase offset (radians)
-  phiDrac: 0.0,   // draconic phase offset (radians)
-  phiNode: 0.0,   // nodal modulation phase offset (radians)
-  trainEnd: 1962.5
-};
+let modelFitted = [];   // MLR fitted y-pole (arcseconds)
+let modelResid  = [];   // residual
 
-const observed = generateObserved();
-let modelRaw = computeModel(params);
-let model = fitModel(modelRaw, observed, params.trainEnd);
-let viewMode = 'deriv'; // 'deriv' or 'raw'
+function runModel() {
+  if (iersTime.length === 0) return;
 
-/* ═══════════════════════════════════════════════════════
-   CHARTS SETUP
-═══════════════════════════════════════════════════════ */
-const MARGIN = { top: 20, right: 20, bottom: 36, left: 48 };
+  // 1. Resonator ODE
+  const { resCos, resSin } = computeResonator(params);
 
-function chartDims(wrap) {
-  const w = wrap.clientWidth || 800;
-  const h = Math.min(Math.max(w * 0.32, 200), 320);
-  return {
-    w, h,
-    innerW: w - MARGIN.left - MARGIN.right,
-    innerH: h - MARGIN.top - MARGIN.bottom
-  };
+  // 2. Design matrix
+  const X = buildDesignMatrix(params, resCos, resSin);
+
+  // 3. Training indices
+  const trainN = iersTime.filter(t => t <= params.trainEnd).length;
+  const safeN  = Math.max(10, Math.min(trainN, iersTime.length - 5));
+
+  // 4. OLS solve on training window
+  const beta = solveOLS(X, iersYpole, safeN);
+  mlrCoeffs = beta;
+
+  // 5. Apply to full record
+  modelFitted = applyCoeffs(X, beta);
+  modelResid  = iersYpole.map((v, i) => v - modelFitted[i]);
+
+  // 6. Update MLR slider hints from coefficients
+  updateMLRHints(beta, resCos, resSin);
+
+  // 7. Update stats
+  updateStats(safeN);
+
+  // 8. Update formula box
+  const Tcw = chandlerPeriod(params.Td, params.Ty);
+  const Tcw_yr = Tcw / DAYS_PER_YEAR;
+  const Ty_yr  = params.Ty / DAYS_PER_YEAR;
+  const Tbeat  = Math.abs(1 / (1/Tcw_yr - 1/Ty_yr));
+  document.getElementById('fmPeriod').textContent = Tcw.toFixed(1);
+  document.getElementById('fmBeat').textContent   = Tbeat.toFixed(2);
+  document.getElementById('kpiPeriod').textContent = Tcw.toFixed(1);
+  document.getElementById('kpiBeat').textContent   = Tbeat.toFixed(2);
+  document.getElementById('kpiQ').textContent      = params.Q;
 }
 
-/* ─── TIME SERIES ───────────────────────────────────── */
-const tsWrap = document.getElementById('tsWrap');
-let tsSvg, tsX, tsYscale, tsObsLine, tsModLine, tsResLine, tsTrainBand, tsTrainBorderL, tsTrainBorderR;
+/* Extract amplitude/phase from MLR coefficients for sliders */
+function updateMLRHints(beta, resCos, resSin) {
+  // Annual: columns 2 (cos) and 3 (sin)
+  const aAnn = beta[2], bAnn = beta[3];
+  const ampAnn_mlr = Math.sqrt(aAnn*aAnn + bAnn*bAnn);
+  const phiAnn_mlr = Math.atan2(-bAnn, aAnn);
+  // Draconic: columns 4 and 5
+  const aDrac = beta[4], bDrac = beta[5];
+  const ampDrac_mlr = Math.sqrt(aDrac*aDrac + bDrac*bDrac);
+  // Nodal: columns 6 and 7
+  const aNode = beta[6], bNode = beta[7];
+  const ampNode_mlr = Math.sqrt(aNode*aNode + bNode*bNode);
+  // Resonator: columns 0 and 1
+  const aRes = beta[0], bRes = beta[1];
+  const ampRes_mlr = Math.sqrt(aRes*aRes + bRes*bRes);
+
+  const fmt = (v, u) => `MLR: ${v.toFixed(3)} ${u}`;
+  const el = id => document.getElementById(id);
+  el('mlrAmpAnn').textContent  = fmt(ampAnn_mlr,  '"');
+  el('mlrPhiAnn').textContent  = fmt(phiAnn_mlr,  'rad');
+  el('mlrAmpDrac').textContent = fmt(ampDrac_mlr, '"');
+  el('mlrAmpNode').textContent = fmt(ampNode_mlr, '"');
+
+  // Update MLR info box
+  el('mlrInfo').innerHTML =
+    `<span class="hl">β_resonator</span> = ${aRes.toFixed(4)} (cos) + ${bRes.toFixed(4)} (sin) → |A|=${ampRes_mlr.toFixed(4)}"` +
+    `&nbsp;&nbsp;|&nbsp;&nbsp;<span class="hl2">β_annual</span> = ${aAnn.toFixed(4)} (cos) + ${bAnn.toFixed(4)} (sin) → |A|=${ampAnn_mlr.toFixed(4)}" φ=${phiAnn_mlr.toFixed(3)} rad` +
+    `<br><span class="hl">β_draconic</span> = ${aDrac.toFixed(4)} (cos) + ${bDrac.toFixed(4)} (sin) → |A|=${ampDrac_mlr.toFixed(4)}"` +
+    `&nbsp;&nbsp;|&nbsp;&nbsp;<span class="hl2">β_nodal</span> = ${aNode.toFixed(4)} (cos) + ${bNode.toFixed(4)} (sin) → |A|=${ampNode_mlr.toFixed(4)}"` +
+    `&nbsp;&nbsp;|&nbsp;&nbsp;<span class="hl">DC offset</span> = ${beta[8].toFixed(4)}"`;
+}
+
+function updateStats(trainN) {
+  const N = iersTime.length;
+  // Bandpass both signals
+  const obsBP   = chandlerBandpass(iersYpole);
+  const modBP   = chandlerBandpass(modelFitted);
+
+  const rTrain = pearson(obsBP, modBP, 0, trainN);
+  const rFull  = pearson(obsBP, modBP, 0, N);
+
+  const fmt = v => isNaN(v) ? '—' : (v >= 0 ? '+' : '') + v.toFixed(3);
+  document.getElementById('kpiCorrTrain').textContent = fmt(rTrain);
+  document.getElementById('kpiCorrFull').textContent  = fmt(rFull);
+  document.getElementById('kpiSpan').textContent =
+    (iersTime[N-1] - iersTime[0]).toFixed(1);
+}
+
+/* ═══════════════════════════════════════════════════════
+   D3 CHARTS
+═══════════════════════════════════════════════════════ */
+const MARGIN = { top: 12, right: 20, bottom: 36, left: 52 };
+
+function chartDims(selector, heightRatio) {
+  const el = document.querySelector(selector);
+  const W = el.clientWidth || 600;
+  const H = W * heightRatio;
+  return { W, H,
+    w: W - MARGIN.left - MARGIN.right,
+    h: H - MARGIN.top  - MARGIN.bottom };
+}
+
+/* ─── Time Series ──────────────────────────────────── */
+let tsSvg, tsScX, tsScY, tsPath_obs, tsPath_mod, tsPath_res, tsBand, tsBandLine;
 
 function initTS() {
-  tsWrap.innerHTML = '';
-  const { w, h, innerW, innerH } = chartDims(tsWrap);
+  const { W, H, w, h } = chartDims('#tsChart', 0.28);
+  const div = d3.select('#tsChart');
+  div.selectAll('*').remove();
+  const svg = div.append('svg').attr('width', W).attr('height', H);
+  tsSvg = svg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
 
-  tsSvg = d3.select(tsWrap).append('svg')
-    .attr('width', w).attr('height', h)
-    .attr('viewBox', `0 0 ${w} ${h}`);
+  const tMin = d3.min(iersTime), tMax = d3.max(iersTime);
+  const yAll = [...iersYpole, ...modelFitted];
+  const yPad = 0.08;
+  const yMin = d3.min(yAll), yMax = d3.max(yAll);
+  const ySpan = yMax - yMin;
 
-  const g = tsSvg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+  tsScX = d3.scaleLinear().domain([tMin, tMax]).range([0, w]);
+  tsScY = d3.scaleLinear().domain([yMin - ySpan*yPad, yMax + ySpan*yPad]).range([h, 0]);
 
-  tsX = d3.scaleLinear().domain([T0, T1]).range([0, innerW]);
-
-  const getDisplay = () => viewMode === 'deriv'
-    ? { obs: derivative(observed), mod: derivative(model) }
-    : { obs: observed, mod: model };
-
-  const { obs, mod } = getDisplay();
-  const allVals = [...obs, ...mod];
-  const ext = d3.extent(allVals);
-  const pad = (ext[1] - ext[0]) * 0.1;
-  tsYscale = d3.scaleLinear().domain([ext[0] - pad, ext[1] + pad]).range([innerH, 0]);
-
-  // Grid lines
-  const yTicks = tsYscale.ticks(6);
-  g.selectAll('.grid-line').data(yTicks).enter().append('line')
-    .attr('class', 'grid-line')
-    .attr('x1', 0).attr('x2', innerW)
-    .attr('y1', d => tsYscale(d)).attr('y2', d => tsYscale(d));
-
-  // Zero line
-  if (tsYscale.domain()[0] < 0) {
-    g.append('line').attr('class', 'zero-line')
-      .attr('x1', 0).attr('x2', innerW)
-      .attr('y1', tsYscale(0)).attr('y2', tsYscale(0));
-  }
+  // Grid
+  tsSvg.append('g').attr('class', 'grid')
+    .selectAll('line').data(tsScY.ticks(6)).enter().append('line')
+    .attr('class','grid-line').attr('x1',0).attr('x2',w)
+    .attr('y1', d=>tsScY(d)).attr('y2', d=>tsScY(d));
 
   // Training band
-  tsTrainBand = g.append('rect').attr('class', 'train-band')
-    .attr('x', tsX(T0)).attr('y', 0)
-    .attr('width', tsX(params.trainEnd) - tsX(T0))
-    .attr('height', innerH);
-
-  tsTrainBorderL = g.append('line').attr('class', 'train-border')
-    .attr('x1', tsX(T0)).attr('x2', tsX(T0))
-    .attr('y1', 0).attr('y2', innerH);
-  tsTrainBorderR = g.append('line').attr('class', 'train-border')
-    .attr('x1', tsX(params.trainEnd)).attr('x2', tsX(params.trainEnd))
-    .attr('y1', 0).attr('y2', innerH);
-
-  // Lines
-  const lineGen = d3.line()
-    .x((_, i) => tsX(years[i]))
-    .y(d => tsYscale(d))
-    .curve(d3.curveMonotoneX);
-
-  // Residual
-  const res = obs.map((v, i) => v - mod[i]);
-  tsResLine = g.append('path').datum(res)
-    .attr('fill', 'none')
-    .attr('stroke', 'var(--color-residual)')
-    .attr('stroke-width', 1)
-    .attr('stroke-dasharray', '3 2')
-    .attr('opacity', 0.55)
-    .attr('d', lineGen);
-
-  // Observed
-  tsObsLine = g.append('path').datum(obs)
-    .attr('fill', 'none')
-    .attr('stroke', 'var(--color-observed)')
-    .attr('stroke-width', 1.8)
-    .attr('opacity', 0.9)
-    .attr('d', lineGen);
-
-  // Model
-  tsModLine = g.append('path').datum(mod)
-    .attr('fill', 'none')
-    .attr('stroke', 'var(--color-model)')
-    .attr('stroke-width', 2)
-    .attr('opacity', 0.9)
-    .attr('d', lineGen);
+  tsBand = tsSvg.append('rect').attr('class','train-band')
+    .attr('y',0).attr('height',h);
+  tsBandLine = tsSvg.append('line').attr('class','train-border')
+    .attr('y1',0).attr('y2',h);
 
   // Axes
-  g.append('g').attr('class', 'axis')
-    .attr('transform', `translate(0,${innerH})`)
-    .call(d3.axisBottom(tsX).ticks(10).tickFormat(d3.format('d')));
-  g.append('g').attr('class', 'axis').call(d3.axisLeft(tsYscale).ticks(6));
+  tsSvg.append('g').attr('class','axis').attr('transform',`translate(0,${h})`)
+    .call(d3.axisBottom(tsScX).ticks(10).tickFormat(d3.format('.4g')));
+  tsSvg.append('g').attr('class','axis')
+    .call(d3.axisLeft(tsScY).ticks(5).tickFormat(d => d.toFixed(2)));
+  tsSvg.append('text').attr('x',-h/2).attr('y',-38).attr('transform','rotate(-90)')
+    .attr('fill','var(--color-text-muted)').attr('font-size','10').attr('text-anchor','middle')
+    .text('Y-pole (arcseconds)');
 
-  // Axis label
-  g.append('text').attr('fill', 'var(--color-text-faint)').attr('font-size', 10)
-    .attr('transform', `translate(${innerW+4},${innerH/2}) rotate(90)`)
-    .attr('text-anchor', 'middle').text(viewMode === 'deriv' ? 'dY/dt (mas/mo)' : 'Y (mas)');
+  // Zero line
+  tsSvg.append('line').attr('class','zero-line')
+    .attr('x1',0).attr('x2',w)
+    .attr('y1',tsScY(0)).attr('y2',tsScY(0));
 
-  // Period annotation lines (Chandler ~1.18 yr recurring peaks)
-  // Use vertical bars at Chandler period multiples — annotate beat envelope years
-  const beatYears = [];
-  for (let yr = T0 + 3.2; yr < T1; yr += 6.41) beatYears.push(yr);
-  g.selectAll('.beat-ann').data(beatYears).enter().append('line')
-    .attr('class', 'annotation-line')
-    .attr('x1', d => tsX(d)).attr('x2', d => tsX(d))
-    .attr('y1', 0).attr('y2', innerH * 0.12);
+  // Paths
+  const obsLine = d3.line().x((_,i)=>tsScX(iersTime[i])).y((_,i)=>tsScY(iersYpole[i])).curve(d3.curveLinear);
+  const modLine = d3.line().x((_,i)=>tsScX(iersTime[i])).y((_,i)=>tsScY(modelFitted[i])).curve(d3.curveLinear);
+  const resLine = d3.line().x((_,i)=>tsScX(iersTime[i])).y((_,i)=>tsScY(modelResid[i])).curve(d3.curveLinear);
 
-  // Tooltip interaction overlay
-  const overlay = g.append('rect')
-    .attr('width', innerW).attr('height', innerH)
-    .attr('fill', 'none').attr('pointer-events', 'all');
+  const dummy = iersTime.map(() => 0);
+  tsPath_obs = tsSvg.append('path').datum(dummy).attr('fill','none')
+    .attr('stroke','var(--color-observed)').attr('stroke-width',1.0).attr('opacity',0.85);
+  tsPath_mod = tsSvg.append('path').datum(dummy).attr('fill','none')
+    .attr('stroke','var(--color-model)').attr('stroke-width',1.5);
+  tsPath_res = tsSvg.append('path').datum(dummy).attr('fill','none')
+    .attr('stroke','var(--color-residual)').attr('stroke-width',0.8)
+    .attr('stroke-dasharray','3 3').attr('opacity',0.6);
 
-  const bisect = d3.bisectLeft;
-  const tooltip = document.getElementById('tooltip');
-  overlay.on('mousemove', function(event) {
-    const [mx] = d3.pointer(event);
-    const yr = tsX.invert(mx);
-    const idx = Math.min(Math.max(0, bisect(years, yr)), NPTS-1);
-    const { obs, mod } = getDisplay();
-    const res = obs[idx] - mod[idx];
-    document.getElementById('tt-head').textContent = years[idx].toFixed(2);
-    document.getElementById('tt-obs').textContent = obs[idx].toFixed(1) + ' mas';
-    document.getElementById('tt-mod').textContent = mod[idx].toFixed(1) + ' mas';
-    document.getElementById('tt-res').textContent = res.toFixed(1) + ' mas';
-    tooltip.style.left = (event.clientX + 14) + 'px';
-    tooltip.style.top = (event.clientY - 28) + 'px';
-    tooltip.classList.add('visible');
-  }).on('mouseleave', () => tooltip.classList.remove('visible'));
+  // Tooltip overlay
+  const bisect = d3.bisector(d => d).left;
+  tsSvg.append('rect').attr('width',w).attr('height',h)
+    .attr('fill','none').attr('pointer-events','all')
+    .on('mousemove', function(event) {
+      const [mx] = d3.pointer(event);
+      const t = tsScX.invert(mx);
+      const idx = bisect(iersTime, t);
+      if (idx >= 0 && idx < iersTime.length) {
+        const tt = document.getElementById('tooltip');
+        tt.classList.add('visible');
+        document.getElementById('tt-year').textContent  = iersTime[idx].toFixed(2);
+        document.getElementById('tt-obs').textContent   = iersYpole[idx].toFixed(4) + '"';
+        document.getElementById('tt-model').textContent = modelFitted[idx] != null ? modelFitted[idx].toFixed(4) + '"' : '—';
+        tt.style.left = (event.clientX + 14) + 'px';
+        tt.style.top  = (event.clientY - 28) + 'px';
+      }
+    })
+    .on('mouseleave', () => document.getElementById('tooltip').classList.remove('visible'));
 }
 
 function updateTS() {
-  const { obs, mod } = viewMode === 'deriv'
-    ? { obs: derivative(observed), mod: derivative(model) }
-    : { obs: observed, mod: model };
+  if (!tsSvg) return;
+  const N = iersTime.length;
+  const obsLine = d3.line().x((_,i)=>tsScX(iersTime[i])).y(v=>tsScY(v)).curve(d3.curveLinear);
+  const modLine = d3.line().x((_,i)=>tsScX(iersTime[i])).y(v=>tsScY(v)).curve(d3.curveLinear);
+  const resLine = d3.line().x((_,i)=>tsScX(iersTime[i])).y(v=>tsScY(v)).curve(d3.curveLinear);
 
-  const allVals = [...obs, ...mod];
-  const ext = d3.extent(allVals);
-  const pad = (ext[1] - ext[0]) * 0.1;
-  tsYscale.domain([ext[0] - pad, ext[1] + pad]);
+  tsPath_obs.datum(iersYpole).attr('d', obsLine);
+  tsPath_mod.datum(modelFitted).attr('d', modLine);
+  tsPath_res.datum(modelResid).attr('d', resLine);
 
-  const lineGen = d3.line()
-    .x((_, i) => tsX(years[i]))
-    .y(d => tsYscale(d))
-    .curve(d3.curveMonotoneX);
-
-  const res = obs.map((v, i) => v - mod[i]);
-  tsObsLine.datum(obs).attr('d', lineGen);
-  tsModLine.datum(mod).attr('d', lineGen);
-  tsResLine.datum(res).attr('d', lineGen);
-
-  // Update training band
-  tsTrainBand.attr('width', tsX(params.trainEnd) - tsX(T0));
-  tsTrainBorderR.attr('x1', tsX(params.trainEnd)).attr('x2', tsX(params.trainEnd));
-
-  // Update axis
-  tsSvg.select('g').selectAll('.axis').filter((_, i) => i === 1)
-    .call(d3.axisLeft(tsYscale).ticks(6));
+  const xEnd = tsScX(params.trainEnd);
+  tsBand.attr('x',0).attr('width', xEnd);
+  tsBandLine.attr('x1', xEnd).attr('x2', xEnd);
 }
 
-/* ─── AMPLITUDE SPECTRUM ────────────────────────────── */
-const specWrap = document.getElementById('specWrap');
-let specSvg, specX, specY;
+/* ─── Amplitude Spectrum ───────────────────────────── */
+let specSvg, specScX, specScY, specPath_obs, specPath_mod, specInited = false;
 
-function initSpectrum() {
-  specWrap.innerHTML = '';
-  const { w, h, innerW, innerH } = chartDims(specWrap);
+function initSpec() {
+  const { W, H, w, h } = chartDims('#specChart', 0.55);
+  const div = d3.select('#specChart');
+  div.selectAll('*').remove();
+  const svg = div.append('svg').attr('width', W).attr('height', H);
+  specSvg = svg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
 
-  specSvg = d3.select(specWrap).append('svg')
-    .attr('width', w).attr('height', h)
-    .attr('viewBox', `0 0 ${w} ${h}`);
+  const obsSpec = amplitudeSpectrum(iersYpole);
+  const modSpec = amplitudeSpectrum(modelFitted);
+  const pMin = d3.min(obsSpec.periods), pMax = d3.max(obsSpec.periods);
+  const aMax = d3.max([...obsSpec.amps, ...modSpec.amps]);
 
-  const g = specSvg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
-
-  const obsSpec = amplitudeSpectrum(observed);
-  const modSpec = amplitudeSpectrum(model);
-
-  specX = d3.scaleLog().domain([180, 800]).range([0, innerW]);
-  const maxAmp = Math.max(d3.max(obsSpec.amps), d3.max(modSpec.amps));
-  specY = d3.scaleLinear().domain([0, maxAmp * 1.12]).range([innerH, 0]);
-
-  // Grid
-  const yTicks = specY.ticks(6);
-  g.selectAll('.grid-line').data(yTicks).enter().append('line')
-    .attr('class', 'grid-line')
-    .attr('x1', 0).attr('x2', innerW)
-    .attr('y1', d => specY(d)).attr('y2', d => specY(d));
-
-  // Shaded area under observed spectrum
-  const areaObs = d3.area()
-    .x((_, i) => specX(obsSpec.periods[i]))
-    .y0(innerH)
-    .y1((d) => specY(d))
-    .curve(d3.curveBasis);
-  g.append('path').datum(obsSpec.amps)
-    .attr('fill', 'var(--color-observed)').attr('opacity', 0.12)
-    .attr('d', areaObs);
-
-  // Annotation lines for key periods
-  const keyPeriods = [
-    { p: 432.77, label: '433d' },
-    { p: 365.24, label: '365d' },
-    { p: 182.6,  label: '183d' },
-  ];
-  keyPeriods.forEach(({ p, label }) => {
-    if (p < 180 || p > 800) return;
-    g.append('line')
-      .attr('stroke', 'var(--color-accent2)').attr('stroke-dasharray','4 3')
-      .attr('stroke-width', 1.5).attr('opacity', 0.65)
-      .attr('x1', specX(p)).attr('x2', specX(p))
-      .attr('y1', 0).attr('y2', innerH);
-    g.append('text')
-      .attr('x', specX(p) + 3).attr('y', innerH - 4)
-      .attr('fill', 'var(--color-accent2)').attr('font-size', 9)
-      .attr('font-family', 'var(--font-mono)')
-      .text(label);
-  });
-
-  // Observed spectrum
-  const lineObs = d3.line().x((_, i) => specX(obsSpec.periods[i])).y(d => specY(d)).curve(d3.curveBasis);
-  g.append('path').datum(obsSpec.amps)
-    .attr('fill', 'none')
-    .attr('stroke', 'var(--color-observed)')
-    .attr('stroke-width', 2)
-    .attr('opacity', 0.9)
-    .attr('d', lineObs);
-
-  // Model spectrum
-  const lineMod = d3.line().x((_, i) => specX(modSpec.periods[i])).y(d => specY(d)).curve(d3.curveBasis);
-  g.append('path').datum(modSpec.amps)
-    .attr('fill', 'none')
-    .attr('stroke', 'var(--color-model)')
-    .attr('stroke-width', 2)
-    .attr('stroke-dasharray', '5 3')
-    .attr('opacity', 0.9)
-    .attr('d', lineMod);
+  specScX = d3.scaleLog().domain([pMin, pMax]).range([0, w]);
+  specScY = d3.scaleLinear().domain([0, aMax * 1.05]).range([h, 0]);
 
   // Axes
-  g.append('g').attr('class', 'axis')
-    .attr('transform', `translate(0,${innerH})`)
-    .call(d3.axisBottom(specX)
-      .tickValues([182, 250, 320, 365, 433, 500, 600, 750])
-      .tickFormat(d => d + 'd'));
-  g.append('g').attr('class', 'axis').call(d3.axisLeft(specY).ticks(5));
+  const xTicks = [182, 250, 365, 433, 600, 800];
+  specSvg.append('g').attr('class','axis').attr('transform',`translate(0,${h})`)
+    .call(d3.axisBottom(specScX).tickValues(xTicks).tickFormat(d => d + 'd'));
+  specSvg.append('g').attr('class','axis')
+    .call(d3.axisLeft(specScY).ticks(4).tickFormat(d => d.toFixed(3)));
+  specSvg.append('text').attr('x', w/2).attr('y', h+32)
+    .attr('fill','var(--color-text-muted)').attr('font-size','10').attr('text-anchor','middle')
+    .text('Period (days)');
 
-  // Labels
-  g.append('text').attr('fill', 'var(--color-text-faint)').attr('font-size', 10)
-    .attr('x', innerW / 2).attr('y', innerH + 30)
-    .attr('text-anchor', 'middle').text('Period (days) — log scale');
-}
-
-/* ─── PHASE PLANE ───────────────────────────────────── */
-const phaseWrap = document.getElementById('phaseWrap');
-let phaseDecadeColors;
-
-function initPhase() {
-  phaseWrap.innerHTML = '';
-  const { w, h, innerW, innerH } = chartDims(phaseWrap);
-  const sz = Math.min(innerW, innerH);
-  const cx = MARGIN.left + sz / 2;
-  const cy = MARGIN.top + sz / 2;
-
-  const svg = d3.select(phaseWrap).append('svg')
-    .attr('width', w).attr('height', h)
-    .attr('viewBox', `0 0 ${w} ${h}`);
-
-  // Synthesize X component similarly to Y
-  const obsX = observed.map((y, i) => {
-    const t = years[i];
-    const Tcw = 432.77 / DAYS_PER_YEAR;
-    const nodalMod = 1 + 0.25 * Math.cos(2 * Math.PI * t / (18.6 / 2));
-    const ann = 90 * Math.cos(2 * Math.PI * t / 1.0 + 0.3)
-              + 30 * Math.sin(2 * Math.PI * t / 1.0 + 1.0);
-    const cw = 100 * nodalMod * Math.cos(2 * Math.PI * t / Tcw + 1.1)
-             + 15 * nodalMod * Math.sin(2 * Math.PI * t / Tcw * 2);
-    const noise = 8 * (Math.cos(t * 7.3) + Math.sin(t * 11.7) * 0.6);
-    return cw + ann + noise;
-  });
-
-  const extX = d3.extent(obsX);
-  const extY = d3.extent(observed);
-  const rng = Math.max(extX[1]-extX[0], extY[1]-extY[0]) / 2 * 1.1;
-  const midX = (extX[0]+extX[1])/2, midY = (extY[0]+extY[1])/2;
-
-  const scX = d3.scaleLinear().domain([midX-rng, midX+rng]).range([cx - sz/2, cx + sz/2]);
-  const scY = d3.scaleLinear().domain([midY-rng, midY+rng]).range([cy + sz/2, cy - sz/2]);
-
-  // Decade color map
-  const decades = [];
-  for (let yr = 1950; yr < 2024; yr += 10) decades.push(yr);
-  const colorScale = d3.scaleSequential(d3.interpolateTurbo)
-    .domain([1950, 2020]);
-
-  phaseDecadeColors = decades;
-
-  // Draw path segments colored by decade
-  const g = svg.append('g');
-
-  // Circles at origin
-  g.append('line').attr('stroke','var(--color-border)').attr('stroke-width',1)
-    .attr('x1',cx-sz/2).attr('x2',cx+sz/2)
-    .attr('y1',scY(midY)).attr('y2',scY(midY));
-  g.append('line').attr('stroke','var(--color-border)').attr('stroke-width',1)
-    .attr('x1',scX(midX)).attr('x2',scX(midX))
-    .attr('y1',cy-sz/2).attr('y2',cy+sz/2);
-
-  // Plot spiral colored by time
-  for (let i = 1; i < NPTS; i++) {
-    const col = colorScale(years[i-1]);
-    g.append('line')
-      .attr('x1', scX(obsX[i-1])).attr('y1', scY(observed[i-1]))
-      .attr('x2', scX(obsX[i])).attr('y2', scY(observed[i]))
-      .attr('stroke', col).attr('stroke-width', 1.2).attr('opacity', 0.7);
+  // Reference lines
+  const refLines = [
+    { p: 182.6, label: '½yr' },
+    { p: 365.2, label: '1yr' },
+    { p: chandlerPeriod(params.Td, params.Ty), label: 'CW' },
+    { p: 433.0, label: '433d' }
+  ];
+  for (const { p, label } of refLines) {
+    if (p < pMin || p > pMax) continue;
+    specSvg.append('line').attr('class','annotation-line')
+      .attr('x1', specScX(p)).attr('x2', specScX(p))
+      .attr('y1', 0).attr('y2', h);
+    specSvg.append('text').attr('class','annotation-label')
+      .attr('x', specScX(p)+2).attr('y', 12).text(label);
   }
 
-  // Axes
-  g.append('g').attr('class', 'axis')
-    .attr('transform', `translate(0,${scY(midY)})`)
-    .call(d3.axisBottom(scX).ticks(4).tickFormat(d3.format('.0f')));
-  g.append('g').attr('class', 'axis')
-    .attr('transform', `translate(${scX(midX)},0)`)
-    .call(d3.axisLeft(scY).ticks(4).tickFormat(d3.format('.0f')));
+  // Paths
+  const lineObs = d3.line().x((_,i)=>specScX(obsSpec.periods[i])).y(v=>specScY(v));
+  const lineMod = d3.line().x((_,i)=>specScX(modSpec.periods[i])).y(v=>specScY(v));
+  specPath_obs = specSvg.append('path').datum(obsSpec.amps)
+    .attr('fill','none').attr('stroke','var(--color-observed)').attr('stroke-width',1.4)
+    .attr('d', lineObs);
+  specPath_mod = specSvg.append('path').datum(modSpec.amps)
+    .attr('fill','none').attr('stroke','var(--color-model)').attr('stroke-width',1.8)
+    .attr('d', lineMod);
 
-  g.append('text').attr('fill','var(--color-text-faint)').attr('font-size',9)
-    .attr('x',cx+sz/2-2).attr('y',scY(midY)-4)
-    .attr('text-anchor','end').text('X (mas)');
-  g.append('text').attr('fill','var(--color-text-faint)').attr('font-size',9)
-    .attr('x',scX(midX)+3).attr('y',cy-sz/2+12)
-    .text('Y (mas)');
+  // Legend
+  specSvg.append('circle').attr('cx', w-110).attr('cy',10).attr('r',5).attr('fill','var(--color-observed)');
+  specSvg.append('text').attr('x', w-100).attr('y',14).attr('fill','var(--color-text-muted)').attr('font-size',10).text('Observed');
+  specSvg.append('circle').attr('cx', w-110).attr('cy',26).attr('r',5).attr('fill','var(--color-model)');
+  specSvg.append('text').attr('x', w-100).attr('y',30).attr('fill','var(--color-text-muted)').attr('font-size',10).text('MLR model');
 
-  // Decade legend
-  const bar = document.getElementById('phaseDecadeBar');
-  bar.innerHTML = '';
-  decades.forEach(yr => {
-    const col = colorScale(yr);
-    const item = document.createElement('div');
-    item.className = 'legend-item';
-    item.innerHTML = `<div style="width:16px;height:3px;background:${col};border-radius:2px"></div>
-      <span style="font-size:0.68rem">${yr}s</span>`;
-    bar.appendChild(item);
-  });
+  specInited = true;
+}
+
+function updateSpec() {
+  if (!specSvg) { initSpec(); return; }
+  const obsSpec = amplitudeSpectrum(iersYpole);
+  const modSpec = amplitudeSpectrum(modelFitted);
+  const aMax = d3.max([...obsSpec.amps, ...modSpec.amps]);
+  specScY.domain([0, aMax * 1.05]);
+
+  const lineObs = d3.line().x((_,i)=>specScX(obsSpec.periods[i])).y(v=>specScY(v));
+  const lineMod = d3.line().x((_,i)=>specScX(modSpec.periods[i])).y(v=>specScY(v));
+  specPath_obs.datum(obsSpec.amps).attr('d', lineObs);
+  specPath_mod.datum(modSpec.amps).attr('d', lineMod);
+}
+
+/* ─── Phase Plane ──────────────────────────────────── */
+function drawPhase() {
+  const { W, H, w, h } = chartDims('#phaseChart', 0.55);
+  const div = d3.select('#phaseChart');
+  div.selectAll('*').remove();
+  const svg = div.append('svg').attr('width', W).attr('height', H);
+  const g = svg.append('g').attr('transform', `translate(${MARGIN.left},${MARGIN.top})`);
+
+  // Use Chandler-bandpassed signals for X and Y
+  const xBP = chandlerBandpass(iersXpole);
+  const yBP = chandlerBandpass(iersYpole);
+
+  const N = iersTime.length;
+  const ext = d3.extent([...xBP, ...yBP]);
+  const pad = (ext[1]-ext[0])*0.06;
+  const scX = d3.scaleLinear().domain([ext[0]-pad, ext[1]+pad]).range([0, w]);
+  const scY = d3.scaleLinear().domain([ext[0]-pad, ext[1]+pad]).range([h, 0]);
+
+  g.append('g').attr('class','axis').attr('transform',`translate(0,${h})`).call(d3.axisBottom(scX).ticks(5).tickFormat(d => d.toFixed(2)));
+  g.append('g').attr('class','axis').call(d3.axisLeft(scY).ticks(5).tickFormat(d => d.toFixed(2)));
+  g.append('text').attr('x',w/2).attr('y',h+32).attr('fill','var(--color-text-muted)').attr('font-size',10).attr('text-anchor','middle').text('X-pole (arcseconds)');
+  g.append('text').attr('x',-h/2).attr('y',-40).attr('transform','rotate(-90)').attr('fill','var(--color-text-muted)').attr('font-size',10).attr('text-anchor','middle').text('Y-pole (arcseconds)');
+
+  // Axes cross
+  g.append('line').attr('class','zero-line').attr('x1',scX(0)).attr('x2',scX(0)).attr('y1',0).attr('y2',h);
+  g.append('line').attr('class','zero-line').attr('x1',0).attr('x2',w).attr('y1',scY(0)).attr('y2',scY(0));
+
+  // Turbo color by decade
+  const tMin = iersTime[0], tMax = iersTime[N-1];
+  const colScale = d3.scaleSequential(d3.interpolateTurbo).domain([tMin, tMax]);
+
+  // Draw path segments colored by time
+  for (let i = 1; i < N; i++) {
+    g.append('line')
+      .attr('x1', scX(xBP[i-1])).attr('y1', scY(yBP[i-1]))
+      .attr('x2', scX(xBP[i])).attr('y2', scY(yBP[i]))
+      .attr('stroke', colScale(iersTime[i]))
+      .attr('stroke-width', 0.8).attr('opacity', 0.75);
+  }
+
+  // Decade labels
+  const tStart = Math.ceil(tMin / 10) * 10;
+  for (let dec = tStart; dec <= tMax; dec += 10) {
+    const idx = iersTime.findIndex(t => t >= dec);
+    if (idx < 0 || idx >= N) continue;
+    g.append('circle').attr('cx', scX(xBP[idx])).attr('cy', scY(yBP[idx]))
+      .attr('r', 3).attr('fill', colScale(dec)).attr('stroke','var(--color-bg)').attr('stroke-width',1);
+    g.append('text').attr('x', scX(xBP[idx])+5).attr('y', scY(yBP[idx])+4)
+      .attr('fill', colScale(dec)).attr('font-size',9).attr('font-family','var(--font-mono)').text(dec);
+  }
 }
 
 /* ═══════════════════════════════════════════════════════
-   CORRELATION STATS
+   RENDER ALL CHARTS
 ═══════════════════════════════════════════════════════ */
-function updateStats() {
-  const trainIdx = years.findIndex(y => y >= params.trainEnd) || NPTS;
-
-  // Correlate on Chandler-bandpassed signals to isolate the wobble band
-  // (removes annual wobble and drift that the resonator model doesn't produce)
-  const obsBP = chandlerBandpass(observed);
-  const modBP = chandlerBandpass(model);
-
-  const rTrain = pearson(obsBP, modBP, 0, trainIdx);
-  const rFull  = pearson(obsBP, modBP, 0, NPTS);
-
-  document.getElementById('kpiCorrTrain').textContent = rTrain.toFixed(3);
-  document.getElementById('kpiCorrFull').textContent  = rFull.toFixed(3);
-
-  // Color code correlation
-  const colorR = r => r > 0.7 ? 'var(--color-primary)' :
-                       r > 0.4 ? 'var(--color-accent)' : 'var(--color-residual)';
-  document.getElementById('kpiCorrTrain').style.color = colorR(Math.abs(rTrain));
-  document.getElementById('kpiCorrFull').style.color  = colorR(Math.abs(rFull));
+function render() {
+  runModel();
+  updateTS();
+  updateSpec();
+  drawPhase();
 }
 
-/* ═══════════════════════════════════════════════════════
-   INIT + UPDATE LOOP
-═══════════════════════════════════════════════════════ */
-function fullRender() {
-  modelRaw = computeModel(params);
-  model = fitModel(modelRaw, observed, params.trainEnd);
-  updateStats();
+function initCharts() {
   initTS();
-  initSpectrum();
-  initPhase();
+  initSpec();
+  drawPhase();
 }
-
-fullRender();
 
 /* ═══════════════════════════════════════════════════════
-   CONTROLS — SLIDERS
+   SLIDER WIRING
 ═══════════════════════════════════════════════════════ */
-function bindSlider(id, valId, key, format, onChange) {
-  const el = document.getElementById(id);
-  const vl = document.getElementById(valId);
-  el.addEventListener('input', () => {
-    const v = parseFloat(el.value);
-    params[key] = v;
-    vl.textContent = format(v);
-    onChange();
-  });
+function wireSliders() {
+  function wire(id, valId, key, fmt, rerender) {
+    const sl = document.getElementById(id);
+    const vl = document.getElementById(valId);
+    sl.value = params[key];
+    vl.textContent = fmt(params[key]);
+    sl.addEventListener('input', () => {
+      params[key] = parseFloat(sl.value);
+      vl.textContent = fmt(params[key]);
+      if (rerender) render();
+    });
+  }
+
+  wire('slTrainEnd', 'valTrainEnd', 'trainEnd', v => v.toFixed(1), true);
+  wire('slQ',        'valQ',        'Q',        v => v.toFixed(0), true);
+  wire('slAmpAnn',   'valAmpAnn',   'ampAnn',   v => v.toFixed(2), true);
+  wire('slPhiAnn',   'valPhiAnn',   'phiAnn',   v => v.toFixed(2), true);
+  wire('slAmpDrac',  'valAmpDrac',  'ampDrac',  v => v.toFixed(2), true);
+  wire('slPhiDrac',  'valPhiDrac',  'phiDrac',  v => v.toFixed(2), true);
+  wire('slAmpNode',  'valAmpNode',  'ampNode',  v => v.toFixed(2), true);
+  wire('slPhiNode',  'valPhiNode',  'phiNode',  v => v.toFixed(2), true);
 }
-
-let updateTimer = null;
-function debounced(fn) {
-  clearTimeout(updateTimer);
-  updateTimer = setTimeout(fn, 80);
-}
-
-function softUpdate() {
-  model = fitModel(modelRaw, observed, params.trainEnd);
-  updateTS();
-  updateStats();
-}
-
-function hardUpdate() {
-  debounced(() => {
-    modelRaw = computeModel(params);
-    model = fitModel(modelRaw, observed, params.trainEnd);
-    updateStats();
-    initTS();
-    initSpectrum();
-  });
-}
-
-bindSlider('ctrlTd', 'valTd', 'Td', v => v.toFixed(3), hardUpdate);
-bindSlider('ctrlTy', 'valTy', 'Ty', v => v.toFixed(2), hardUpdate);
-bindSlider('ctrlQ',  'valQ',  'Q',  v => v.toFixed(0),  hardUpdate);
-bindSlider('ctrlTnode','valTnode','Tnode', v => v.toFixed(1)+' yr', hardUpdate);
-bindSlider('ctrlAmpAnn',  'valAmpAnn',  'ampAnn',  v => v.toFixed(2), hardUpdate);
-bindSlider('ctrlAmpDrac', 'valAmpDrac', 'ampDrac', v => v.toFixed(2), hardUpdate);
-bindSlider('ctrlPhiAnn',  'valPhiAnn',  'phiAnn',  v => v.toFixed(2)+' rad', hardUpdate);
-bindSlider('ctrlPhiDrac', 'valPhiDrac', 'phiDrac', v => v.toFixed(2)+' rad', hardUpdate);
-bindSlider('ctrlPhiNode', 'valPhiNode', 'phiNode', v => v.toFixed(2)+' rad', hardUpdate);
-bindSlider('ctrlTrainEnd','valTrainEnd','trainEnd', v => v.toFixed(1), () => {
-  model = fitModel(modelRaw, observed, params.trainEnd);
-  updateTS();
-  updateStats();
-});
-
-/* ═══════════════════════════════════════════════════════
-   VIEW TOGGLE (dY/dt vs raw Y)
-═══════════════════════════════════════════════════════ */
-document.querySelectorAll('.tab-btn[data-view]').forEach(btn => {
-  btn.addEventListener('click', () => {
-    viewMode = btn.dataset.view;
-    document.querySelectorAll('.tab-btn[data-view]').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    initTS();
-    initSpectrum();
-    updateStats();
-  });
-});
 
 /* ═══════════════════════════════════════════════════════
    THEME TOGGLE
 ═══════════════════════════════════════════════════════ */
-(function() {
-  const t = document.querySelector('[data-theme-toggle]');
-  const r = document.documentElement;
-  let d = r.getAttribute('data-theme') ||
-    (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
-  r.setAttribute('data-theme', d);
-  t && t.addEventListener('click', () => {
-    d = d === 'dark' ? 'light' : 'dark';
-    r.setAttribute('data-theme', d);
-    t.setAttribute('aria-label', 'Switch to ' + (d === 'dark' ? 'light' : 'dark') + ' mode');
-    t.innerHTML = d === 'dark'
-      ? `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-           <circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
-         </svg>`
-      : `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-         </svg>`;
-    // Re-render charts to pick up new CSS variable colors
-    setTimeout(() => { initTS(); initSpectrum(); initPhase(); }, 50);
-  });
-})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const html = document.documentElement;
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  // Redraw phase plane to pick up new CSS colors
+  if (iersTime.length > 0) drawPhase();
+});
 
 /* ═══════════════════════════════════════════════════════
-   RESIZE
+   LOADING HELPERS
 ═══════════════════════════════════════════════════════ */
-let resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => {
-    initTS(); initSpectrum(); initPhase();
-  }, 200);
-});
+function setLoadMsg(msg) {
+  document.getElementById('loadMsg').textContent = msg;
+}
+
+function setDataBadge(state, text) {
+  const el = document.getElementById('dataBadge');
+  el.className = 'data-badge ' + state;
+  el.textContent = text;
+}
+
+/* ═══════════════════════════════════════════════════════
+   BOOT SEQUENCE
+═══════════════════════════════════════════════════════ */
+async function boot() {
+  try {
+    await fetchIERS();
+
+    if (iersTime.length === 0) throw new Error('No IERS data parsed');
+
+    setDataBadge('ready', `IERS · ${iersTime.length} pts`);
+    setLoadMsg('Initialising charts…');
+
+    // Show app, hide overlay
+    document.getElementById('appContent').style.display = '';
+    document.getElementById('loadOverlay').style.display = 'none';
+
+    // Wire sliders
+    wireSliders();
+
+    // Initial model run + chart init
+    runModel();
+    initCharts();
+    updateTS();
+    updateSpec();
+
+  } catch (err) {
+    console.error('Boot error:', err);
+    setDataBadge('error', 'load failed');
+    document.getElementById('loadMsg').textContent =
+      'IERS fetch failed — CORS or network error. Try refreshing or opening in a different browser.';
+    document.getElementById('loadOverlay').querySelector('.spinner').style.display = 'none';
+
+    // Show app anyway with a warning (no data)
+    setTimeout(() => {
+      document.getElementById('appContent').style.display = '';
+      document.getElementById('loadOverlay').style.display = 'none';
+    }, 3000);
+  }
+}
+
+boot();
 </script>
 </body>
 </html>
