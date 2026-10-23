@@ -1,6 +1,16 @@
 # ChandlerWobble
 Mathematical Geoenergy treatment of Chandler wobble mechanism.
 
+Both `cw.py` and `claude/cw_fit_offline.py` use the same mass-normalized
+Newtonian model: a damped 432.3-day oscillator receives additive momentum
+impulses every 0.5 years. Each impulse magnitude is the unit-RMS square of the
+27.212221-day draconic sinusoid. The free response is propagated exactly between
+impulses; no continuous forcing or state-dependent (parametric) kick is used.
+The optional `--amp-step s` adds the inertia pulse's effect on the wobble itself:
+whole-year events scale the state by 1+s and half-year events by 1/(1+s), an annual
+amplitude modulation that produces the 1 -/+ CW sidebands with the observed phase
+relation (`s = 0.25` matches their level; see `docs/cw_magnetized_spheroid.md` §5).
+
 ## Interactive Visualization
 
 **[Launch Interactive Model →](https://pukpr.github.io/ChandlerWobble/)**

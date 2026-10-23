@@ -2,10 +2,17 @@ from pathlib import Path
 
 import argparse
 import numpy as np
-from scipy.integrate import solve_ivp
 from scipy.linalg import toeplitz
 from scipy.signal import correlate
 import matplotlib.pyplot as plt
+from cw_physics import (
+    CHANDLER_PERIOD_DAYS,
+    DEFAULT_Q_FACTOR,
+    DRACONIC_PERIOD_DAYS,
+    IMPULSE_CADENCE_YEARS,
+    TROPICAL_YEAR_DAYS,
+    forced_response,
+)
 
 CW_DATA_FILENAME = "cw.dat"
 SAMPLING_UNIFORMITY_RTOL = 1e-3
@@ -29,6 +36,36 @@ def parse_args():
         type=int,
         default=DEFAULT_AR_ORDER,
         help="Autoregressive order for MEM/AR-Z estimators.",
+    )
+    parser.add_argument(
+        "--phase-years",
+        type=float,
+        default=0.0,
+        help="Draconic forcing phase in years.",
+    )
+    parser.add_argument(
+        "--impulse-scale",
+        type=float,
+        default=0.1,
+        help="Momentum increment that scales each normalized impulse.",
+    )
+    parser.add_argument(
+        "--q",
+        type=float,
+        default=DEFAULT_Q_FACTOR,
+        help="Oscillator quality factor.",
+    )
+    parser.add_argument(
+        "--amp-step",
+        type=float,
+        default=0.0,
+        help="Inertia-pulse amplitude step: whole-year events scale the state by "
+             "1+s, half-year events by 1/(1+s). 0.25 matches the observed sidebands.",
+    )
+    parser.add_argument(
+        "--amp-step-swap",
+        action="store_true",
+        help="Make the half-year events the enlarging ones.",
     )
     return parser.parse_args()
 
@@ -142,138 +179,39 @@ def compute_spectrum(signal, dt, estimator, ar_order):
 args = parse_args()
 
 # -----------------------------
-# Parameters (nondimensional)
+# Newtonian impulse-map model
 # -----------------------------
 
-# Chandler wobble emerges from aliasing between lunar draconic forcing 
-# and annual/semi-annual inertia impulses. The period is:
-# T_CW = (1/2) * |1/(1/T_d - 13/T_y)| ≈ 433 days
-# where the factor of 1/2 arises from quadratic (π-symmetric) coupling.
+# The squared draconic signal has twice the draconic frequency. Sampling it
+# twice yearly aliases its 26.84 cycles/year component to the CW frequency.
+DRACONIC_CYCLES_PER_YEAR = TROPICAL_YEAR_DAYS / DRACONIC_PERIOD_DAYS
+CW_Freq = abs(2 * DRACONIC_CYCLES_PER_YEAR - 26.0)
+CW_Calculated = TROPICAL_YEAR_DAYS / CW_Freq
+TMAX_YEARS = 130.0
+OUTPUT_STEP_YEARS = 0.01
+T = np.arange(0.0, TMAX_YEARS + OUTPUT_STEP_YEARS, OUTPUT_STEP_YEARS)
+px = forced_response(
+    T,
+    args.phase_years,
+    impulse_scale=args.impulse_scale,
+    q_factor=args.q,
+    amp_step=args.amp_step,
+    amp_step_swap=args.amp_step_swap,
+)
 
-Nutation = 455.0  # 443 460
-Calendar = 365.242
-Draconic = 27.2122
-CW_Freq = (Calendar/Draconic-13.0)*2.0  # Aliased difference frequency
-CW_Calculated = Calendar/CW_Freq 
-
-#omega0 = 1.0          # free nutation frequency (sets timescale)
-omega0 = Calendar/Nutation*2*np.pi          # free nutation frequency (sets timescale)
-#zeta   = 1e-3         # weak damping
-#zeta   = 5e-1         # strong damping
-zeta   = 0.15         # 0.05 strong damping
-
-#omega_m = 30.0        # "draconic" forcing frequency (off-resonant)
-omega_m = Calendar/Draconic * 2*np.pi        
-eps_m   = 2e-2        # forcing amplitude
-N       = 2 #40
-M       = 2
-Semi    = 1.0
-Inertial_load = 0.8
-
-#Ts = 2*np.pi * 13.0   # sampling period (annual analogue)
-Ts = 1.0              # sampling period (annual analogue)
-eps_s = 0.1          # impulse strength
-#eps_s = 4e-6          # impulse strength
-
-#tmax = 40000.0         # total integration time
-tmax = 130.0         # total integration time
-#dt_sample = 0.5       # output sampling
-#dt_sample = 0.05       # output sampling
-
-# -----------------------------
-# ODE system between impulses
-# -----------------------------
-
-def rhs(t, y):
-    px, py, vx, vy = y
-
-    fx = eps_m * (np.cos(omega_m * t))**N * (1.0 + 0.0*(np.sin(np.pi * t / Ts))**M)
-    fy = 0  # eps_m * (np.sin(omega_m * t))**N
-
-    dpx = vx
-    dpy = vy
-    dvx = -2*zeta*vx - omega0**2 * px + fx
-    dvy = -2*zeta*vy - omega0**2 * py + fy
-
-    return [dpx, dpy, dvx, dvy]
-
-# -----------------------------
-# Impulse event
-# -----------------------------
-
-def impulse_event(t, y):
-    #return np.sin(2*np.pi * t / Ts)
-    return np.sin(np.pi * t / Ts)
-
-impulse_event.terminal = True
-impulse_event.direction = 0
-
-# -----------------------------
-# Apply impulse map
-# -----------------------------
-state = True
-def apply_impulse(y,t):
-    px, py, vx, vy = y
-    global state
-    if state:
-       vx -= eps_s * omega0**2 * px * (1+Inertial_load*(np.cos(omega_m * t))**M)
-       vy -= 0.0 # eps_s * omega0**2 * py * (1+Inertial_load*(np.cos(omega_m * t))**M)
-    else:
-       vx -= Semi*eps_s * omega0**2 * px * (1+Inertial_load*(np.cos(omega_m * t))**M)
-       vy -= 0.0 # Semi*eps_s * omega0**2 * py * (1+Inertial_load*(np.cos(omega_m * t))**M)
-    state = not state
-    return np.array([px, py, vx, vy])
-
-# -----------------------------
-# Time integration loop
-# -----------------------------
-
-t = 0.0
-y = np.array([1e-3, 0.0, 0.0, 0.0])  # small initial tilt
-
-T_hist = []
-P_hist = []
-
-while t < tmax:
-    sol = solve_ivp(
-        rhs,
-        (t + 1e-10, tmax),
-        y,
-        events=impulse_event,
-        max_step=0.2,
-        rtol=1e-9, # -9
-        atol=1e-9
-    )
-
-    # store solution
-    T_hist.append(sol.t)
-    P_hist.append(sol.y)
-
-    # advance time
-    t = sol.t[-1]
-    y = sol.y[:, -1]
-
-    # apply impulse if event triggered
-    if sol.status == 1:
-        y = apply_impulse(y,t)
-        print(f"[{y[0]}] in iteration {t}")
-
-print(f"CW={CW_Calculated}")
-
-# concatenate results
-T = np.concatenate(T_hist)
-P = np.hstack(P_hist)
-
-px, py = P[0], P[1]
+print(f"Forced alias period={CW_Calculated:.3f} days")
+print(f"Oscillator period={CHANDLER_PERIOD_DAYS:.3f} days; "
+      f"Q={args.q:.1f}; impulse cadence={IMPULSE_CADENCE_YEARS:.1f} years; "
+      f"amplitude step={args.amp_step:.3f}")
 
 # -----------------------------
 # Diagnostics
 # -----------------------------
 
-r = np.sqrt(px**2 + py**2)
+r = np.abs(px)
 
 # Remove initial transient
-mask = T > 0.2 * tmax
+mask = T > 0.2 * TMAX_YEARS
 #mask = T > 0.5 * tmax
 T2 = T[mask]
 r2 = r[mask]
@@ -337,7 +275,7 @@ cw_freq, cw_spec = compute_spectrum(cw_amp, dt, args.spectral_estimator, args.ar
 plt.figure(figsize=(16,12))
 
 plt.subplot(2,1,1)
-plt.plot(T2-3.8, px2*100.0 - 0.02, lw=0.8, color='r', label="simulation")
+plt.plot(T2, px2, lw=0.8, color='r', label="simulation")
 plt.plot(cw_time_aligned, cw_amp, lw=0.8, label="cw.dat")
 plt.xlabel("Time")
 plt.ylabel("px")
