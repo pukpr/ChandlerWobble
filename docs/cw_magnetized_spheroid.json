@@ -1,0 +1,268 @@
+{
+ "equivalence": {
+  "max_abs_diff": 1.1250701932585816e-10,
+  "f_numerical": 0.16666111129629013,
+  "f_kittel": 0.16666666666666666,
+  "f_euler": 0.16666666666666663,
+  "earth": {
+   "H_dynamical_ellipticity": 0.0032738,
+   "euler_period_days": 304.6214124259271,
+   "observed_period_days": 432.3,
+   "lengthening_factor": 1.4191385843735451
+  }
+ },
+ "alias_table": [
+  {
+   "month": "draconic",
+   "power": 1,
+   "alternating": false,
+   "line": 0.5780084617128445
+  },
+  {
+   "month": "draconic",
+   "power": 1,
+   "alternating": true,
+   "line": 0.4219915382871555
+  },
+  {
+   "month": "draconic",
+   "power": 2,
+   "alternating": false,
+   "line": 0.843983076574311
+  },
+  {
+   "month": "draconic",
+   "power": 2,
+   "alternating": true,
+   "line": 0.15601692342568896
+  },
+  {
+   "month": "tropical",
+   "power": 1,
+   "alternating": false,
+   "line": 0.6317331112085665
+  },
+  {
+   "month": "tropical",
+   "power": 1,
+   "alternating": true,
+   "line": 0.36826688879143354
+  },
+  {
+   "month": "tropical",
+   "power": 2,
+   "alternating": false,
+   "line": 0.7365337775828671
+  },
+  {
+   "month": "tropical",
+   "power": 2,
+   "alternating": true,
+   "line": 0.2634662224171329
+  },
+  {
+   "month": "anomalistic",
+   "power": 1,
+   "alternating": false,
+   "line": 0.7447590325372744
+  },
+  {
+   "month": "anomalistic",
+   "power": 1,
+   "alternating": true,
+   "line": 0.2552409674627256
+  },
+  {
+   "month": "anomalistic",
+   "power": 2,
+   "alternating": false,
+   "line": 0.5104819349254512
+  },
+  {
+   "month": "anomalistic",
+   "power": 2,
+   "alternating": true,
+   "line": 0.48951806507454876
+  },
+  {
+   "month": "synodic",
+   "power": 1,
+   "alternating": false,
+   "line": 0.36826668103369187
+  },
+  {
+   "month": "synodic",
+   "power": 1,
+   "alternating": true,
+   "line": 0.6317333189663081
+  },
+  {
+   "month": "synodic",
+   "power": 2,
+   "alternating": false,
+   "line": 0.7365333620673837
+  },
+  {
+   "month": "synodic",
+   "power": 2,
+   "alternating": true,
+   "line": 0.26346663793261627
+  }
+ ],
+ "observed_peaks": {
+  "cw": [
+   0.8427973699940227,
+   1.0
+  ],
+  "sat_low": [
+   0.15690376569037656,
+   0.004502575576878994
+  ],
+  "sat_high": [
+   1.8439928272564254,
+   0.0037206970703395014
+  ],
+  "annual": [
+   0.9997011356843992,
+   0.32442750415539195
+  ]
+ },
+ "fit": {
+  "t0_years": 0.4691307264064485,
+  "trigger_day_of_year": 171.34633860028936,
+  "second_trigger_day": 353.96743860028937,
+  "asymmetry_a": 0.9999999984962573
+ },
+ "parametric": {
+  "alternating_phase_step_rad": 0.2
+ },
+ "variants": {
+  "continuous B^2 (no comb)": {
+   "strongest_line_0p45_0p95": 0.8442916915720262,
+   "sat_low": [
+    0.12104004781829049,
+    3.0233879253872834e-12
+   ],
+   "sat_high": [
+    1.8395098625224147,
+    2.7279719933463204e-15
+   ],
+   "train_r": 0.47948439926987146,
+   "holdout_r": 0.52739252263067,
+   "logspec_r": 0.3330380301771579
+  },
+  "comb x B^2, symmetric": {
+   "strongest_line_0p45_0p95": 0.8442916915720262,
+   "sat_low": [
+    0.13150029886431558,
+    8.599802208511492e-10
+   ],
+   "sat_high": [
+    1.8798565451285114,
+    2.171620656230107e-08
+   ],
+   "train_r": 0.8396927040479256,
+   "holdout_r": 0.8527150114498059,
+   "logspec_r": 0.5527777077977053
+  },
+  "comb x B^2, pear (fitted a)": {
+   "strongest_line_0p45_0p95": 0.8442916915720262,
+   "sat_low": [
+    0.15540944411237298,
+    5.2270051472326124e-06
+   ],
+   "sat_high": [
+    1.8439928272564254,
+    4.830980262970481e-05
+   ],
+   "train_r": 0.8409520643649459,
+   "holdout_r": 0.8529334511835635,
+   "logspec_r": 0.711195650815379
+  },
+  "comb x B^2, declination field": {
+   "strongest_line_0p45_0p95": 0.7367005379557681,
+   "sat_low": [
+    0.19874476987447698,
+    3.390384120666458e-08
+   ],
+   "sat_high": [
+    1.8828451882845187,
+    1.7262987558622618e-07
+   ],
+   "train_r": 0.5470155827600428,
+   "holdout_r": 0.688433081506442,
+   "logspec_r": 0.3009888670797114
+  },
+  "comb x B, same polarity": {
+   "strongest_line_0p45_0p95": 0.5783024506873878,
+   "sat_low": [
+    0.16736401673640167,
+    7.545022571481555e-05
+   ],
+   "sat_high": [
+    1.8335325762104002,
+    0.0006261086849940162
+   ],
+   "train_r": 0.3966499759232358,
+   "holdout_r": 0.6081293551777789,
+   "logspec_r": 0.08490961614955385
+  },
+  "comb x B, alternating (QBO rule)": {
+   "strongest_line_0p45_0p95": 0.8338314405260011,
+   "sat_low": [
+    0.19874476987447698,
+    7.296886021328297e-09
+   ],
+   "sat_high": [
+    1.8111177525403466,
+    2.5780389746954673e-09
+   ],
+   "train_r": 0.5160620934533343,
+   "holdout_r": 0.250313545206278,
+   "logspec_r": 0.18436701585912826
+  },
+  "comb x B^2, pear + inertia phase steps": {
+   "strongest_line_0p45_0p95": 0.8442916915720262,
+   "sat_low": [
+    0.15540944411237298,
+    0.003983107114238653
+   ],
+   "sat_high": [
+    1.8439928272564254,
+    0.004142149537898709
+   ],
+   "train_r": 0.836001056688516,
+   "holdout_r": 0.8517855008538368,
+   "logspec_r": 0.6650710115725927
+  }
+ },
+ "baseline_sinusoid": {
+  "freq": 0.843983076574311,
+  "train_r": 0.8396583054503536,
+  "holdout_r": 0.8773136829116434
+ },
+ "reverse_split": {
+  "fit_window": [
+   1990.0,
+   2018.7
+  ],
+  "eval_window": [
+   1935.0,
+   1990.0
+  ],
+  "t0_days": 34.95921211206902,
+  "a": -0.9999999947290817,
+  "device": [
+   0.9106338970727758,
+   0.7782064467487891
+  ],
+  "sinusoid": [
+   0.9109562514451914,
+   0.8029459643923706
+  ]
+ },
+ "llg_check": {
+  "rel_rms_diff": 0.005647593159329003,
+  "rms_angle_rad": 1.00057714188741e-06
+ }
+}
