@@ -1,0 +1,68 @@
+V "GNAT Lib v13"
+P ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_FINALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_PRAGMAS
+
+U pace.keyed_shared_memory.io%s  pace-keyed_shared_memory-io.ads  b150ade8 NE OO PK GE
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W pace.keyed_shared_memory%s  pace-keyed_shared_memory.adb  pace-keyed_shared_memory.ali
+Z system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+
+D ada.ads		20240521074738 76789da1 ada%s
+D a-except.ads		20240521074738 2a7d8d70 ada.exceptions%s
+D a-finali.ads		20240521074738 bf4f806b ada.finalization%s
+D a-reatim.ads		20240521074737 b89a10c3 ada.real_time%s
+D a-stream.ads		20240521074738 119b8fb3 ada.streams%s
+D a-string.ads		20240521074738 90ac6797 ada.strings%s
+D a-sttebu.ads		20240521074738 f1ad67a2 ada.strings.text_buffers%s
+D a-stuten.ads		20240521074738 c6ced0ae ada.strings.utf_encoding%s
+D a-taside.ads		20240521074737 c0a7c8d8 ada.task_identification%s
+D a-unccon.ads		20240521074738 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20240521074738 15f799c2 interfaces%s
+D i-c.ads		20240521074738 5c5a6c17 interfaces.c%s
+D pace.ads		20260318215246 262ce44f pace%s
+D pace-keyed_shared_memory.ads  20260318215246 15179ecc pace.keyed_shared_memory%s
+D pace-keyed_shared_memory-io.ads  20260318215246 a4473324 pace.keyed_shared_memory.io%s
+D system.ads		20240521074738 426dafb8 system%s
+D s-atacco.ads		20240521074738 903317eb system.address_to_access_conversions%s
+D s-c_time.ads		20251218205951 535885c5 system.c_time%s
+D s-finroo.ads		20240521074738 4ff27390 system.finalization_root%s
+D s-linux.ads		20251218205951 96312dab system.linux%s
+D s-multip.ads		20240521074738 38ac9f73 system.multiprocessors%s
+D s-oscons.ads		20251218205951 ece202eb system.os_constants%s
+D s-osinte.ads		20251218205951 a8f58951 system.os_interface%s
+D s-parame.ads		20251218205951 1f39ba92 system.parameters%s
+D s-secsta.ads		20240521074738 578279f5 system.secondary_stack%s
+D s-soflin.ads		20240521074738 df77073e system.soft_links%s
+D s-stache.ads		20240521074738 0b81c1fe system.stack_checking%s
+D s-stausa.ads		20240521074738 5be75682 system.stack_usage%s
+D s-stalib.ads		20240521074738 1c9580f6 system.standard_library%s
+D s-stoele.ads		20240521074738 ab5468e4 system.storage_elements%s
+D s-stopoo.ads		20240521074738 e9fa2dd8 system.storage_pools%s
+D s-tasinf.ads		20240521074737 528dde74 system.task_info%s
+D s-taspri.ads		20240521074737 4ec891e7 system.task_primitives%s
+D s-taprop.ads		20240521074737 6eefbe12 system.task_primitives.operations%s
+D s-taskin.ads		20240521074737 0ec7ab0b system.tasking%s
+D s-traent.ads		20240521074738 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240521074738 fa2a7f59 system.unsigned_types%s
+G a e
+X 13 pace.ads
+7K9*Pace 166e9 15|4r9 13r5
+X 14 pace-keyed_shared_memory.ads
+4K14*Keyed_Shared_Memory 13|7k9 14|62e29 15|4r14 13r10
+29R9*Block<31|42R9> 54e14 15|7r11
+X 15 pace-keyed_shared_memory-io.ads
+2i4 Key{integer} 7r18
+3+9 Data_Type 5r30 12r30
+4k34*Io 14|4k14 15|2z4 3z9 13l30 13e32
+5P9*Data_Block(3+9) 9r8 12r12
+7r4*Pool{14|29R9} 9r36
+12p4*Value{5P9}
+X 28 s-stausa.ads
+207U14*Initialize 208i<c,__gnat_stack_usage_initialize>22
+272U14*Output_Results 276i<c,__gnat_stack_usage_output_results>22
+

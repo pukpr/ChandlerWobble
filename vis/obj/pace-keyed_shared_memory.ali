@@ -1,0 +1,143 @@
+V "GNAT Lib v13"
+P SS ZX
+
+RN
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTIONS
+RV NO_FINALIZATION
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_ELABORATION_CODE
+
+U pace.keyed_shared_memory%b  pace-keyed_shared_memory.adb  95a4c6b5 OO PK
+Z ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W pace%s		pace.adb		pace.ali
+
+U pace.keyed_shared_memory%s  pace-keyed_shared_memory.ads  71953fbf EE OO PF PK
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W pace%s		pace.adb		pace.ali
+W system%s		system.ads		system.ali
+Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+Z system.put_images%s	s-putima.adb		s-putima.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+W system.storage_elements%s  s-stoele.adb	s-stoele.ali
+W system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+
+D ada.ads		20240521074738 76789da1 ada%s
+D a-except.ads		20240521074738 2a7d8d70 ada.exceptions%s
+D a-finali.ads		20240521074738 bf4f806b ada.finalization%s
+D a-reatim.ads		20240521074737 b89a10c3 ada.real_time%s
+D a-stream.ads		20240521074738 119b8fb3 ada.streams%s
+D a-string.ads		20240521074738 90ac6797 ada.strings%s
+D a-sttebu.ads		20240521074738 f1ad67a2 ada.strings.text_buffers%s
+D a-stuten.ads		20240521074738 c6ced0ae ada.strings.utf_encoding%s
+D a-tags.ads		20240521074738 9eaa38c6 ada.tags%s
+D a-taside.ads		20240521074737 c0a7c8d8 ada.task_identification%s
+D a-unccon.ads		20240521074738 0e9b276f ada.unchecked_conversion%s
+D interfac.ads		20240521074738 15f799c2 interfaces%s
+D i-c.ads		20240521074738 5c5a6c17 interfaces.c%s
+D pace.ads		20260318215246 262ce44f pace%s
+D pace-keyed_shared_memory.ads  20260318215246 15179ecc pace.keyed_shared_memory%s
+D pace-keyed_shared_memory.adb  20260318215246 80b35879 pace.keyed_shared_memory%b
+D system.ads		20240521074738 426dafb8 system%s
+D s-atacco.ads		20240521074738 903317eb system.address_to_access_conversions%s
+D s-c_time.ads		20251218205951 535885c5 system.c_time%s
+D s-exctab.ads		20240521074738 91bef6ef system.exception_table%s
+D s-finmas.ads		20240521074738 bd688734 system.finalization_masters%s
+D s-finroo.ads		20240521074738 4ff27390 system.finalization_root%s
+D s-linux.ads		20251218205951 96312dab system.linux%s
+D s-multip.ads		20240521074738 38ac9f73 system.multiprocessors%s
+D s-oscons.ads		20251218205951 ece202eb system.os_constants%s
+D s-osinte.ads		20251218205951 a8f58951 system.os_interface%s
+D s-parame.ads		20251218205951 1f39ba92 system.parameters%s
+D s-pooglo.ads		20240521074738 91708d21 system.pool_global%s
+D s-putima.ads		20240521074738 17291fe4 system.put_images%s
+D s-retsta.ads		20240521074738 0f6b06cb system.return_stack%s
+D s-secsta.ads		20240521074738 578279f5 system.secondary_stack%s
+D s-soflin.ads		20240521074738 df77073e system.soft_links%s
+D s-stache.ads		20240521074738 0b81c1fe system.stack_checking%s
+D s-stausa.ads		20240521074738 5be75682 system.stack_usage%s
+D s-stalib.ads		20240521074738 1c9580f6 system.standard_library%s
+D s-stoele.ads		20240521074738 ab5468e4 system.storage_elements%s
+D s-stoele.adb		20240521074738 8f5a9db6 system.storage_elements%b
+D s-stopoo.ads		20240521074738 e9fa2dd8 system.storage_pools%s
+D s-stratt.ads		20240521074738 f7dfd786 system.stream_attributes%s
+D s-tasinf.ads		20240521074737 528dde74 system.task_info%s
+D s-taspri.ads		20240521074737 4ec891e7 system.task_primitives%s
+D s-taprop.ads		20240521074737 6eefbe12 system.task_primitives.operations%s
+D s-taskin.ads		20240521074737 0ec7ab0b system.tasking%s
+D s-traent.ads		20240521074738 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240521074738 fa2a7f59 system.unsigned_types%s
+G a e
+G c Z s b [allocate pace__keyed_shared_memory 31 14 none]
+G c Z s b [deallocate pace__keyed_shared_memory 37 14 none]
+G c Z s b [storage_size pace__keyed_shared_memory 43 13 none]
+G c Z s s [blockDF pace__keyed_shared_memory 51 9 none]
+G c Z s s [blockIP pace__keyed_shared_memory 51 9 none]
+G c Z b b [shmget pace__keyed_shared_memory 11 13 none]
+G c Z b b [shmat pace__keyed_shared_memory 14 13 none]
+G c Z b b [shmdt pace__keyed_shared_memory 17 13 none]
+X 3 a-finali.ads
+53U14*Initialize<22|44p14>
+54U14*Finalize<22|43p14>
+X 14 pace.ads
+7K9*Pace 166e9 15|4r9 62r5 16|1r14 69r5
+X 15 pace-keyed_shared_memory.ads
+4K14*Keyed_Shared_Memory 14|7k9 15|51E9 62l10 62e29 16|1b19 69l10 69t29
+29R9*Block<38|42R9> 3|53P14 54P14 15|29d16 31P14 32r41 37P14 38r41 43P13
+. 44r14 51c9 54e14 16|21r41 45r41 56r14 22|42p14
+29i16*Key{integer} 51r16 16|33r18
+31U14*Allocate<38|46p14> 32=7 33<7 34>7 35>7 16|20b14 42l8 42t16
+32r7 Pool{29R9} 16|21b7 30m7 33r13 34r22 39m7
+33m7 Storage_Address{17|67M9} 16|22b7 40m7
+34i7 Size_In_Storage_Elements{36|61I12} 16|23b7 30r20
+35i7 Alignment{36|61I12} 16|24b7
+37U14*Deallocate<38|53p14> 38=7 39>7 40>7 41>7 16|44b14 53l8 53t18
+38r7 Pool{29R9} 16|45b7
+39m7 Storage_Address{17|67M9} 16|46b7 52r21
+40i7 Size_In_Storage_Elements{36|61I12} 16|47b7
+41i7 Alignment{36|61I12} 16|48b7
+43V13*Storage_Size{36|61I12}<38|60p13> 44>7 16|55b13 61l8 61t20
+44r7 Pool{29R9} 16|56b7 60r14
+47X4*Memory_Attach_Error 16|37r16
+52i7 Shm_Id{integer} 16|39m12
+53i7 Size{36|61I12} 16|30m12 34r27 60r19
+X 16 pace-keyed_shared_memory.adb
+6N4 Ipc_Alloc 35r13
+7N4 Ipc_Creat 35r25
+8N4 Shm_R 35r37
+9N4 Shm_W 35r45
+11V13 Shmget{integer} 11>21 11>26 11>32 12b<c,shmget>22 32s10
+11i21 Key{integer}
+11i26 Size{integer}
+11i32 Flags{integer}
+14V13 Shmat{17|67M9} 14>20 14>24 14>33 15b<c,shmat>22 40s26
+14i20 Id{integer}
+14i24 Address{integer}
+14i33 Flags{integer}
+17V13 Shmdt{integer} 17>20 18b<c,shmdt>22 52s14
+17m20 Addr{17|67M9}
+28i7 Id{integer} 31m7 36r10 39r26 40r33
+50i7 Ret{integer} 52m7
+X 17 system.ads
+37K9*System 15|1r6 2r6 26r8 27r8 33r38 34r37 35r37 39r37 40r37 41r37 45r14
+. 53r16 16|14r57 17r27 22r38 23r37 24r37 27r11 46r37 47r37 48r37 57r14 17|153e11
+67M9*Address 15|33r45 39r44 16|14r64 17r34 22r45 46r44
+X 22 s-finroo.ads
+42U14*Adjust
+X 34 s-stausa.ads
+207U14*Initialize 208i<c,__gnat_stack_usage_initialize>22
+272U14*Output_Results 276i<c,__gnat_stack_usage_output_results>22
+X 36 s-stoele.ads
+40K16*Storage_Elements 15|2w13 27r15 34r44 35r44 40r44 41r44 45r21 53r23
+. 16|23r44 24r44 27r18 47r44 48r44 57r21 36|116e28
+54I9*Storage_Offset<long_integer>
+61I12*Storage_Count{54I9} 15|34r61 35r61 40r61 41r61 45r38 53r40 16|23r61
+. 24r61 47r61 48r61 57r38
+X 38 s-stopoo.ads
+39K16*Storage_Pools 15|1w13 26r15 38|100e25
+42H9*Root_Storage_Pool<3|50R9> 15|29r38 51r38 38|67e62
+

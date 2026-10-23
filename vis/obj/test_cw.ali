@@ -1,0 +1,187 @@
+V "GNAT Lib v13"
+M P W=b
+P SS ZX
+
+RN
+RV NO_ALLOCATORS
+RV NO_DELAY
+RV NO_DISPATCHING_CALLS
+RV NO_ENUMERATION_MAPS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTIONS
+RV NO_FIXED_POINT
+RV NO_FLOATING_POINT
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_LOCAL_ALLOCATORS
+RV NO_NESTED_FINALIZATION
+RV NO_RELATIVE_DELAY
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_ALLOCATORS_AFTER_ELABORATION
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_TASK_HIERARCHY
+RV NO_TASKING
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLEMENTATION_PRAGMAS
+RV NO_IMPLICIT_LOOPS
+RV MAX_TASKS=1+
+
+U test_cw%b		test_cw.adb		03cafb40 NE OO SU
+W ada%s			ada.ads			ada.ali
+Z ada.calendar.delays%s	a-caldel.adb		a-caldel.ali
+W ada.characters%s	a-charac.ads		a-charac.ali
+Z ada.characters.handling%s  a-chahan.adb	a-chahan.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+W ada.numerics.long_elementary_functions%s  a-nlelfu.ads  a-nlelfu.ali
+Z ada.real_time%s	a-reatim.adb		a-reatim.ali
+W ada.strings%s		a-string.ads		a-string.ali
+Z ada.strings.fixed%s	a-strfix.adb		a-strfix.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W hal%s			hal.adb			hal.ali
+W hal.gazebo_commands%s	hal-gazebo_commands.adb	hal-gazebo_commands.ali
+W interfaces%s		interfac.ads		interfac.ali
+Z interfaces.c%s	i-c.adb			i-c.ali
+W pace%s		pace.adb		pace.ali
+W pace.keyed_shared_memory%s  pace-keyed_shared_memory.adb  pace-keyed_shared_memory.ali
+Z pace.keyed_shared_memory.io%s  pace-keyed_shared_memory-io.ads  pace-keyed_shared_memory-io.ali
+Z system%s		system.ads		system.ali
+Z system.parameters%s	s-parame.adb		s-parame.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+Z system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+Z system.task_info%s	s-tasinf.adb		s-tasinf.ali
+Z system.tasking%s	s-taskin.adb		s-taskin.ali
+Z system.tasking.stages%s  s-tassta.adb		s-tassta.ali
+
+D ada.ads		20240521074738 76789da1 ada%s
+D a-calend.ads		20251218205951 e6961b4c ada.calendar%s
+D a-caldel.ads		20240521074737 9f20b83d ada.calendar.delays%s
+D a-charac.ads		20240521074737 2d3ec45b ada.characters%s
+D a-chahan.ads		20240521074737 278246c0 ada.characters.handling%s
+D a-chlat1.ads		20240521074737 e0d72e76 ada.characters.latin_1%s
+D a-except.ads		20240521074738 2a7d8d70 ada.exceptions%s
+D a-finali.ads		20240521074738 bf4f806b ada.finalization%s
+D a-numeri.ads		20240521074738 84bea7a3 ada.numerics%s
+D a-ngelfu.ads		20240521074738 58d8ffc8 ada.numerics.generic_elementary_functions%s
+D a-nlelfu.ads		20240521074738 d3157d1f ada.numerics.long_elementary_functions%s
+D a-reatim.ads		20240521074737 b89a10c3 ada.real_time%s
+D a-stream.ads		20240521074738 119b8fb3 ada.streams%s
+D a-string.ads		20240521074738 90ac6797 ada.strings%s
+D a-strfix.ads		20240521074738 d8832344 ada.strings.fixed%s
+D a-strmap.ads		20240521074738 ed8acfdb ada.strings.maps%s
+D a-strsea.ads		20240521074738 2d394feb ada.strings.search%s
+D a-sttebu.ads		20240521074738 f1ad67a2 ada.strings.text_buffers%s
+D a-stuten.ads		20240521074738 c6ced0ae ada.strings.utf_encoding%s
+D a-tags.ads		20240521074738 9eaa38c6 ada.tags%s
+D a-taside.ads		20240521074737 c0a7c8d8 ada.task_identification%s
+D a-unccon.ads		20240521074738 0e9b276f ada.unchecked_conversion%s
+D hal.ads		20260318215246 8b227aff hal%s
+D hal-gazebo_commands.ads  20260318215246 b81c087f hal.gazebo_commands%s
+D hal-gazebo_commands.adb  20260318215246 1a306744 hal.gazebo_commands%b
+D interfac.ads		20240521074738 15f799c2 interfaces%s
+D i-c.ads		20240521074738 5c5a6c17 interfaces.c%s
+D pace.ads		20260318215246 262ce44f pace%s
+D pace-keyed_shared_memory.ads  20260318215246 15179ecc pace.keyed_shared_memory%s
+D pace-keyed_shared_memory-io.ads  20260318215246 a4473324 pace.keyed_shared_memory.io%s
+D system.ads		20240521074738 426dafb8 system%s
+D s-atacco.ads		20240521074738 903317eb system.address_to_access_conversions%s
+D s-c_time.ads		20251218205951 535885c5 system.c_time%s
+D s-exctab.ads		20240521074738 91bef6ef system.exception_table%s
+D s-finmas.ads		20240521074738 bd688734 system.finalization_masters%s
+D s-finroo.ads		20240521074738 4ff27390 system.finalization_root%s
+D s-linux.ads		20251218205951 96312dab system.linux%s
+D s-memory.ads		20240521074738 5b8432d0 system.memory%s
+D s-multip.ads		20240521074738 38ac9f73 system.multiprocessors%s
+D s-oscons.ads		20251218205951 ece202eb system.os_constants%s
+D s-osinte.ads		20251218205951 a8f58951 system.os_interface%s
+D s-parame.ads		20251218205951 1f39ba92 system.parameters%s
+D s-pooglo.ads		20240521074738 91708d21 system.pool_global%s
+D s-putima.ads		20240521074738 17291fe4 system.put_images%s
+D s-retsta.ads		20240521074738 0f6b06cb system.return_stack%s
+D s-secsta.ads		20240521074738 578279f5 system.secondary_stack%s
+D s-soflin.ads		20240521074738 df77073e system.soft_links%s
+D s-stache.ads		20240521074738 0b81c1fe system.stack_checking%s
+D s-stausa.ads		20240521074738 5be75682 system.stack_usage%s
+D s-stalib.ads		20240521074738 1c9580f6 system.standard_library%s
+D s-stalib.adb		20240521074738 eb464a47 system.standard_library%b
+D s-stoele.ads		20240521074738 ab5468e4 system.storage_elements%s
+D s-stoele.adb		20240521074738 8f5a9db6 system.storage_elements%b
+D s-stopoo.ads		20240521074738 e9fa2dd8 system.storage_pools%s
+D s-stratt.ads		20240521074738 f7dfd786 system.stream_attributes%s
+D s-tasinf.ads		20240521074737 528dde74 system.task_info%s
+D s-taspri.ads		20240521074737 4ec891e7 system.task_primitives%s
+D s-taprop.ads		20240521074737 6eefbe12 system.task_primitives.operations%s
+D s-taskin.ads		20240521074737 0ec7ab0b system.tasking%s
+D s-tassta.ads		20240521074737 cca55c94 system.tasking.stages%s
+D s-traent.ads		20240521074738 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240521074738 fa2a7f59 system.unsigned_types%s
+D test_cw.adb		20260318215246 68c38e20 test_cw%b
+G a e
+G c Z b b [test_cw standard 6 11 none]
+G r s block [test_cw standard 6 11 none] [blockIP pace__keyed_shared_memory 51 9 none]
+G r i none [test_cw standard 6 11 none] [io pace__keyed_shared_memory 4 34 none]
+G r i none [test_cw standard 6 11 none] [gazebo_commands hal 4 13 none]
+X 1 ada.ads
+16K9*Ada 20e8 63|4r6 7r8 7r22
+X 9 a-numeri.ads
+16K13*Numerics 35e17 63|4r10 7r12 7r26
+21N4*Pi 63|26r64 27r65 40r66 53r69
+X 10 a-ngelfu.ads
+95V13*Sin{long_float} 63|26s56[11|18]
+105V13*Cos{long_float} 63|27s57[11|18] 40s58[11|18] 53s61[11|18]
+X 11 a-nlelfu.ads
+18K22*Long_Elementary_Functions[10|39] 63|4w19 7r35
+X 23 hal.ads
+1K9*Hal 88e8 63|3r6 16r21
+X 24 hal-gazebo_commands.ads
+4k13*Gazebo_Commands 39e24 63|3w10 16r25
+20U14 Set_Rot 63|40s9[16] 53s9[16] 64s9[16]
+21e7 Name{63|9E7} 63|40r17[16] 53r17[16] 64r17[16]
+22f7 Yaw{long_float} 63|40r30[16] 53r31[16] 64r32[16]
+23f7 Pitch{long_float} 63|40r45[16] 53r48[16]
+29U14 Set_Torque 63|26s9[16]
+30e7 Name{63|9E7} 63|26r20[16]
+35f7 Pitch{long_float} 63|27r35[16]
+36f7 Roll{long_float} 63|26r35[16]
+X 31 system.ads
+67M9*Address
+X 38 s-memory.ads
+51V13*Alloc{31|67M9} 101i<c,__gnat_malloc>22
+66U14*Free 102i<c,__gnat_free>22
+74V13*Realloc{31|67M9} 103i<c,__gnat_realloc>22
+X 49 s-stausa.ads
+207U14*Initialize 208i<c,__gnat_stack_usage_initialize>22
+272U14*Output_Results 276i<c,__gnat_stack_usage_output_results>22
+X 51 s-stalib.adb
+87U14 Break_Start 88i<c,__gnat_break_start>22
+X 63 test_cw.adb
+6U11*Test_CW 6b11 67t4
+9E7 Elements 15e5 16r49
+10n7 Earth{9E7} 26r28 64r25
+11n7 Moon{9E7} 53r25
+12n7 Sun{9E7} 40r25
+13n7 sphere_link{9E7}
+14n7 cylinder_link{9E7}
+16K12 E[24|4] 26r7 40r7 53r7 64r7
+18N4 dT 28r17 29r26 41r17 42r22 55r17 56r22 65r13
+20t9 Wobble 21b14 31l8 31t14
+22f5 Time{long_float} 26r67 27r68 29m7 29r15
+23f5 Lunar_Torque{long_float} 26r43 27r44
+25i9 I{integer}
+33t9 Solar 34b14 44l8 44t13
+35f5 Time{long_float} 40r69 42m7 42r15
+36f5 Annual{long_float} 40r37
+37f5 Dip{long_float} 40r54
+39i9 I{integer}
+46t9 Lunar 47b14 58l8 58t13
+48f5 Time{long_float} 53r72 56m7 56r15
+49f5 Draconic{long_float} 53r38
+50f5 Dip{long_float} 53r57
+52i9 I{integer}
+60f4 Daily{long_float} 64r39
+63i8 I{integer}
+

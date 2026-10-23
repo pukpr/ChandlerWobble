@@ -1,0 +1,183 @@
+V "GNAT Lib v13"
+P SS ZX
+
+RN
+RV NO_FLOATING_POINT
+RV NO_SECONDARY_STACK
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_ATTRIBUTES
+RV NO_IMPLICIT_LOOPS
+
+U hal%b			hal.adb			c1630ab0 NE OO PK
+W ada%s			ada.ads			ada.ali
+W ada.numerics%s	a-numeri.ads		a-numeri.ali
+Z system.concat_7%s	s-conca7.adb		s-conca7.ali
+Z system.img_flt%s	s-imgflt.ads		s-imgflt.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+
+U hal%s			hal.ads			8b227aff EB NE OO PK
+
+D ada.ads		20240521074738 76789da1 ada%s
+D a-assert.ads		20240521074737 ba465f5c ada.assertions%s
+D a-except.ads		20240521074738 2a7d8d70 ada.exceptions%s
+D a-numeri.ads		20240521074738 84bea7a3 ada.numerics%s
+D a-nubinu.ads		20240521074738 93f1f3d1 ada.numerics.big_numbers%s
+D a-nbnbig.ads		20240521074738 711e0174 ada.numerics.big_numbers.big_integers_ghost%s
+D a-unccon.ads		20240521074738 0e9b276f ada.unchecked_conversion%s
+D hal.ads		20260318215246 8b227aff hal%s
+D hal.adb		20260318215246 ceffd7ec hal%b
+D system.ads		20240521074738 426dafb8 system%s
+D s-assert.ads		20240521074738 9c4520c7 system.assertions%s
+D s-casuti.ads		20240521074738 cf13d755 system.case_util%s
+D s-conca7.ads		20240521074738 09fd419f system.concat_7%s
+D s-exctab.ads		20240521074738 91bef6ef system.exception_table%s
+D s-imager.ads		20240521074738 45c7157d system.image_r%s
+D s-imageu.ads		20240521074738 631c6ed0 system.image_u%s
+D s-imgflt.ads		20240521074738 d12816b5 system.img_flt%s
+D s-imguns.ads		20240521074738 7867236f system.img_uns%s
+D s-parame.ads		20251218205951 1f39ba92 system.parameters%s
+D s-powflt.ads		20240521074738 a51ab9b8 system.powten_flt%s
+D s-secsta.ads		20240521074738 578279f5 system.secondary_stack%s
+D s-stalib.ads		20240521074738 1c9580f6 system.standard_library%s
+D s-stoele.ads		20240521074738 ab5468e4 system.storage_elements%s
+D s-traent.ads		20240521074738 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240521074738 fa2a7f59 system.unsigned_types%s
+D s-valuns.ads		20240521074738 e8a1f424 system.val_uns%s
+D s-valuti.ads		20240521074738 fcd603d8 system.val_util%s
+D s-valueu.ads		20240521074738 18770347 system.value_u%s
+D s-vauspe.ads		20240521074738 a67b2f28 system.value_u_spec%s
+D s-widuns.ads		20240521074738 866a5800 system.wid_uns%s
+D s-widthu.ads		20240521074738 b32f15e2 system.width_u%s
+G a e
+G c Z s b [rads hal 6 13 none]
+G c Z s b [rads hal 7 13 none]
+G c Z s b [degs hal 10 13 none]
+G c Z s b [degs hal 11 13 none]
+G c Z s b [Oadd hal 31 13 none]
+G c Z s b [Omultiply hal 32 13 none]
+G c Z s b [to_str hal 33 13 none]
+G c Z s b [terrain_to_division_cs hal 34 13 none]
+G c Z s b [division_to_terrain_cs hal 35 13 none]
+G c Z s b [Oadd hal 53 13 none]
+G c Z s b [Omultiply hal 54 13 none]
+G c Z s b [to_str hal 55 13 none]
+G c Z s b [terrain_to_division_cs hal 56 13 none]
+G c Z s b [division_to_terrain_cs hal 57 13 none]
+G c Z s b [get_pos hal 60 13 none]
+G c Z s b [get_ori hal 61 13 none]
+G c Z s b [get_axis_value hal 62 13 none]
+G c Z s b [get_axis_value hal 63 13 none]
+G c Z s b [convert_angle hal 85 13 none]
+G c Z s s [positionIP hal 18 9 none]
+G c Z s s [position_longIP hal 24 9 none]
+G c Z s s [orientationIP hal 37 9 none]
+G c Z s s [ori_arrIP hal 43 9 none]
+G c Z s s [six_dofIP hal 45 9 none]
+G c Z s s [six_dof_arrIP hal 51 9 none]
+G c Z s s [rateIP hal 69 9 none]
+X 1 ada.ads
+16K9*Ada 20e8 9|1r6 5r28 28r76
+X 4 a-numeri.ads
+16K13*Numerics 35e17 9|1w10 5r32 28r80
+21N4*Pi 9|5r41 28r89
+X 8 hal.ads
+1K9*Hal 88l5 88e8 9|3b14 79r24 80r18 81r25 146l5 146t8
+6V13*Rads{float} 6>19 9|7b13 10l8 10t12
+6f19 Degrees{float} 9|7b19 9r14
+7V13*Rads{long_float} 7>19 9|12b13 15l8 15t12
+7f19 Degrees{long_float} 9|12b19 14r14
+10V13*Degs{float} 10>19 9|17b13 20l8 20t12 79s28 80s22 81s29
+10f19 Radians{float} 9|17b19 19r14
+11V13*Degs{long_float} 11>19 9|22b13 25l8 25t12
+11f19 Radians{long_float} 9|22b19 24r14
+18R9*Position 21e17 22r26 31r25 31r42 32r38 32r55 33r27 34r51 34r68 35r52
+. 35r69 47r16 60r57 62r48 9|38r25 38r42 43r38 43r55 48r27 55r51 55r68 60r52
+. 60r69 98r57 99r13 124r48
+20f10*X{float} 9|40r17 40r23 45r26 50r25 57r59 62r45 102m14 127r22
+20f13*Y{float} 9|40r28 40r34 45r40 50r44 57r28 62r62 104m14 129r22
+20f16*Z{float} 9|40r39 40r45 45r54 51r26 57r44 62r28 106m14 131r22
+24R9*Position_Long 27e17 28r26
+26f10*X{long_float}
+26f13*Y{long_float}
+26f16*Z{long_float}
+31V14*"+"{18R9} 31>18 31>21 9|38b14 41l9 41t11
+31r18 L{18R9} 9|38b18 40r15 40r26 40r37
+31r21 R{18R9} 9|38b21 40r21 40r32 40r43
+32V14*"*"{18R9} 32>18 32>34 9|43b14 46l9 46t11
+32f18 Scalar{float} 9|43b18 45r15 45r29 45r43
+32r34 P{18R9} 9|43b34 45r24 45r38 45r52
+33V13*To_Str{string} 33>21 9|48b13 52l8 52t14
+33r21 Pos{18R9} 9|48b21 50r21 50r40 51r22
+34V13*Terrain_To_Division_Cs{18R9} 34>37 9|55b13 58l8 58t30
+34r37 Terrain_Pos{18R9} 9|55b37 57r16 57r32 57r47
+35V13*Division_To_Terrain_Cs{18R9} 35>37 9|60b13 63l8 63t30
+35r37 Division_Pos{18R9} 9|60b37 62r15 62r32 62r49
+37R9*Orientation 40e17 41r26 43r48 48r16 53r25 53r45 54r38 54r58 55r27 56r51
+. 56r71 57r52 57r72 61r57 63r48 9|66r25 66r45 71r38 71r58 76r27 88r51 88r71
+. 93r52 93r72 111r57 112r13 135r48
+39f10*A{float} 9|68r17 68r23 73r26 79r38 83r28 90r59 95r45 115m14 138r22
+39f13*B{float} 9|68r28 68r34 73r40 80r32 83r47 90r28 95r62 117m14 140r22
+39f16*C{float} 9|68r39 68r45 73r54 81r39 84r29 90r44 95r28 119m14 142r22
+43A9*Ori_Arr(37R9)<integer>
+45R9*Six_Dof 49e17 51r53
+47r10*Pos{18R9}
+48r10*Ori{37R9}
+51A9*Six_Dof_Arr(45R9)<integer>
+53V14*"+"{37R9} 53>18 53>21 9|66b14 69l9 69t11
+53r18 L{37R9} 9|66b18 68r15 68r26 68r37
+53r21 R{37R9} 9|66b21 68r21 68r32 68r43
+54V14*"*"{37R9} 54>18 54>34 9|71b14 74l9 74t11
+54f18 Scalar{float} 9|71b18 73r15 73r29 73r43
+54r34 R{37R9} 9|71b34 73r24 73r38 73r52
+55V13*To_Str{string} 55>21 55>40 9|76b13 86l8 86t14
+55r21 Ori{37R9} 9|76b21 79r34 80r28 81r35 83r24 83r43 84r25
+55b40 To_Degrees{boolean} 9|76b40 78r10
+56V13*Terrain_To_Division_Cs{37R9} 56>37 9|88b13 91l8 91t30
+56r37 Terrain_Ori{37R9} 9|88b37 90r16 90r32 90r47
+57V13*Division_To_Terrain_Cs{37R9} 57>37 9|93b13 96l8 96t30
+57r37 Division_Ori{37R9} 9|93b37 95r15 95r32 95r49
+59E9*Axes 59e35 60r29 61r29 62r36 63r36 9|98r29 111r29 124r36 135r36
+59n18*X{59E9} 9|101r17 126r17
+59n21*Y{59E9} 9|103r20 128r20
+59n24*Z{59E9}
+59n27*A{59E9} 9|114r17 137r17
+59n30*B{59E9} 9|116r20 139r20
+59n33*C{59E9}
+60V13*Get_Pos{18R9} 60>22 60>35 9|98b13 109l8 109t15
+60e22 Axis{59E9} 9|98b22 101r10 103r13
+60f35 Value{float} 9|98b35 102r19 104r19 106r19
+61V13*Get_Ori{37R9} 61>22 61>35 9|111b13 122l8 122t15
+61e22 Axis{59E9} 9|111b22 114r10 116r13
+61f35 Value{float} 9|111b35 115r19 117r19 119r19
+62V13*Get_Axis_Value{float} 62>29 62>42 9|124b13 133l8 133t22
+62e29 Axis{59E9} 9|124b29 126r10 128r13
+62r42 Pos{18R9} 9|124b42 127r18 129r18 131r18
+63V13*Get_Axis_Value{float} 63>29 63>42 9|135b13 144l8 144t22
+63e29 Axis{59E9} 9|135b29 137r10 139r13
+63r42 Ori{37R9} 9|135b42 138r18 140r18 142r18
+69R9*Rate 73e17
+71f10*Units{float}
+72i10*Second{integer}
+76E9*Rotation_Direction 76e40
+76n32*Cw{76E9}
+76n36*Ccw{76E9}
+80E9*Direction_To_Rotate 80e58
+80n33*Pos{80E9}
+80n38*Neg{80E9}
+80n43*Shortest_Route{80E9}
+82N4*Max_Assembly_Name_Length
+84E9*Angle_Units 84e58 85r56 85r80 9|27r27 32r56 32r80
+84n25*Degrees{84E9} 9|27r59
+84n34*Radians{84E9} 9|28r59
+84n43*Mils{84E9} 9|29r59
+84n49*Yumamils{84E9} 9|30r59
+85V13*Convert_Angle{float} 85>28 85>43 85>69 9|32b13 35l8 35t21
+85f28 Value{float} 9|32b28 34r14
+85e43 From_Units{84E9} 9|32b43 34r64
+85e69 To_Units{84E9} 9|32b69 34r37
+X 9 hal.adb
+5N4 Pi_Factor 9r24 14r24 19r24 24r24
+27a4 Num_In_Circle(float) 34r22 34r49
+99r7 Pos{8|18R9} 102m10 104m10 106m10 108r14
+112r7 Ori{8|37R9} 115m10 117m10 119m10 121r14
+

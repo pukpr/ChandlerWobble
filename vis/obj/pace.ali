@@ -1,0 +1,413 @@
+V "GNAT Lib v13"
+P SS ZX
+
+RN
+RV NO_ACCESS_SUBPROGRAMS
+RV NO_ALLOCATORS
+RV NO_DIRECT_BOOLEAN_OPERATORS
+RV NO_DISPATCH
+RV NO_DISPATCHING_CALLS
+RV NO_EXCEPTION_HANDLERS
+RV NO_EXCEPTION_PROPAGATION
+RV NO_EXCEPTIONS
+RV NO_FINALIZATION
+RV NO_FIXED_POINT
+RV NO_FLOATING_POINT
+RV NO_IO
+RV NO_IMPLICIT_CONDITIONALS
+RV NO_LOCAL_ALLOCATORS
+RV NO_NESTED_FINALIZATION
+RV NO_SECONDARY_STACK
+RV NO_STANDARD_STORAGE_POOLS
+RV NO_STREAMS
+RV NO_UNCHECKED_DEALLOCATION
+RV NO_DEFAULT_INITIALIZATION
+RV NO_DYNAMIC_SIZED_OBJECTS
+RV NO_IMPLEMENTATION_ASPECT_SPECIFICATIONS
+RV NO_IMPLICIT_LOOPS
+RV NO_ELABORATION_CODE
+
+U pace%b		pace.adb		132ca000 OO PK
+W ada%s			ada.ads			ada.ali
+W ada.environment_variables%s  a-envvar.adb	a-envvar.ali
+Z ada.exceptions%s	a-except.adb		a-except.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+W ada.tags%s		a-tags.adb		a-tags.ali
+W ada.text_io%s		a-textio.adb		a-textio.ali
+W ada.unchecked_deallocation%s
+Z system%s		system.ads		system.ali
+Z system.concat_2%s	s-conca2.adb		s-conca2.ali
+Z system.concat_4%s	s-conca4.adb		s-conca4.ali
+Z system.img_flt%s	s-imgflt.ads		s-imgflt.ali
+Z system.img_int%s	s-imgint.ads		s-imgint.ali
+Z system.return_stack%s	s-retsta.ads		s-retsta.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+Z system.storage_elements%s  s-stoele.adb	s-stoele.ali
+Z system.storage_pools%s  s-stopoo.adb		s-stopoo.ali
+Z system.storage_pools.subpools%s  s-stposu.adb	s-stposu.ali
+Z system.strings.stream_ops%s  s-ststop.adb	s-ststop.ali
+Z system.val_flt%s	s-valflt.ads		s-valflt.ali
+Z system.val_int%s	s-valint.ads		s-valint.ali
+
+U pace%s		pace.ads		dab8befc EB EE OO PF PK
+W ada%s			ada.ads			ada.ali
+W ada.exceptions%s	a-except.adb		a-except.ali
+W ada.finalization%s	a-finali.ads		a-finali.ali
+W ada.real_time%s	a-reatim.adb		a-reatim.ali
+W ada.streams%s		a-stream.adb		a-stream.ali
+Z ada.strings.text_buffers%s  a-sttebu.adb	a-sttebu.ali
+Z ada.tags%s		a-tags.adb		a-tags.ali
+W ada.task_identification%s  a-taside.adb	a-taside.ali
+Z system%s		system.ads		system.ali
+Z system.exception_table%s  s-exctab.adb	s-exctab.ali
+Z system.finalization_masters%s  s-finmas.adb	s-finmas.ali
+Z system.pool_global%s	s-pooglo.adb		s-pooglo.ali
+Z system.put_images%s	s-putima.adb		s-putima.ali
+Z system.return_stack%s	s-retsta.ads		s-retsta.ali
+Z system.secondary_stack%s  s-secsta.adb	s-secsta.ali
+Z system.soft_links%s	s-soflin.adb		s-soflin.ali
+Z system.standard_library%s  s-stalib.adb	s-stalib.ali
+Z system.stream_attributes%s  s-stratt.adb	s-stratt.ali
+
+D ada.ads		20240521074738 76789da1 ada%s
+D a-assert.ads		20240521074737 ba465f5c ada.assertions%s
+D a-envvar.ads		20240521074738 00080416 ada.environment_variables%s
+D a-except.ads		20240521074738 2a7d8d70 ada.exceptions%s
+D a-finali.ads		20240521074738 bf4f806b ada.finalization%s
+D a-ioexce.ads		20240521074738 40018c65 ada.io_exceptions%s
+D a-numeri.ads		20240521074738 84bea7a3 ada.numerics%s
+D a-nubinu.ads		20240521074738 93f1f3d1 ada.numerics.big_numbers%s
+D a-nbnbig.ads		20240521074738 711e0174 ada.numerics.big_numbers.big_integers_ghost%s
+D a-reatim.ads		20240521074737 b89a10c3 ada.real_time%s
+D a-stream.ads		20240521074738 119b8fb3 ada.streams%s
+D a-string.ads		20240521074738 90ac6797 ada.strings%s
+D a-sttebu.ads		20240521074738 f1ad67a2 ada.strings.text_buffers%s
+D a-stuten.ads		20240521074738 c6ced0ae ada.strings.utf_encoding%s
+D a-tags.ads		20240521074738 9eaa38c6 ada.tags%s
+D a-taside.ads		20240521074737 c0a7c8d8 ada.task_identification%s
+D a-textio.ads		20240521074738 5c2c6153 ada.text_io%s
+D a-unccon.ads		20240521074738 0e9b276f ada.unchecked_conversion%s
+D a-uncdea.ads		20240521074738 c3a8ac65 ada.unchecked_deallocation%s
+D interfac.ads		20240521074738 15f799c2 interfaces%s
+D i-c.ads		20240521074738 5c5a6c17 interfaces.c%s
+D i-cstrea.ads		20240521074738 e53d8b8e interfaces.c_streams%s
+D pace.ads		20260318215246 262ce44f pace%s
+D pace.adb		20260318215246 3426b5a9 pace%b
+D system.ads		20240521074738 426dafb8 system%s
+D s-atacco.ads		20240521074738 903317eb system.address_to_access_conversions%s
+D s-assert.ads		20240521074738 9c4520c7 system.assertions%s
+D s-c_time.ads		20251218205951 535885c5 system.c_time%s
+D s-casuti.ads		20240521074738 cf13d755 system.case_util%s
+D s-conca2.ads		20240521074738 b5fb73f7 system.concat_2%s
+D s-conca4.ads		20240521074738 33f85f3e system.concat_4%s
+D s-crtl.ads		20240521074738 8a0692f8 system.crtl%s
+D s-exctab.ads		20240521074738 91bef6ef system.exception_table%s
+D s-ficobl.ads		20240521074738 dc5161d4 system.file_control_block%s
+D s-finmas.ads		20240521074738 bd688734 system.finalization_masters%s
+D s-finroo.ads		20240521074738 4ff27390 system.finalization_root%s
+D s-imagei.ads		20240521074738 c707dfd0 system.image_i%s
+D s-imager.ads		20240521074738 45c7157d system.image_r%s
+D s-imageu.ads		20240521074738 631c6ed0 system.image_u%s
+D s-imgflt.ads		20240521074738 d12816b5 system.img_flt%s
+D s-imgint.ads		20240521074738 d4a52a9b system.img_int%s
+D s-imguns.ads		20240521074738 7867236f system.img_uns%s
+D s-linux.ads		20251218205951 96312dab system.linux%s
+D s-memory.ads		20240521074738 5b8432d0 system.memory%s
+D s-multip.ads		20240521074738 38ac9f73 system.multiprocessors%s
+D s-oscons.ads		20251218205951 ece202eb system.os_constants%s
+D s-osinte.ads		20251218205951 a8f58951 system.os_interface%s
+D s-parame.ads		20251218205951 1f39ba92 system.parameters%s
+D s-pooglo.ads		20240521074738 91708d21 system.pool_global%s
+D s-powflt.ads		20240521074738 a51ab9b8 system.powten_flt%s
+D s-putima.ads		20240521074738 17291fe4 system.put_images%s
+D s-retsta.ads		20240521074738 0f6b06cb system.return_stack%s
+D s-secsta.ads		20240521074738 578279f5 system.secondary_stack%s
+D s-soflin.ads		20240521074738 df77073e system.soft_links%s
+D s-stache.ads		20240521074738 0b81c1fe system.stack_checking%s
+D s-stausa.ads		20240521074738 5be75682 system.stack_usage%s
+D s-stalib.ads		20240521074738 1c9580f6 system.standard_library%s
+D s-stalib.adb		20240521074738 eb464a47 system.standard_library%b
+D s-stoele.ads		20240521074738 ab5468e4 system.storage_elements%s
+D s-stoele.adb		20240521074738 8f5a9db6 system.storage_elements%b
+D s-stopoo.ads		20240521074738 e9fa2dd8 system.storage_pools%s
+D s-stposu.ads		20240521074738 e251976f system.storage_pools.subpools%s
+D s-stratt.ads		20240521074738 f7dfd786 system.stream_attributes%s
+D s-string.ads		20240521074738 582aac7d system.strings%s
+D s-ststop.ads		20240521074738 c569db7c system.strings.stream_ops%s
+D s-tasinf.ads		20240521074737 528dde74 system.task_info%s
+D s-taspri.ads		20240521074737 4ec891e7 system.task_primitives%s
+D s-taprop.ads		20240521074737 6eefbe12 system.task_primitives.operations%s
+D s-taskin.ads		20240521074737 0ec7ab0b system.tasking%s
+D s-traent.ads		20240521074738 c81cbf8c system.traceback_entries%s
+D s-unstyp.ads		20240521074738 fa2a7f59 system.unsigned_types%s
+D s-valflt.ads		20240521074738 78fc9326 system.val_flt%s
+D s-valint.ads		20240521074738 1f610d7a system.val_int%s
+D s-valrea.ads		20240521074738 f0598c00 system.val_real%s
+D s-valuns.ads		20240521074738 e8a1f424 system.val_uns%s
+D s-valuti.ads		20240521074738 fcd603d8 system.val_util%s
+D s-valuei.ads		20240521074738 11081e09 system.value_i%s
+D s-vaispe.ads		20240521074738 44130d39 system.value_i_spec%s
+D s-valueu.ads		20240521074738 18770347 system.value_u%s
+D s-vauspe.ads		20240521074738 a67b2f28 system.value_u_spec%s
+D s-wchcon.ads		20240521074738 d9032363 system.wch_con%s
+D s-widuns.ads		20240521074738 866a5800 system.wid_uns%s
+D s-widthu.ads		20240521074738 b32f15e2 system.width_u%s
+G a e
+G c Z s b [input pace 20 14 none]
+G c Z s b [inout pace 21 14 none]
+G c Z s b [output pace 22 14 none]
+G c Z s b [to_channel_msg pace 32 13 none]
+G c Z s b [to_callback pace 35 13 none]
+G c Z s b [to_msg pace 37 13 none]
+G c Z s b [input pace__dispatching 42 17 none]
+G c Z s b [inout pace__dispatching 43 17 none]
+G c Z s b [output pace__dispatching 44 17 none]
+G c Z s b [set_input_call pace__dispatching 47 17 none]
+G c Z s b [set_inout_call pace__dispatching 49 17 none]
+G c Z s b [set_output_call pace__dispatching 51 17 none]
+G c Z s b [set_trace_call pace__dispatching 54 17 none]
+G c Z s b [now pace 58 13 none]
+G c Z s b [tag pace 61 13 none]
+G c Z s b [getenv pace 71 13 none]
+G c Z s b [getenv pace 72 13 none]
+G c Z s b [getenv pace 73 13 none]
+G c Z s b [get_time pace 75 13 none]
+G c Z s b [get_wait pace 76 13 none]
+G c Z s b [set_time pace 78 14 none]
+G c Z s b [set_wait pace 79 14 none]
+G c Z s b [set_async pace 81 14 none]
+G c Z s b [get_node pace 83 13 none]
+G c Z s b [set_node pace 84 14 none]
+G c Z s b [get pace 97 13 none]
+G c Z s b [error pace 123 14 none]
+G c Z s b [display pace 128 14 none]
+G c Z s b [is_local pace 130 13 none]
+G c Z s b [flow pace 134 13 none]
+G c Z s b [free pace 135 14 none]
+G c Z s s [msgDA pace 112 9 none]
+G c Z s s [msgDF pace 112 9 none]
+G c Z s s [msgIP pace 112 9 none]
+G c Z s b [initialize pace 146 14 none]
+G c Z s b [adjust pace 147 14 none]
+G c Z s b [finalize pace 148 14 none]
+G c Z s b [write pace 150 14 none]
+G c Z s b [read pace 154 14 none]
+G c Z s s [channel_msgDA pace 141 9 none]
+G c Z s s [channel_msgDF pace 141 9 none]
+G c Z s s [channel_msgIP pace 141 9 none]
+G c Z s b [set_clock pace 162 14 none]
+G c Z b b [free_channel pace 13 14 none]
+X 1 ada.ads
+16K9*Ada 20e8 23|1r6 2r6 3r6 4r6 5r6 64r22 65r43 66r24 67r18 108r24 124r28
+. 125r14 137r23 150r37 154r36 24|1r6 2r6 3r6 4r6 13r34 23r14 29r7 31r32 38r7
+. 40r32 48r7 50r32 57r10 58r17 79r7 79r29 91r10 147r37 153r36 222r17 222r39
+. 225r11 239r8
+X 3 a-envvar.ads
+19K13*Environment_Variables 69e30 24|4w10 57r14 58r21
+22V13*Value{string} 24|58s43
+34V13*Exists{boolean} 24|57s36
+X 4 a-except.ads
+44K13*Exceptions 295e19 23|2w10 124r32 125r18 24|29r11 38r11 48r11
+53R9*Exception_Occurrence 267e14 23|124r43
+80U14*Raise_Exception 24|29s22 38s22 48s22
+94V13*Exception_Information{string} 23|125r29
+X 5 a-finali.ads
+40K13*Finalization 68e21 23|4w10 137r27
+43H9*Controlled<36|40R9> 59e72 23|141r31 159r10
+X 10 a-reatim.ads
+39K13*Real_Time 186e18 23|5w10 108r28 24|222r21 222r43 225r15 239r12
+50O9*Time<duration> 24|222r31
+55O9*Time_Span<duration> 23|109r15 118r21 119r21
+58o4*Time_Span_Zero{55O9} 23|109r37
+62V13*Clock{50O9} 24|222s53 228s30
+72V14*"-"{55O9} 24|228s36
+111V13*To_Duration{duration} 24|228s17 254s14 259s14
+113V13*To_Time_Span{55O9} 23|118s38 24|264s19 269s19
+X 11 a-stream.ads
+36K13*Streams 87e16 23|3w10 150r41 154r40 24|147r41 153r40
+39H9*Root_Stream_Type 70e64 23|150r49 154r48 24|147r49 153r48
+X 15 a-tags.ads
+70K13*Tags 668e13 24|2w10 23r18 31r36 40r36 50r36
+87V13*External_Tag{string} 24|23s23 31s41 40s41 50s41
+X 16 a-taside.ads
+45K13*Task_Identification 106e28 23|1w10 64r26 65r47 66r28 67r22
+53P9*Task_Id<69|109P9> 23|64r46 66r48
+62V13*Image{string} 23|67r42
+65V13*Current_Task{53P9} 23|65r67
+X 17 a-textio.ads
+58K13*Text_IO 787e16 24|1w10 79r11 79r33 91r14
+66P9*File_Type
+192V13*Current_Error{66P9} 24|79s41
+555U14*Put_Line 24|79s19
+566U14*Put_Line 24|91s22
+X 19 a-uncdea.ads
+17+9 Object 24|14r37
+18P9 Name(17+9) 24|14r58
+20u15*Unchecked_Deallocation 24|3w10 13r38
+X 23 pace.ads
+7K9*Pace 97E13 166l5 166e9 24|6b14 167r13 180r13 193r13 264r33 280l5 280t9
+13I12*Node_Slot{integer} 83r47 84r58 97r24 114r17 130r30 24|95r25 97r24 102r30
+. 242r47 247r58
+17R9*Msg 20p14 20r34 21p14 21r38 22p14 22r36 32r35 33r24 35r32 37r47 38r44
+. 42r33 43r37 44r35 46r53 48r57 50r55 53r53 61r31 75r29 76r29 78r37 79r37
+. 81r38 83r29 84r37 112c9 120e17 133r31 134r32 139r23 24|8r32 10r18 14r47
+. 21r31 27r34 31r55 36r38 40r55 45r36 50r55 115r34 128r35 135r47 140r32 150r7
+. 156r31 164r33 177r37 190r35 242r29 247r37 252r29 257r29 262r37 267r37 272r38
+20U14*Input 20>21 24|27b14 34l8 34t13 167R18
+20r21 Message{17R9} 24|27b21 31r66
+21U14*Inout 21=21 24|36b14 43l8 43t13 180R18
+21r21 Message{17R9} 24|36b21 40r66
+22U14*Output 22<22 24|45b14 53l8 53t14 193R18
+22r22 Message{17R9} 24|45b22 50r66
+23X4*Dispatch_Error 24|30r10 39r10 49r10
+28R9*Channel_Msg<5|43R9> 30r32 32r53 33r42 35r50 37r27 38r24 141c9 144e17
+. 146r42 147r38 148r40 151r31 152r8 155r31 156r8 158r32 24|107r42 112r38
+. 119r40 128r53 129r16 135r27 140r50 141r16 148r31 154r31
+30r4*Null_Channel_Msg{28R9} 158c4 24|109r27
+32V13*To_Channel_Msg{28R9} 32>29 33r62 24|128b13 133l8 133t22 141s31
+32c29 Obj<17R9> 24|128b29 131r33
+33V14*"+"=33:62{28R9}
+33c18 Obj<17R9>
+35V13*To_Callback{28R9} 35>26 24|140b13 145l8 145t19
+35c26 Obj<17R9> 24|140b26 141r47
+37V13*To_Msg{17C9} 37>21 38r62 24|135b13 138l8 138t14
+37r21 Obj{28R9} 24|135b21 137r14
+38V14*"+"=38:62{17C9}
+38r18 Obj{28R9}
+41K12*Dispatching 55l8 55e19 24|159b17 219l8 219t19
+42U17*Input 42>24 24|164b17 174l11 174t16
+42c24 Obj<17R9> 24|164b24 167r25 169r17 172r17
+43U17*Inout 43=24 24|177b17 187l11 187t16
+43c24 Obj<17R9> 24|177b24 180m25 182m17 185r17
+44U17*Output 44<25 24|190b17 200l11 200t17
+44c25 Obj<17R9> 24|190b25 193m26 195m17 198r17
+46P12*Input_Call 46>44 47r43 24|163r12 202r43
+46c44 Obj<17R9>
+47U17*Set_Input_Call 47>33 24|202b17 205l11 205t25
+47p33 Call{46P12} 24|202b33 204r16
+48P12*Inout_Call 48=44 49r43 24|176r12 206r43
+48c44 Obj<17R9>
+49U17*Set_Inout_Call 49>33 24|206b17 209l11 209t25
+49p33 Call{48P12} 24|206b33 208r16
+50P12*Output_Call 50<45 51r44 24|189r12 210r44
+50c45 Obj<17R9>
+51U17*Set_Output_Call 51>34 24|210b17 213l11 213t26
+51p34 Call{50P12} 24|210b34 212r16
+53P12*Trace_Call 53>44 54r43 24|161r12 214r43
+53c44 Obj<17R9>
+54U17*Set_Trace_Call 54>33 24|214b17 217l11 217t25
+54p33 Call{53P12} 24|214b33 216r16
+58V13*Now{duration} 118s52 24|224b13 232l8 232t11 264s38
+61V13*Tag{string} 61>18 24|21b13 24l8 24t11
+61c18 Message<17R9> 24|21b18 23r37
+64P12*Thread{16|53P9} 65r28 115r15
+65V13*Current=65:67{16|53P9} 66s59 115s25 139s34
+66V13*Image=67:42{string}
+66p20 T{16|53P9}
+71V13*Getenv{string} 71>21 71>39 24|55b13 62l8 62t14 66s29 71s27
+71a21 Name{string} 24|55b21 57r44 58r50
+71a39 Default{string} 24|55b39 60r17
+72V13*Getenv{integer} 72>21 72>39 24|64b13 67l8 67t14 86s39 95s38
+72a21 Name{string} 24|64b21 66r37
+72i39 Default{integer} 24|64b39 66r58
+73V13*Getenv{float} 73>21 73>39 24|69b13 72l8 72t14
+73a21 Name{string} 24|69b21 71r35
+73f39 Default{float} 24|69b39 71r54
+75V13*Get_Time{duration} 75>23 24|252b13 255l8 255t16
+75c23 Obj<17R9> 24|252b23 254r27
+76V13*Get_Wait{duration} 76>23 24|257b13 260l8 260t16
+76c23 Obj<17R9> 24|257b23 259r27
+78U14*Set_Time 78=24 24|262b14 265l8 265t16
+78c24 Obj<17R9> 24|262b24 264m7
+79U14*Set_Wait 79=24 79>48 24|267b14 270l8 270t16
+79c24 Obj<17R9> 24|267b24 269m7
+79o48 Wait{duration} 24|267b48 269r33
+81U14*Set_Async 81=25 24|272b14 275l8 275t17
+81c25 Obj<17R9> 24|272b25 274m7
+83V13*Get_Node{13I12} 83>23 24|242b13 245l8 245t16
+83c23 Obj<17R9> 24|242b23 244r14
+84U14*Set_Node 84=24 84>48 24|247b14 250l8 250t16
+84c24 Obj<17R9> 24|247b24 249m7
+84i48 Node{13I12} 24|247b48 249r19
+97V13 Get{13I12} 24|97b13 100l8 100t11 104s21 143s32
+100E9 Synchronization 104e37 116r17
+100n29 Sync{100E9}
+101n29 Async{100E9} 24|274r19
+102n29 Simple{100E9} 116r36 139r43
+103n29 Balk{100E9}
+104n29 Timeout{100E9}
+106E9 Delivery 106e55 117r17
+106n22 Default{106E9}
+106n31 One_Way{106E9} 117r29 139r51
+106n40 Two_Way{106E9}
+106n49 Reply{106E9}
+108K12 Art=108:28 109r11 109r33 118r17 118r34 119r17
+109o4 Zero=109:37{10|55O9} 119r34 139r60 139r66
+114i10*Slot{13I12} 24|143m24 244r18 249m11
+115p10*Id{64P12}
+116e10*Send{100E9} 24|274m11
+117e10*Enum{106E9}
+118o10*Time{10|55O9} 24|254r31 264m11
+119o10*Wait{10|55O9} 24|259r31 269m11
+123U14 Error 123>21 123>39 24|77b14 81l8 81t13
+123a21 Text{string} 24|77b21 80r42
+123a39 X_Info{string} 24|77b39 80r57
+124V13 X_Info=125:29{string}
+124r21 X{4|53R9}
+128U14 Display 128>23 24|88b14 93l8 93t15
+128a23 Text{string} 24|88b23 91r47
+130V13 Is_Local{boolean} 130>23 24|102b13 105l8 105t16
+130i23 Node{13I12} 24|102b23 104r14 104r28
+133P9 Channel(17R9) 134r50 135r33 143r22 24|8r50 14r66 16r33
+134V13 Flow{133P9} 134>19 24|8b13 11l8 11t12 131s27 156s25
+134c19 Message<17R9> 24|8b19 10r29
+135U14 Free 135=20 24|16b14 19l8 19t12 123s10
+135p20 Obj{133P9} 24|16b20 18m21
+137K12 Af=137:27 141r28 159r7
+139r4 Null_Msg{17R9} 143m33 143r33 159m39 159r39 24|114m30 114r30 122m30
+. 122r30
+143p10*Reference{133P9} 159m26 24|109m14 109r44 114r17 115m17 115r52 122r17
+. 123m23 131m14 137r18 143r14 150r38 156m12
+146U14 Initialize<5|46p14> 146=26 24|107b14 110l8 110t18
+146r26 Object{28R9} 24|107b26 109m7
+147U14 Adjust<5|47p14> 147=22 24|112b14 117l8 117t14
+147r22 Object{28R9} 24|112b22 114r10 115m10 115r45
+148U14 Finalize<5|48p14> 148=24 24|119b14 125l8 125t16
+148r24 Object{28R9} 24|119b24 122r10 123m16 123r16
+150U14 Write 150^21 151>21 152r30 24|147b14 151l8 151t13
+150p21 Stream(11|39R9) 24|147b21 150r25
+151r21 Item{28R9} 24|148b21 150r33
+154U14 Read 154^20 155<20 156r29 24|153b14 157l8 157t12
+154p20 Stream(11|39R9) 24|153b20 156r48
+155r20 Item{28R9} 24|154b20 156m7
+161P9 Clock_Call(duration) 162r36 24|221r16 233r36
+162U14 Set_Clock 162>25 24|233b14 236l8 236t17
+162p25 Clock{161P9} 24|233b25 235r20
+X 24 pace.adb
+13U14 Free_Channel[19|20] 18s7
+86b4 Pace_Display{boolean} 90r10
+95i4 This_Node{23|13I12} 99r14 104r40
+129r7 Result{23|28R9} 131m7 132r14
+141r7 Result{23|28R9} 143m7 143r7 144r14
+161p7 Tr{23|53P12} 171r13 172r13 184r13 185r13 197r13 198r13 216m10
+163p7 Ip{23|46P12} 166r13 169r13 204m10
+176p7 Io{23|48P12} 179r13 182r13 208m10
+189p7 Op{23|50P12} 192r13 195r13 212m10
+221p4 Now_Clock{23|161P9} 227r10 230r17 235m7
+222o4 Start_Time{10|50O9} 228r38
+X 25 system.ads
+67M9*Address
+X 44 s-memory.ads
+51V13*Alloc{25|67M9} 101i<c,__gnat_malloc>22
+66U14*Free 102i<c,__gnat_free>22
+74V13*Realloc{25|67M9} 103i<c,__gnat_realloc>22
+X 56 s-stausa.ads
+207U14*Initialize 208i<c,__gnat_stack_usage_initialize>22
+272U14*Output_Results 276i<c,__gnat_stack_usage_output_results>22
+X 58 s-stalib.adb
+87U14 Break_Start 88i<c,__gnat_break_start>22
+X 69 s-taskin.ads
+109P9*Task_Id(107R9)
+
