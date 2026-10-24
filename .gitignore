@@ -40,3 +40,6 @@ Thumbs.db
 *.png
 *.jpg
 *.pdf.txt
+
+# Downloaded data (regenerate with docs/fetch_eop.py)
+docs/data/

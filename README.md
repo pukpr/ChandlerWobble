@@ -8,8 +8,10 @@ impulses every 0.5 years. Each impulse magnitude is the unit-RMS square of the
 impulses; no continuous forcing or state-dependent (parametric) kick is used.
 The optional `--amp-step s` adds the inertia pulse's effect on the wobble itself:
 whole-year events scale the state by 1+s and half-year events by 1/(1+s), an annual
-amplitude modulation that produces the 1 -/+ CW sidebands with the observed phase
-relation (`s = 0.25` matches their level; see `docs/cw_magnetized_spheroid.md` §5).
+amplitude modulation that produces the 1 -/+ CW sidebands seen in `cw.dat` (`s = 0.25`
+matches their level). Raw IERS polar motion since 1973 shows those sidebands 6-100 times
+weaker in amplitude, consistent with the default s = 0; the `cw.dat` excess comes from its
+processing (see `docs/cw_data_tests.md` §2).
 
 ## Interactive Visualization
 

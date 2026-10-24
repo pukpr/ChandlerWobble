@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Sidebands of the Chandler line: mixing with the carrier or resonance filtering? (2026-10-23)
-Companion to cw_magnetized_spheroid.py; discussion in cw_magnetized_spheroid.md, section 5.
+Companion to cw_magnetized_spheroid.py; discussion in cw_data_tests.md, section 2 (the AM reading tested here applies to
+cw.dat only: raw IERS polar motion does not show these sidebands).
 
 Lines fitted jointly to cw.dat by least squares, with signed frequencies (a negative frequency is the folded image):
   carrier  f_c ~ 0.844        CW line

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Chandler wobble as a polar-magnetized, pear-shaped spheroid in a pulsed coaxial electromagnet (2026-10-23).
-Derivation and results: cw_magnetized_spheroid.md (same directory).
+Derivation and results: cw_magnetized_spheroid.md (the device appendix, same directory).
 
 The device (a macrospin, i.e. the uniform k = 0 Kittel mode of a ferromagnetic ellipsoid):
   spin            unit magnetization m, polar (along z) at rest; shape-anisotropy tensor N plays the inverse inertia

@@ -63,7 +63,9 @@ def amplitude_factor(event_index, amp_step, swap=False):
     Events at whole years multiply the state by ``1 + amp_step`` and events at
     half years divide it by the same factor (``swap`` reverses this).  The
     alternation modulates the wobble amplitude once a year, which produces the
-    observed 1 -/+ CW sidebands as amplitude-modulation products of the CW line.
+    1 -/+ CW sidebands of cw.dat as amplitude-modulation products of the CW line.
+    Raw IERS polar motion (1973-now) limits such a modulation to about 1%, so
+    those cw.dat sidebands appear to come from its processing, not the Earth.
     """
     enlarge = (event_index % 2 == 0) != swap
     return 1 + amp_step if enlarge else 1 / (1 + amp_step)

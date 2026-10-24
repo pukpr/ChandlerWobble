@@ -60,7 +60,8 @@ def parse_args():
         type=float,
         default=0.0,
         help="Inertia-pulse amplitude step: whole-year events scale the state by "
-             "1+s, half-year events by 1/(1+s). 0.25 matches the observed sidebands.",
+             "1+s, half-year events by 1/(1+s). 0.25 matches the cw.dat sidebands, "
+             "which raw IERS polar motion does not show (docs/cw_data_tests.md section 2).",
     )
     parser.add_argument(
         "--amp-step-swap",
