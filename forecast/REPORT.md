@@ -1,6 +1,6 @@
 # Chandler wobble forecast ledger
 
-Updated 2026-10-24 15:44 UTC. Data end 2026.8049 (feeds: c01 updated, c04 updated, usno cached). Error = |Δp|, the vector error of complex polar motion, in mas. `SS` = 1 − MSE(engine)/MSE(baseline); positive beats the baseline.
+Updated 2026-10-24 16:04 UTC. Data end 2026.7283 (feeds: c01 updated, c04 updated, usno missing). Error = |Δp|, the vector error of complex polar motion, in mas. `SS` = 1 − MSE(engine)/MSE(baseline); positive beats the baseline.
 
 ## Live issues
 
@@ -28,14 +28,14 @@ Origins every 3 months from 2005; each uses only data at or before its origin. M
 | ls_free | 0.5–1 | 85 | 60.6 | 0.83 |  |  |
 | ls_free | 1–2 | 83 | 84.3 | 0.76 |  |  |
 | ls_free | 2–3 | 79 | 92.6 | 0.68 |  |  |
-| free_decay | 0–0.5 | 86 | 50.5 | 0.93 | 0.27 | 0.69 |
+| free_decay | 0–0.5 | 86 | 50.5 | 0.93 | 0.26 | 0.69 |
 | free_decay | 0.5–1 | 85 | 53.2 | 0.92 | 0.20 | 0.68 |
-| free_decay | 1–2 | 83 | 66.6 | 0.86 | 0.34 | 0.77 |
+| free_decay | 1–2 | 83 | 66.6 | 0.86 | 0.35 | 0.77 |
 | free_decay | 2–3 | 79 | 72.5 | 0.84 | 0.43 | 0.84 |
 | device | 0–0.5 | 86 | 92.8 | 0.67 | -1.39 | 0.19 |
 | device | 0.5–1 | 85 | 87.3 | 0.67 | -1.30 | 0.20 |
 | device | 1–2 | 83 | 105.7 | 0.58 | -0.72 | 0.24 |
-| device | 2–3 | 79 | 109.9 | 0.63 | -0.31 | 0.29 |
+| device | 2–3 | 79 | 109.9 | 0.63 | -0.33 | 0.29 |
 | two_line_fm | 0–0.5 | 86 | 82.4 | 0.61 | -1.02 | 0.28 |
 | two_line_fm | 0.5–1 | 85 | 72.9 | 0.71 | -0.56 | 0.31 |
 | two_line_fm | 1–2 | 83 | 76.3 | 0.70 | -0.35 | 0.47 |
@@ -55,10 +55,10 @@ Origins every 3 months from 2005; each uses only data at or before its origin. M
 
 | claim | evaluate after | status | provisional reading (data so far) | engines predicting PASS |
 |---|---|---|---|---|
-| **C1_regrowth**: The CW regrows: its amplitude at the draconic alias, centred 2029.0 (window 2026-2032), is at least 50 mas. | 2032.0 | pending | value 55.2 | alias_cw, device, free_decay, two_line_fm |
-| **C2_phase_lock**: The CW keeps the phase of its 1939-2008 plateau: within 45 deg of it, centred 2029.0. | 2032.0 | pending | value 23.2, signed 23.2, amp_mas 55.2 | alias_cw, device, free_decay, ls_free, two_line_fm |
-| **C3_mm_persists**: The Mm line (14 - anomalistic, 0.7448 /yr, prograde) persists over 2017-2031 at 10-35 mas and within 45 deg of its 1973-2016 phase. | 2031.0 | pending | value 18.8, signed -18.8, amp_mas 22.5, ref_amp_mas 10.8 | alias_cw, device, free_decay, ls_free |
-| **C4_seven_sixths**: The 7/6 line (1 + F - M, 1.16675 /yr, prograde) keeps its phase: over 2019-2031, within 45 deg of its 1973-2019 phase. | 2031.0 | pending | value 33.4, signed -33.4, amp_mas 5.4, ref_amp_mas 5.6 | — |
-| **C5_no_sidebands**: No 1 -/+ CW sidebands in raw polar motion over 2017-2031: both below 3 mas (they were cw.dat processing products). | 2031.0 | pending | value 2.5, upper_mas 1.0, lower_mas 2.5 | alias_cw, device, free_decay, ls_free, two_line_fm |
+| **C1_regrowth**: The CW regrows: its amplitude at the draconic alias, centred 2029.0 (window 2026-2032), is at least 50 mas. | 2032.0 | pending | value 54.3 | alias_cw, device, free_decay, two_line_fm |
+| **C2_phase_lock**: The CW keeps the phase of its 1939-2008 plateau: within 45 deg of it, centred 2029.0. | 2032.0 | pending | value 24.0, signed 24.0, amp_mas 54.3 | alias_cw, device, free_decay, ls_free, two_line_fm |
+| **C3_mm_persists**: The Mm line (14 - anomalistic, 0.7448 /yr, prograde) persists over 2017-2031 at 10-35 mas and within 45 deg of its 1973-2016 phase. | 2031.0 | pending | value 19.7, signed -19.7, amp_mas 22.8, ref_amp_mas 10.8 | alias_cw, device, free_decay, ls_free |
+| **C4_seven_sixths**: The 7/6 line (1 + F - M, 1.16675 /yr, prograde) keeps its phase: over 2019-2031, within 45 deg of its 1973-2019 phase. | 2031.0 | pending | value 36.2, signed -36.2, amp_mas 5.1, ref_amp_mas 5.6 | — |
+| **C5_no_sidebands**: No 1 -/+ CW sidebands in raw polar motion over 2017-2031: both below 3 mas (they were cw.dat processing products). | 2031.0 | pending | value 2.2, upper_mas 0.7, lower_mas 2.2 | alias_cw, device, free_decay, ls_free, two_line_fm |
 
 Claims: `claims.yml` (registered 2026-10-24). Engines: `targets.yml`. Method: `README.md`.

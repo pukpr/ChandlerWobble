@@ -5,7 +5,7 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 55.20530127046195
+   "value": 54.30974968556971
   },
   "engine_predictions": {
    "alias_cw": {
@@ -51,9 +51,9 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 23.23109047500967,
-   "signed": 23.23109047500967,
-   "amp_mas": 55.20530127046195
+   "value": 23.964913749185776,
+   "signed": 23.964913749185776,
+   "amp_mas": 54.30974968556971
   },
   "engine_predictions": {
    "alias_cw": {
@@ -109,10 +109,10 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 18.805639883535918,
-   "signed": -18.805639883535918,
-   "amp_mas": 22.49999552054412,
-   "ref_amp_mas": 10.821770377940748
+   "value": 19.71550361562083,
+   "signed": -19.71550361562083,
+   "amp_mas": 22.83759121809479,
+   "ref_amp_mas": 10.821770377940727
   },
   "engine_predictions": {
    "alias_cw": {
@@ -173,10 +173,10 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 33.440541378081406,
-   "signed": -33.440541378081406,
-   "amp_mas": 5.390825765731744,
-   "ref_amp_mas": 5.631475790873172
+   "value": 36.171121078677885,
+   "signed": -36.171121078677885,
+   "amp_mas": 5.109952789079841,
+   "ref_amp_mas": 5.631475790873195
   },
   "engine_predictions": {
    "alias_cw": {
@@ -237,9 +237,9 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 2.466000573310181,
-   "upper_mas": 1.0338113528103148,
-   "lower_mas": 2.466000573310181
+   "value": 2.232294766912311,
+   "upper_mas": 0.7233984520741648,
+   "lower_mas": 2.232294766912311
   },
   "engine_predictions": {
    "alias_cw": {
