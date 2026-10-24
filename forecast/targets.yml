@@ -1,0 +1,43 @@
+# Chandler wobble forecast ledger: engine registry and settings.
+#
+# Every engine is issued from the same origins and scored on the same observations, so they compete head to head.
+# Engine parameters here are part of each issue's fingerprint: change one and the next issue is a new issue.
+#
+#   alias_cw     port of gem-lte-core forecast/engines.py: prograde CW at the forced alias, prograde annual, drift
+#   ls_free      benchmark: least-squares harmonic extrapolation with the CW frequency fitted (standard EOP practice)
+#   free_decay   consensus expectation: the CW as a free mode (432.3 d, Q 85) decaying from its state at the origin
+#   device       the gated lunar device (docs/cw_flagship.py): sin^2(beta)(a/r)^3 gated by push-pull semiannual
+#                inertia pulses through one prograde mode; comb timing and linear terms fitted at each origin
+#   two_line_fm  steady forced lines at the draconic alias (0.84398 /yr) and the F - M alias (0.83325 /yr), fitted on
+#                the long record (C01 + C04) up to the origin; their ~93-yr beat carries the envelope
+
+settings:
+  grid_years: 0.05            # projection and scoring step (18.3 d)
+  live_horizon_years: 6.0     # live issues reach the claim windows
+  hindcast_horizon_years: 3.0
+  hindcast_start: 2005.0      # rolling origins from here (every hindcast_step_months) to data end - 0.5 yr
+  hindcast_step_months: 3
+  horizon_bins: [0.0, 0.5, 1.0, 2.0, 3.0, 6.0]
+  baselines: [persistence, ls_free]   # skill scores are reported against these
+
+engines:
+  alias_cw:
+    train_years: 24
+  ls_free:
+    train_years: 10
+    f_scan: [0.80, 0.90]
+  free_decay:
+    state_years: 6            # window that estimates the CW state (and seasonal lines, drift) at the origin
+    period_days: 432.3
+    Q: 85
+  device:
+    train_years: 24
+    f0: 0.8431530             # cw_bandpass.json, lowest Q that fits the line set
+    Q: 31.62
+    tau_days: 5.533
+    push_pull: 0.977
+    asymmetry: 0.383
+  two_line_fm:
+    train_start: 1890.0
+    season_segment_years: 10
+    drift_knot_years: 5

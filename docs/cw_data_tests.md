@@ -150,7 +150,7 @@ The device has to produce each line at its observed strength:
 
 ## 7. Open checks
 
-- The IERS C01 series (1846–now): CW and Mm phase locks, and the 1 ∓ CW sidebands, before 1973.
+- The IERS C01 series (1846–now): CW phase lock done ([cw_longrecord.md](cw_longrecord.md)); Mm and the 1 ∓ CW sidebands before 1973 still to do.
 - The provenance of `cw.dat`: its source series, the splice near 2005, the semiannual removal and the seasonal gain.
 - A physically fixed comb date (the fits repeat every ~27 days), to make the CW–Mm relative phase a test.
 
@@ -165,6 +165,7 @@ The device has to produce each line at its observed strength:
 | The natural period is ≈ 450 d, with 0.817 as the free mode and a 37-yr free/forced beat | **withdrawn**: with pulse shape free, f₀ ≈ 425–440 d; 0.817 is phase-steady | §4, lead §3 |
 | Low Q (single digits) is allowed once the wobble is forced | **bounded**: Q ≳ 30, set by the 2 − CW line | lead §3 |
 | CW counter-torque from a finite-difference inverse | **corrected**: computed exactly in the frequency domain | `cw_counter_torque.py` |
+| The peak near 1.16 /yr is the draconic comb partner 2 − CW (1.1560) | **re-identified**: it is F − M on the annual harmonic, 1 + (F − M) = 1.1668 ≈ 7/6, phase-steady (±31°); 2 − CW wanders | [cw_suppression.md §6.2](cw_suppression.md) |
 | The Kittel (nanomagnet) mode as the working analog | kept only as a mathematical identity; rotating machinery is the analog | lead §1, [cw_magnetized_spheroid.md](cw_magnetized_spheroid.md) |
 
 ## Scripts

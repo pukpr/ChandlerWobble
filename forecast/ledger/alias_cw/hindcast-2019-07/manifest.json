@@ -1,0 +1,17 @@
+{
+ "chandler_period_days": 432.7567772785059,
+ "cw_amp_mas": 94.28155497488784,
+ "r_train": 0.9154813729160384,
+ "issue": "hindcast-2019-07",
+ "data_end": 2019.475,
+ "horizon_years": 3.0,
+ "settings": {
+  "train_years": 24
+ },
+ "fingerprint": "7548db9ff1116918",
+ "hindcast_origin": 2019.475,
+ "engine": "alias_cw",
+ "issued_utc": "2026-10-24T15:43:58+00:00",
+ "issued_year": 2026.8126712328767,
+ "git_rev": "aa35b19"
+}

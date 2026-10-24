@@ -1,0 +1,27 @@
+{
+ "comb_day": 128,
+ "r_train": 0.9580816096002303,
+ "train_years": 24,
+ "f0": 0.843153,
+ "Q": 31.62,
+ "tau_days": 5.533,
+ "push_pull": 0.977,
+ "asymmetry": 0.383,
+ "issue": "hindcast-2009-01",
+ "data_end": 2008.975,
+ "horizon_years": 3.0,
+ "settings": {
+  "train_years": 24,
+  "f0": 0.843153,
+  "Q": 31.62,
+  "tau_days": 5.533,
+  "push_pull": 0.977,
+  "asymmetry": 0.383
+ },
+ "fingerprint": "50f2b36bfbfc0762",
+ "hindcast_origin": 2008.975,
+ "engine": "device",
+ "issued_utc": "2026-10-24T15:43:49+00:00",
+ "issued_year": 2026.8126712328767,
+ "git_rev": "aa35b19"
+}

@@ -1,0 +1,292 @@
+{
+ "C1_regrowth": {
+  "statement": "The CW regrows: its amplitude at the draconic alias, centred 2029.0 (window 2026-2032), is at least 50 mas.",
+  "evaluate_after": 2032.0,
+  "status": "pending",
+  "observed": null,
+  "provisional": {
+   "value": 55.20530127046195
+  },
+  "engine_predictions": {
+   "alias_cw": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 60.47
+    },
+    "verdict": "PASS"
+   },
+   "device": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 59.63
+    },
+    "verdict": "PASS"
+   },
+   "free_decay": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 52.13
+    },
+    "verdict": "PASS"
+   },
+   "ls_free": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 41.81
+    },
+    "verdict": "INCONCLUSIVE"
+   },
+   "two_line_fm": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 89.91
+    },
+    "verdict": "PASS"
+   }
+  }
+ },
+ "C2_phase_lock": {
+  "statement": "The CW keeps the phase of its 1939-2008 plateau: within 45 deg of it, centred 2029.0.",
+  "evaluate_after": 2032.0,
+  "status": "pending",
+  "observed": null,
+  "provisional": {
+   "value": 23.23109047500967,
+   "signed": 23.23109047500967,
+   "amp_mas": 55.20530127046195
+  },
+  "engine_predictions": {
+   "alias_cw": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 6.01,
+     "signed": -6.01,
+     "amp_mas": 60.47
+    },
+    "verdict": "PASS"
+   },
+   "device": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 5.57,
+     "signed": -5.57,
+     "amp_mas": 59.63
+    },
+    "verdict": "PASS"
+   },
+   "free_decay": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 21.26,
+     "signed": 21.26,
+     "amp_mas": 52.13
+    },
+    "verdict": "PASS"
+   },
+   "ls_free": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 4.55,
+     "signed": 4.55,
+     "amp_mas": 41.81
+    },
+    "verdict": "PASS"
+   },
+   "two_line_fm": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 42.95,
+     "signed": 42.95,
+     "amp_mas": 89.91
+    },
+    "verdict": "PASS"
+   }
+  }
+ },
+ "C3_mm_persists": {
+  "statement": "The Mm line (14 - anomalistic, 0.7448 /yr, prograde) persists over 2017-2031 at 10-35 mas and within 45 deg of its 1973-2016 phase.",
+  "evaluate_after": 2031.0,
+  "status": "pending",
+  "observed": null,
+  "provisional": {
+   "value": 18.805639883535918,
+   "signed": -18.805639883535918,
+   "amp_mas": 22.49999552054412,
+   "ref_amp_mas": 10.821770377940748
+  },
+  "engine_predictions": {
+   "alias_cw": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 1.03,
+     "signed": -1.03,
+     "amp_mas": 15.92,
+     "ref_amp_mas": 10.82
+    },
+    "verdict": "PASS"
+   },
+   "device": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 1.33,
+     "signed": -1.33,
+     "amp_mas": 17.32,
+     "ref_amp_mas": 10.82
+    },
+    "verdict": "PASS"
+   },
+   "free_decay": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 17.06,
+     "signed": -17.06,
+     "amp_mas": 13.88,
+     "ref_amp_mas": 10.82
+    },
+    "verdict": "PASS"
+   },
+   "ls_free": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 11.94,
+     "signed": -11.94,
+     "amp_mas": 16.58,
+     "ref_amp_mas": 10.82
+    },
+    "verdict": "PASS"
+   },
+   "two_line_fm": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 55.52,
+     "signed": -55.52,
+     "amp_mas": 7.81,
+     "ref_amp_mas": 10.82
+    },
+    "verdict": "FAIL"
+   }
+  }
+ },
+ "C4_seven_sixths": {
+  "statement": "The 7/6 line (1 + F - M, 1.16675 /yr, prograde) keeps its phase: over 2019-2031, within 45 deg of its 1973-2019 phase.",
+  "evaluate_after": 2031.0,
+  "status": "pending",
+  "observed": null,
+  "provisional": {
+   "value": 33.440541378081406,
+   "signed": -33.440541378081406,
+   "amp_mas": 5.390825765731744,
+   "ref_amp_mas": 5.631475790873172
+  },
+  "engine_predictions": {
+   "alias_cw": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 64.24,
+     "signed": -64.24,
+     "amp_mas": 3.63,
+     "ref_amp_mas": 5.63
+    },
+    "verdict": "INCONCLUSIVE"
+   },
+   "device": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 58.72,
+     "signed": -58.72,
+     "amp_mas": 3.36,
+     "ref_amp_mas": 5.63
+    },
+    "verdict": "INCONCLUSIVE"
+   },
+   "free_decay": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 51.11,
+     "signed": -51.11,
+     "amp_mas": 5.3,
+     "ref_amp_mas": 5.63
+    },
+    "verdict": "INCONCLUSIVE"
+   },
+   "ls_free": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 51.72,
+     "signed": -51.72,
+     "amp_mas": 3.13,
+     "ref_amp_mas": 5.63
+    },
+    "verdict": "INCONCLUSIVE"
+   },
+   "two_line_fm": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 52.52,
+     "signed": -52.52,
+     "amp_mas": 8.09,
+     "ref_amp_mas": 5.63
+    },
+    "verdict": "INCONCLUSIVE"
+   }
+  }
+ },
+ "C5_no_sidebands": {
+  "statement": "No 1 -/+ CW sidebands in raw polar motion over 2017-2031: both below 3 mas (they were cw.dat processing products).",
+  "evaluate_after": 2031.0,
+  "status": "pending",
+  "observed": null,
+  "provisional": {
+   "value": 2.466000573310181,
+   "upper_mas": 1.0338113528103148,
+   "lower_mas": 2.466000573310181
+  },
+  "engine_predictions": {
+   "alias_cw": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 2.97,
+     "upper_mas": 0.47,
+     "lower_mas": 2.97
+    },
+    "verdict": "PASS"
+   },
+   "device": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 2.56,
+     "upper_mas": 0.63,
+     "lower_mas": 2.56
+    },
+    "verdict": "PASS"
+   },
+   "free_decay": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 1.45,
+     "upper_mas": 0.89,
+     "lower_mas": 1.45
+    },
+    "verdict": "PASS"
+   },
+   "ls_free": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 1.48,
+     "upper_mas": 0.57,
+     "lower_mas": 1.48
+    },
+    "verdict": "PASS"
+   },
+   "two_line_fm": {
+    "issue": "live-2026-10",
+    "prediction": {
+     "value": 1.43,
+     "upper_mas": 1.43,
+     "lower_mas": 1.27
+    },
+    "verdict": "PASS"
+   }
+  }
+ }
+}

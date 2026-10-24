@@ -1,0 +1,22 @@
+{
+ "cw_freq": 0.8755000000000001,
+ "cw_period_days": 417.1812678469446,
+ "cw_amp_mas": 43.02519105323093,
+ "r_train": 0.9545204857856779,
+ "issue": "hindcast-2019-01",
+ "data_end": 2018.975,
+ "horizon_years": 3.0,
+ "settings": {
+  "train_years": 10,
+  "f_scan": [
+   0.8,
+   0.9
+  ]
+ },
+ "fingerprint": "d54fb572509d1a88",
+ "hindcast_origin": 2018.975,
+ "engine": "ls_free",
+ "issued_utc": "2026-10-24T15:43:58+00:00",
+ "issued_year": 2026.8126712328767,
+ "git_rev": "aa35b19"
+}

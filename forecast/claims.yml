@@ -1,0 +1,67 @@
+# Registered claims: dated, quantitative, falsifiable statements about the Chandler wobble, evaluated automatically
+# from IERS polar motion once the data reach each claim's evaluation date. Registered 2026-10-24, with the data then
+# available ending 2026.7. Each live issue also records what every engine predicts for each claim (from its projection
+# spliced onto the observations), so the claims also score the engines against each other.
+#
+# Estimators (ledger.py: claim_value), all on 0.05-yr bins of complex polar motion p = x - i y:
+#   cw_amp     |CW| (mas) from a least-squares fit in [centre - window/2, centre + window/2] with a prograde line at
+#              the draconic alias 0.84398 /yr, prograde/retrograde annual and semiannual lines, quadratic drift
+#   cw_phase   the same fit's CW phase, minus the circular-mean phase of the same estimator over the reference
+#              plateau window centres (deg, wrapped to +-180)
+#   line       amplitude (mas) and phase of a prograde line at f over [start, end] (fitted jointly with the CW,
+#              seasonal lines and drift); phase compared with the same estimator over the reference window
+#   sidebands  largest amplitude (mas) of the 1 - CW (retrograde, -0.156 /yr) and 1 + CW (+1.844 /yr) lines over a window
+
+claims:
+  C1_regrowth:
+    statement: "The CW regrows: its amplitude at the draconic alias, centred 2029.0 (window 2026-2032), is at least 50 mas."
+    kind: cw_amp
+    centre: 2029.0
+    window: 6.0
+    pass_if: ">= 50"
+    fail_if: "< 35"
+    evaluate_after: 2032.0
+    hypotheses: "forced CW (device, two_line_fm: regrowth after the 2015-22 beat minimum) vs free mode (free_decay: continued decay unless re-excited)"
+  C2_phase_lock:
+    statement: "The CW keeps the phase of its 1939-2008 plateau: within 45 deg of it, centred 2029.0."
+    kind: cw_phase
+    centre: 2029.0
+    window: 6.0
+    reference_centres: [1939.0, 2008.0]
+    pass_if: "<= 45"
+    fail_if: ">= 90"
+    evaluate_after: 2032.0
+    hypotheses: "a forced line keeps its phase between rare reversals; a noise-driven free mode drifts (median 40-60 deg over a decade at Q 50-85)"
+  C3_mm_persists:
+    statement: "The Mm line (14 - anomalistic, 0.7448 /yr, prograde) persists over 2017-2031 at 10-35 mas and within 45 deg of its 1973-2016 phase."
+    kind: line
+    freq: 0.744759
+    start: 2017.0
+    end: 2031.0
+    reference: [1973.0, 2016.0]
+    amp_range: [10, 35]
+    pass_if: "<= 45"
+    fail_if: ">= 90"
+    evaluate_after: 2031.0
+    hypotheses: "a steady lunar (anomalistic) line vs a CW sidelobe or noise"
+  C4_seven_sixths:
+    statement: "The 7/6 line (1 + F - M, 1.16675 /yr, prograde) keeps its phase: over 2019-2031, within 45 deg of its 1973-2019 phase."
+    kind: line
+    freq: 1.166751
+    start: 2019.0
+    end: 2031.0
+    reference: [1973.0, 2019.0]
+    amp_range: [1, 30]
+    pass_if: "<= 45"
+    fail_if: ">= 90"
+    evaluate_after: 2031.0
+    hypotheses: "the lunar F - M (6-yr) line folded by the annual comb vs noise"
+  C5_no_sidebands:
+    statement: "No 1 -/+ CW sidebands in raw polar motion over 2017-2031: both below 3 mas (they were cw.dat processing products)."
+    kind: sidebands
+    start: 2017.0
+    end: 2031.0
+    pass_if: "< 3"
+    fail_if: ">= 6"
+    evaluate_after: 2031.0
+    hypotheses: "the cw.dat 1 -/+ CW satellites were processing artifacts (docs/cw_data_tests.md section 2)"

@@ -31,6 +31,8 @@ This directory is a supplementary view of the Chandler wobble (CW) model in this
 |---|---|
 | [cw_synchronized_wobble.md](cw_synchronized_wobble.md) | **The lead.** Synchronization in rotating machinery; the pulsed inertia comb and aliasing; the bandpass fitted without consensus constraints; the phase-lock evidence; the counter-torque and a pulsed controller; what would strengthen or break the case. |
 | [cw_data_tests.md](cw_data_tests.md) | **The data.** Raw IERS against `cw.dat`. The `cw.dat` 1 ∓ CW side peaks are cross-terms of a seasonal gain in its processing. Every peak catalogued; phase stability of each candidate line (CW, Mm, the 0.817 feature, the other labelled lines); the joint chance; and a log of the claims these tests withdrew. |
+| [cw_suppression.md](cw_suppression.md) | **Supplement.** The post-2010 collapse of the CW (cf. Yamaguchi & Furuya 2024): too fast for free decay at any Q the line set allows; the required forcing reverses in 2010–16, goes quiet, then resumes; the counter-torque needed is the same few × 10⁻⁴ of the lunar torque. Candidate mechanisms: a ~1-week shift in the seasonal comb (which would also rotate Mm and the QBO alias, linking the QBO disruptions the paper cites), a steady F − M beat (~93 yr: 1920s and 2015–20 minima), and a 2F + M counter-modulation that needs an annual impulse. F − M is the Earth's 6-year cycle (Cazenave et al. 2025) and ≈ 1/6 /yr, a reliable assist every sixth year. Its ~93-yr beat with the CW places the 1920s reversal (Malkin & Miller 2010) out of sample and the present absence; its 7/6 /yr alias is steady in raw polar motion. (In raw LOD the 6-year cycle is not separable from red noise.) |
+| [cw_longrecord.md](cw_longrecord.md) | **Supplement.** Long-record phase coherence, IERS C01 1846–2026: the CW phase is locked to the draconic alias for 70 years (1939–2008, ±14.5°) and 40 years before the 1920s, the two plateaus 175° apart. A noise-driven free mode reproduces that pattern in ≤ 0.1% of runs. The F − M beat fitted after 1973 places the 1920s minimum at 1926.7 (observed 1926.3). |
 | [cw_magnetized_spheroid.md](cw_magnetized_spheroid.md) | **The device appendix.** The Euler ↔ Landau–Lifshitz identity for the free mode; the first device (sharp kicks, 432 d, Q = 85); the alias table shared with the QBO; first fits against `cw.dat`; laboratory analogs. |
 | [../README.md](../README.md) | The core impulse model and its spectral estimators. |
 | [../ChandlerWobbleForcing.pdf](../ChandlerWobbleForcing.pdf), [../dialog.pdf](../dialog.pdf) | The 2021 satellite-peak post (based on a processed series; see data tests §2) and the alias derivation. |
@@ -42,6 +44,17 @@ This directory is a supplementary view of the Chandler wobble (CW) model in this
 
 *The bandpass without consensus constraints (`cw_bandpass.py`). f₀, Q, pulse shape and asymmetry are free; the annual
 has its own excitation. The 2 − CW line sets Q ≳ 30, and f₀ lands at 425–440 d.*
+
+![Long-record phase coherence](cw_longrecord.png)
+
+*Long-record phase coherence (`cw_longrecord.py`, IERS C01 1846–2026). Relative to the draconic alias, the CW phase
+sits on two plateaus, 1878–1917 and 1939–2008, joined by the 1920s reversal at the amplitude minimum. The F − M
+beat fitted on 1973–2026 alone puts the earlier minimum at 1926.7, against 1926.3 observed.*
+
+![Suppression episode](cw_suppression.png)
+
+*The post-2010 collapse (`cw_suppression.py`). The CW fell from 112 to 25 mas in 2010–14, an e-fold of 2.6 yr, which
+as free decay would need Q ≈ 7. A forcing that reverses in 2010–16, goes quiet, then resumes reproduces the envelope.*
 
 ![Counter-torque and pulsed control](cw_counter_torque.png)
 
@@ -69,11 +82,11 @@ models are compared, and the absolute phase of the candidate lines is tracked wi
   1. `fetch_eop.py`, to download the raw data;
   2. `cw_magnetized_spheroid.py`, `cw_sidebands.py`, `cw_eop_closure.py`, `cw_peaks.py`;
   3. `cw_bandpass.py`, then `cw_flagship.py` and `cw_counter_torque.py` (they read `cw_bandpass.json`);
-  4. `cw_joint_lock.py`.
+  4. `cw_joint_lock.py`, `cw_suppression.py`, `cw_longrecord.py`.
 - **Data:**
   - `../cw.dat`: a processed x-pole series, 1935–2018.6, of unknown provenance.
-  - `data/finals2000A.all`: IERS Rapid Service daily polar motion, 1973–now, downloaded by `fetch_eop.py`; not in the
-    repository.
+  - `data/finals2000A.all` (IERS Rapid Service daily, 1973–now) and `data/eopc01.iau2000.1846-now` (IERS C01,
+    1846–now), downloaded by `fetch_eop.py`; not in the repository.
 - **Lunar elements:** computed from Meeus' mean elements, so lunar phases are astronomical, not fitted. Only numpy,
   scipy and matplotlib are needed.
 

@@ -1,0 +1,46 @@
+{
+ "f0": 0.84488133240805,
+ "Q": 85,
+ "cw_amp_mas_at_origin": 54.99759987634953,
+ "r_train": 0.9736243579888053,
+ "issue": "live-2026-10",
+ "data_end": 2026.775,
+ "horizon_years": 6.0,
+ "settings": {
+  "state_years": 6,
+  "period_days": 432.3,
+  "Q": 85
+ },
+ "fingerprint": "f3f1855db864b919",
+ "claim_predictions": {
+  "C1_regrowth": {
+   "value": 52.13
+  },
+  "C2_phase_lock": {
+   "value": 21.26,
+   "signed": 21.26,
+   "amp_mas": 52.13
+  },
+  "C3_mm_persists": {
+   "value": 17.06,
+   "signed": -17.06,
+   "amp_mas": 13.88,
+   "ref_amp_mas": 10.82
+  },
+  "C4_seven_sixths": {
+   "value": 51.11,
+   "signed": -51.11,
+   "amp_mas": 5.3,
+   "ref_amp_mas": 5.63
+  },
+  "C5_no_sidebands": {
+   "value": 1.45,
+   "upper_mas": 0.89,
+   "lower_mas": 1.45
+  }
+ },
+ "engine": "free_decay",
+ "issued_utc": "2026-10-24T15:43:36+00:00",
+ "issued_year": 2026.8126712328767,
+ "git_rev": "aa35b19"
+}

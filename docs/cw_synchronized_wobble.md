@@ -57,7 +57,8 @@ seasons are unequal). A torque line at frequency f appears at |f − k| for comb
 |---|---|---|---|---|
 | draconic latitude, squared | 26.8438 /yr | 26 | **0.8440 = CW** | 0.8435 /yr; phase-locked ±18–22° |
 | anomalistic distance, (a/r)³ | 13.2553 /yr | 14 | **0.7448 = Mm** | 0.748 /yr; steady 18–26 mas, phase ±34° |
-| draconic, next harmonic | 26.8438 | 28 | 1.1560 (2 − CW) | ~4 mas, noise-limited |
+| draconic, next harmonic | 26.8438 | 28 | 1.1560 (2 − CW) | ~4 mas, phase wanders (the nearby steady peak is F − M at 7/6, [supplement §6.2](cw_suppression.md)) |
+| perigee − node, F − M (the 6-year cycle) | 0.16675 /yr ≈ 1/6 | 0, ±1 | 1/6, 5/6, 7/6 | 6-yr LOD cycle; ~93-yr envelope with the CW; steady 7/6 line |
 | the comb itself (mean torque) | 0 | 2 | 2.0 (semiannual) | 2.5 mas, steady (the contingency line) |
 
 With a sign-sensitive drive and an alternating comb, the same folding rule gives the QBO's 2.370 yr
@@ -101,6 +102,7 @@ out to be artifacts ([cw_data_tests.md §2](cw_data_tests.md)).
 
 | test | result |
 |---|---|
+| CW phase over 1846–2026 (C01, [supplement](cw_longrecord.md)) | locked to the alias for 70 yr (1939–2008, ±14.5°) and 40 yr (1878–1917), 175° apart; noise-driven free mode: p ≤ 0.0013 for the pattern |
 | CW phase at 0.8440 across windows | ±8° (3 × 18 yr), ±22° (4 × 13.5 yr) raw; ±11° in `cw.dat` 1935–2018. The phase holds while the amplitude falls from 181 to 33 mas |
 | Mm at 0.7448 | prograde; 18 / 24 / 26 / 19 mas in four windows; phase ±34°; best-fit frequency 0.748. Not a CW sidelobe |
 | chance under a noise-driven free wobble | CW lock 0.08–0.28, Mm lock 0.017; **both 0.0014–0.005**; with Mm's steady amplitude ≈ 10⁻⁴ (few hits) |
@@ -152,6 +154,8 @@ lock is what it leaves when nothing corrects it.
 - **A bench test.** A rotor on magnetic bearings, or a drive under slow sampled control, with a fast torque
   modulation gated by a slow pulse train. The test: the resonance locks to |f_mod − k·f_pulse| with the modulation's
   phase, and a feedback controller's steady pulses reproduce the modulation at the alias.
+- **The post-2010 collapse.** Too fast for free decay; the required forcing reverses in 2010–16 and then resumes.
+  The counter-torque needed is the same small fraction of the lunar torque. See [cw_suppression.md](cw_suppression.md).
 - **Breaking it.** A CW phase that drifts in older data as a noise-driven wobble would, or an Mm line that loses its
   phase or amplitude, would weaken the case.
 

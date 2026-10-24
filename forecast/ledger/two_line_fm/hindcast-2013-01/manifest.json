@@ -1,0 +1,23 @@
+{
+ "cw_line_mas": 71.38384449660072,
+ "fm_line_mas": 61.95257012496,
+ "beat_period_years": 93.1649757860781,
+ "r_train": 0.7889694997137693,
+ "train_start": 1890.0,
+ "n_segments": 13,
+ "n_knots": 26,
+ "issue": "hindcast-2013-01",
+ "data_end": 2012.975,
+ "horizon_years": 3.0,
+ "settings": {
+  "train_start": 1890.0,
+  "season_segment_years": 10,
+  "drift_knot_years": 5
+ },
+ "fingerprint": "068a08c00cf08715",
+ "hindcast_origin": 2012.975,
+ "engine": "two_line_fm",
+ "issued_utc": "2026-10-24T15:43:53+00:00",
+ "issued_year": 2026.8126712328767,
+ "git_rev": "aa35b19"
+}

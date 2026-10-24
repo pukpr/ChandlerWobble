@@ -1,0 +1,53 @@
+{
+ "comb_day": 163,
+ "r_train": 0.9310744970690065,
+ "train_years": 24,
+ "f0": 0.843153,
+ "Q": 31.62,
+ "tau_days": 5.533,
+ "push_pull": 0.977,
+ "asymmetry": 0.383,
+ "issue": "live-2026-10",
+ "data_end": 2026.775,
+ "horizon_years": 6.0,
+ "settings": {
+  "train_years": 24,
+  "f0": 0.843153,
+  "Q": 31.62,
+  "tau_days": 5.533,
+  "push_pull": 0.977,
+  "asymmetry": 0.383
+ },
+ "fingerprint": "50f2b36bfbfc0762",
+ "claim_predictions": {
+  "C1_regrowth": {
+   "value": 59.63
+  },
+  "C2_phase_lock": {
+   "value": 5.57,
+   "signed": -5.57,
+   "amp_mas": 59.63
+  },
+  "C3_mm_persists": {
+   "value": 1.33,
+   "signed": -1.33,
+   "amp_mas": 17.32,
+   "ref_amp_mas": 10.82
+  },
+  "C4_seven_sixths": {
+   "value": 58.72,
+   "signed": -58.72,
+   "amp_mas": 3.36,
+   "ref_amp_mas": 5.63
+  },
+  "C5_no_sidebands": {
+   "value": 2.56,
+   "upper_mas": 0.63,
+   "lower_mas": 2.56
+  }
+ },
+ "engine": "device",
+ "issued_utc": "2026-10-24T15:43:45+00:00",
+ "issued_year": 2026.8126712328767,
+ "git_rev": "aa35b19"
+}

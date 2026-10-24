@@ -1,0 +1,20 @@
+{
+ "f0": 0.84488133240805,
+ "Q": 85,
+ "cw_amp_mas_at_origin": 118.08732466506191,
+ "r_train": 0.9839233940199156,
+ "issue": "hindcast-2010-01",
+ "data_end": 2009.975,
+ "horizon_years": 3.0,
+ "settings": {
+  "state_years": 6,
+  "period_days": 432.3,
+  "Q": 85
+ },
+ "fingerprint": "f3f1855db864b919",
+ "hindcast_origin": 2009.975,
+ "engine": "free_decay",
+ "issued_utc": "2026-10-24T15:43:50+00:00",
+ "issued_year": 2026.8126712328767,
+ "git_rev": "aa35b19"
+}
