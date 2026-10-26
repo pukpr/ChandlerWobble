@@ -2,14 +2,15 @@
  "feeds": {
   "c01": "updated",
   "c04": "updated",
-  "usno": "missing"
+  "usno": "updated"
  },
- "data_end": 2026.7282683093772,
- "last_bin": 2026.725,
- "n_bins": 3175,
+ "data_end": 2026.8049281314168,
+ "last_bin": 2026.825,
+ "n_bins": 3177,
  "sources": {
   "C01": 1881,
-  "C04": 23643
+  "C04": 23644,
+  "USNO": 27
  },
- "observed_utc": "2026-10-24T16:04:41+00:00"
+ "observed_utc": "2026-10-26T06:56:32+00:00"
 }
