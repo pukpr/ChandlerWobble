@@ -1,16 +1,16 @@
 # Chandler wobble forecast ledger
 
-Updated 2026-10-26 06:56 UTC. Data end 2026.8049 (feeds: c01 updated, c04 updated, usno updated). Error = |Δp|, the vector error of complex polar motion, in mas. `SS` = 1 − MSE(engine)/MSE(baseline); positive beats the baseline.
+Updated 2026-11-02 06:37 UTC. Data end 2026.8241 (feeds: c01 updated, c04 updated, usno updated). Error = |Δp|, the vector error of complex polar motion, in mas. `SS` = 1 − MSE(engine)/MSE(baseline); positive beats the baseline.
 
 ## Live issues
 
 | engine | issue | data end | r train | notes | C1 regrowth | C2 phase | C3 Mm | C4 7/6 | C5 sidebands |
 |---|---|---|---|---|---|---|---|---|---|
-| alias_cw | live-2026-10 | 2026.775 | 0.922 | CW 59 mas | 60 mas | 6° (60 mas) | 1° (16 mas) | 64° (4 mas) | 3 mas |
-| device | live-2026-10 | 2026.775 | 0.931 | comb day 163, Q 31.62 | 60 mas | 6° (60 mas) | 1° (17 mas) | 59° (3 mas) | 3 mas |
-| free_decay | live-2026-10 | 2026.775 | 0.974 | CW 55 mas at origin, Q 85 | 52 mas | 21° (52 mas) | 17° (14 mas) | 51° (5 mas) | 1 mas |
-| ls_free | live-2026-10 | 2026.775 | 0.960 | CW 437.4 d, 38 mas | 42 mas | 5° (42 mas) | 12° (17 mas) | 52° (3 mas) | 1 mas |
-| two_line_fm | live-2026-10 | 2026.775 | 0.797 | CW line 67, F−M line 58 mas | 90 mas | 43° (90 mas) | 56° (8 mas) | 53° (8 mas) | 1 mas |
+| alias_cw | live-2026-11 | 2026.775 | 0.922 | CW 59 mas | 60 mas | 6° (60 mas) | 1° (16 mas) | 64° (4 mas) | 3 mas |
+| device | live-2026-11 | 2026.775 | 0.931 | comb day 163, Q 31.62 | 60 mas | 6° (60 mas) | 1° (17 mas) | 59° (3 mas) | 3 mas |
+| free_decay | live-2026-11 | 2026.775 | 0.974 | CW 55 mas at origin, Q 85 | 52 mas | 21° (52 mas) | 17° (14 mas) | 51° (5 mas) | 1 mas |
+| ls_free | live-2026-11 | 2026.775 | 0.960 | CW 437.4 d, 38 mas | 42 mas | 5° (42 mas) | 12° (17 mas) | 52° (3 mas) | 1 mas |
+| two_line_fm | live-2026-11 | 2026.775 | 0.797 | CW line 67, F−M line 58 mas | 90 mas | 43° (90 mas) | 56° (8 mas) | 53° (8 mas) | 1 mas |
 
 Claim columns are each engine's prediction, from its projection spliced onto the observations (C3/C4: phase change, with amplitude).
 

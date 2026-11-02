@@ -5,39 +5,39 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 55.20529789636969
+   "value": 55.20531056101114
   },
   "engine_predictions": {
    "alias_cw": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 60.47
     },
     "verdict": "PASS"
    },
    "device": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 59.63
     },
     "verdict": "PASS"
    },
    "free_decay": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 52.13
     },
     "verdict": "PASS"
    },
    "ls_free": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 41.81
     },
     "verdict": "INCONCLUSIVE"
    },
    "two_line_fm": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 89.91
     },
@@ -51,13 +51,13 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 23.231120926050906,
-   "signed": 23.231120926050906,
-   "amp_mas": 55.20529789636969
+   "value": 23.231138076039258,
+   "signed": 23.231138076039258,
+   "amp_mas": 55.20531056101114
   },
   "engine_predictions": {
    "alias_cw": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 6.01,
      "signed": -6.01,
@@ -66,7 +66,7 @@
     "verdict": "PASS"
    },
    "device": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 5.57,
      "signed": -5.57,
@@ -75,7 +75,7 @@
     "verdict": "PASS"
    },
    "free_decay": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 21.26,
      "signed": 21.26,
@@ -84,7 +84,7 @@
     "verdict": "PASS"
    },
    "ls_free": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 4.55,
      "signed": 4.55,
@@ -93,7 +93,7 @@
     "verdict": "PASS"
    },
    "two_line_fm": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 42.95,
      "signed": 42.95,
@@ -109,14 +109,14 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 18.805655876434408,
-   "signed": -18.805655876434408,
-   "amp_mas": 22.49997783452755,
+   "value": 18.805638553656955,
+   "signed": -18.805638553656955,
+   "amp_mas": 22.499965115949664,
    "ref_amp_mas": 10.8217703779407
   },
   "engine_predictions": {
    "alias_cw": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 1.03,
      "signed": -1.03,
@@ -126,7 +126,7 @@
     "verdict": "PASS"
    },
    "device": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 1.33,
      "signed": -1.33,
@@ -136,7 +136,7 @@
     "verdict": "PASS"
    },
    "free_decay": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 17.06,
      "signed": -17.06,
@@ -146,7 +146,7 @@
     "verdict": "PASS"
    },
    "ls_free": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 11.94,
      "signed": -11.94,
@@ -156,7 +156,7 @@
     "verdict": "PASS"
    },
    "two_line_fm": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 55.52,
      "signed": -55.52,
@@ -173,14 +173,14 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 33.440341597330715,
-   "signed": -33.440341597330715,
-   "amp_mas": 5.390822899613065,
+   "value": 33.44025041964805,
+   "signed": -33.44025041964805,
+   "amp_mas": 5.390829791952854,
    "ref_amp_mas": 5.631475790873225
   },
   "engine_predictions": {
    "alias_cw": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 64.24,
      "signed": -64.24,
@@ -190,7 +190,7 @@
     "verdict": "INCONCLUSIVE"
    },
    "device": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 58.72,
      "signed": -58.72,
@@ -200,7 +200,7 @@
     "verdict": "INCONCLUSIVE"
    },
    "free_decay": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 51.11,
      "signed": -51.11,
@@ -210,7 +210,7 @@
     "verdict": "INCONCLUSIVE"
    },
    "ls_free": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 51.72,
      "signed": -51.72,
@@ -220,7 +220,7 @@
     "verdict": "INCONCLUSIVE"
    },
    "two_line_fm": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 52.52,
      "signed": -52.52,
@@ -237,13 +237,13 @@
   "status": "pending",
   "observed": null,
   "provisional": {
-   "value": 2.465975052482113,
-   "upper_mas": 1.0338177527590626,
-   "lower_mas": 2.465975052482113
+   "value": 2.4659734339967985,
+   "upper_mas": 1.0338241708788505,
+   "lower_mas": 2.4659734339967985
   },
   "engine_predictions": {
    "alias_cw": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 2.97,
      "upper_mas": 0.47,
@@ -252,7 +252,7 @@
     "verdict": "PASS"
    },
    "device": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 2.56,
      "upper_mas": 0.63,
@@ -261,7 +261,7 @@
     "verdict": "PASS"
    },
    "free_decay": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 1.45,
      "upper_mas": 0.89,
@@ -270,7 +270,7 @@
     "verdict": "PASS"
    },
    "ls_free": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 1.48,
      "upper_mas": 0.57,
@@ -279,7 +279,7 @@
     "verdict": "PASS"
    },
    "two_line_fm": {
-    "issue": "live-2026-10",
+    "issue": "live-2026-11",
     "prediction": {
      "value": 1.43,
      "upper_mas": 1.43,
