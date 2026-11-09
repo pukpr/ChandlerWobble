@@ -1,6 +1,6 @@
 # Chandler wobble forecast ledger
 
-Updated 2026-11-02 06:37 UTC. Data end 2026.8241 (feeds: c01 updated, c04 updated, usno updated). Error = |Δp|, the vector error of complex polar motion, in mas. `SS` = 1 − MSE(engine)/MSE(baseline); positive beats the baseline.
+Updated 2026-11-09 16:22 UTC. Data end 2026.8433 (feeds: c01 updated, c04 updated, usno updated). Error = |Δp|, the vector error of complex polar motion, in mas. `SS` = 1 − MSE(engine)/MSE(baseline); positive beats the baseline.
 
 ## Live issues
 
